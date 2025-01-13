@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
+    "pre-commit": "lint-staged",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
@@ -19,7 +20,6 @@
     "dotenv": "^16.4.5",
     "events": "^3.3.0",
     "gitcoin-ui": "3.0.1",
-    "lint-staged": "^15.2.10",
     "next": "14.2.23",
     "next-nprogress-bar": "^2.4.3",
     "next-themes": "^0.4.4",
@@ -40,11 +40,15 @@
     "autoprefixer": "^10.4.20",
     "globals": "^15.12.0",
     "json-stringify-deterministic": "^1.0.12",
+    "lint-staged": "~13.2.2",
     "postcss": "^8.4.49",
     "prettier": "^3.4.1",
     "prettier-plugin-tailwind-css": "^1.5.0",
     "tailwindcss": "^3.4.15",
     "typescript": "5.5.4",
     "typescript-eslint": "^8.16.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,md}": "prettier --write"
   }
 }
