@@ -1,0 +1,10 @@
+node_modules
+dist
+pnpm-lock.yaml
+.husky
+.turbo
+.vscode
+package.json
+pnpm-workspace.yaml
+turbo.json
+.next

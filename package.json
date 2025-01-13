@@ -6,9 +6,12 @@
     "dev": "turbo dev",
     "dev:admin": "turbo dev --filter=retrofunding-admin",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky && husky install"
   },
   "devDependencies": {
+    "husky": "~8.0.3",
+    "lint-staged": "^15.3.0",
     "prettier": "^3.2.5",
     "turbo": "^2.3.3",
     "typescript": "5.5.4"
@@ -16,5 +19,8 @@
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,md}": "prettier --write"
   }
 }
