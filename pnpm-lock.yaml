@@ -45,8 +45,8 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
       gitcoin-ui:
-        specifier: 3.0.1
-        version: 3.0.1(@types/react-dom@18.3.1)(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.12)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.12)(jiti@1.21.7)(yaml@2.7.0))
+        specifier: 3.1.1
+        version: 3.1.1(@types/react-dom@18.3.1)(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.12)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.12)(jiti@1.21.7)(yaml@2.7.0))
       next:
         specifier: 14.2.23
         version: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4640,8 +4640,8 @@ packages:
     resolution: {integrity: sha512-/Iu4prUrydE3Pb3lCBMbcSNIf81tgGt0W1ZwknnyF62t3tHmtiJTRj0f+1ZIhp3+Rh0ktz1pJVoa7ZXUCskivA==}
     engines: {node: '>= 4.8.0'}
 
-  gitcoin-ui@3.0.1:
-    resolution: {integrity: sha512-+KgNJNOu5K6NcqGfqZ4hVs+E4tj6JwOn8DSNOZiORSZFIbQjWge215im3Iqh8KgcR+J+FNeq4ySUnqWYy+44dQ==}
+  gitcoin-ui@3.1.1:
+    resolution: {integrity: sha512-rAdpyNkgZkRSz7NvcvV1hHUOdhq1ZKc6HWq0FVrN//VQ6xD8X01dY1qfQx35qPm/Zj8oEV+nnMHB8LsI3VO7Fg==}
     peerDependencies:
       react: 18.3.1
       react-dom: 18.3.1
@@ -8082,7 +8082,7 @@ snapshots:
       '@babel/traverse': 7.26.5
       '@babel/types': 7.26.5
       convert-source-map: 2.0.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -8158,7 +8158,7 @@ snapshots:
       '@babel/parser': 7.26.5
       '@babel/template': 7.25.9
       '@babel/types': 7.26.5
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -8906,7 +8906,7 @@ snapshots:
       bufferutil: 4.0.9
       cross-fetch: 4.1.0
       date-fns: 2.30.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       eciesjs: 0.4.13
       eventemitter2: 6.4.9
       readable-stream: 3.6.2
@@ -8930,7 +8930,7 @@ snapshots:
       '@paulmillr/qr': 0.2.1
       bowser: 2.11.0
       cross-fetch: 4.1.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       eciesjs: 0.4.13
       eth-rpc-errors: 4.0.3
       eventemitter2: 6.4.9
@@ -8953,7 +8953,7 @@ snapshots:
     dependencies:
       '@ethereumjs/tx': 4.2.0
       '@types/debug': 4.1.12
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       semver: 7.6.3
       superstruct: 1.0.4
     transitivePeerDependencies:
@@ -8966,7 +8966,7 @@ snapshots:
       '@noble/hashes': 1.7.0
       '@scure/base': 1.2.1
       '@types/debug': 4.1.12
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       pony-cause: 2.1.11
       semver: 7.6.3
       uuid: 9.0.1
@@ -8980,7 +8980,7 @@ snapshots:
       '@noble/hashes': 1.7.0
       '@scure/base': 1.2.1
       '@types/debug': 4.1.12
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       pony-cause: 2.1.11
       semver: 7.6.3
       uuid: 9.0.1
@@ -10834,7 +10834,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 8.15.0(typescript@5.5.4)
       '@typescript-eslint/utils': 8.15.0(eslint@9.15.0(jiti@1.21.7))(typescript@5.5.4)
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       eslint: 9.15.0(jiti@1.21.7)
       ts-api-utils: 1.4.0(typescript@5.5.4)
     optionalDependencies:
@@ -10857,7 +10857,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 8.19.1(typescript@5.5.4)
       '@typescript-eslint/utils': 8.19.1(eslint@9.15.0(jiti@1.21.7))(typescript@5.5.4)
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       eslint: 9.15.0(jiti@1.21.7)
       ts-api-utils: 2.0.0(typescript@5.5.4)
       typescript: 5.5.4
@@ -10872,7 +10872,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.15.0
       '@typescript-eslint/visitor-keys': 8.15.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       fast-glob: 3.3.2
       is-glob: 4.0.3
       minimatch: 9.0.5
@@ -11582,13 +11582,13 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
   agent-base@7.1.1:
     dependencies:
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -12304,6 +12304,10 @@ snapshots:
     optionalDependencies:
       supports-color: 8.1.1
 
+  debug@4.4.0:
+    dependencies:
+      ms: 2.1.3
+
   debug@4.4.0(supports-color@8.1.1):
     dependencies:
       ms: 2.1.3
@@ -12655,7 +12659,7 @@ snapshots:
 
   esbuild-register@3.6.0(esbuild@0.24.2):
     dependencies:
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       esbuild: 0.24.2
     transitivePeerDependencies:
       - supports-color
@@ -13248,7 +13252,7 @@ snapshots:
     dependencies:
       basic-ftp: 5.0.5
       data-uri-to-buffer: 6.0.2
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       fs-extra: 11.2.0
     transitivePeerDependencies:
       - supports-color
@@ -13261,7 +13265,7 @@ snapshots:
       shelljs: 0.8.5
       shelljs.exec: 1.1.8
 
-  gitcoin-ui@3.0.1(@types/react-dom@18.3.1)(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.12)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.12)(jiti@1.21.7)(yaml@2.7.0)):
+  gitcoin-ui@3.1.1(@types/react-dom@18.3.1)(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.12)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.12)(jiti@1.21.7)(yaml@2.7.0)):
     dependencies:
       '@gitcoin/gitcoin-chain-data': 1.0.43(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.1)
       '@heroicons/react': 1.0.6(react@18.3.1)
@@ -13760,7 +13764,7 @@ snapshots:
   http-proxy-agent@7.0.2:
     dependencies:
       agent-base: 7.1.1
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -13774,14 +13778,14 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
   https-proxy-agent@7.0.5:
     dependencies:
       agent-base: 7.1.1
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
 
@@ -14253,7 +14257,7 @@ snapshots:
       chalk: 5.2.0
       cli-truncate: 3.1.0
       commander: 10.0.1
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       execa: 7.2.0
       lilconfig: 2.1.0
       listr2: 5.0.8(enquirer@2.4.1)
@@ -14709,7 +14713,7 @@ snapshots:
   micromark@4.0.1:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       decode-named-character-reference: 1.0.2
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.2
@@ -15185,7 +15189,7 @@ snapshots:
     dependencies:
       '@tootallnate/quickjs-emscripten': 0.23.0
       agent-base: 7.1.1
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       get-uri: 6.0.3
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.5
@@ -16348,7 +16352,7 @@ snapshots:
   socks-proxy-agent@8.0.4:
     dependencies:
       agent-base: 7.1.1
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       socks: 2.8.3
     transitivePeerDependencies:
       - supports-color
@@ -16820,7 +16824,7 @@ snapshots:
   typechain@8.3.2(typescript@5.5.4):
     dependencies:
       '@types/prettier': 2.7.3
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0
       fs-extra: 7.0.1
       glob: 7.1.7
       js-sha3: 0.8.0
