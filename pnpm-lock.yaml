@@ -45,8 +45,8 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
       gitcoin-ui:
-        specifier: 3.1.1
-        version: 3.1.1(@types/react-dom@18.3.1)(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.12)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.12)(jiti@1.21.7)(yaml@2.7.0))
+        specifier: 3.2.0
+        version: 3.2.0(@types/react-dom@18.3.1)(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.12)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.12)(jiti@1.21.7)(yaml@2.7.0))
       next:
         specifier: 14.2.23
         version: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4640,8 +4640,8 @@ packages:
     resolution: {integrity: sha512-/Iu4prUrydE3Pb3lCBMbcSNIf81tgGt0W1ZwknnyF62t3tHmtiJTRj0f+1ZIhp3+Rh0ktz1pJVoa7ZXUCskivA==}
     engines: {node: '>= 4.8.0'}
 
-  gitcoin-ui@3.1.1:
-    resolution: {integrity: sha512-rAdpyNkgZkRSz7NvcvV1hHUOdhq1ZKc6HWq0FVrN//VQ6xD8X01dY1qfQx35qPm/Zj8oEV+nnMHB8LsI3VO7Fg==}
+  gitcoin-ui@3.2.0:
+    resolution: {integrity: sha512-ILOSM695SlDS8J+rOjMX0DV80xy9qGnQJ2uvu7Nj+ybiHzlHaEmSYiSQYBxjGCOUAfpQbguSTFEZzFQseS3nzA==}
     peerDependencies:
       react: 18.3.1
       react-dom: 18.3.1
@@ -8406,7 +8406,7 @@ snapshots:
   '@eslint/config-array@0.19.0':
     dependencies:
       '@eslint/object-schema': 2.1.4
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.4.0
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -8430,7 +8430,7 @@ snapshots:
   '@eslint/eslintrc@3.2.0':
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.4.0
       espree: 10.3.0
       globals: 14.0.0
       ignore: 5.3.2
@@ -12853,7 +12853,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.6
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.4.0
       escape-string-regexp: 4.0.0
       eslint-scope: 8.2.0
       eslint-visitor-keys: 4.2.0
@@ -13265,7 +13265,7 @@ snapshots:
       shelljs: 0.8.5
       shelljs.exec: 1.1.8
 
-  gitcoin-ui@3.1.1(@types/react-dom@18.3.1)(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.12)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.12)(jiti@1.21.7)(yaml@2.7.0)):
+  gitcoin-ui@3.2.0(@types/react-dom@18.3.1)(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.4.7(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.12)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.12)(jiti@1.21.7)(yaml@2.7.0)):
     dependencies:
       '@gitcoin/gitcoin-chain-data': 1.0.43(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.1)
       '@heroicons/react': 1.0.6(react@18.3.1)
