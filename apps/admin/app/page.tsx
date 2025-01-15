@@ -6,7 +6,6 @@ import { useAccount } from "wagmi";
 
 export default function Home(): React.ReactNode {
   const account = useAccount();
-  console.log(account);
   const actionButton = account.isConnected ? (
     <div>Connected</div>
   ) : (
