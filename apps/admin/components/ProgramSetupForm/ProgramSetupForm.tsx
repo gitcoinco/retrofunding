@@ -1,15 +1,16 @@
 "use client";
 
-import { SetupProgressForm } from "gitcoin-ui/setup-progress-form";
+import { GenericProgressForm } from "gitcoin-ui/generic-progress-form";
 import { programSetupSteps } from "./steps";
 
 export const ProgramSetupForm = (): React.ReactNode => {
   const handleSubmit = async (values: any) => {
     console.log("Submitted final values:", values);
   };
+
   return (
     <div suppressHydrationWarning>
-      <SetupProgressForm
+      <GenericProgressForm
         name="Program Setup"
         onSubmit={handleSubmit}
         dbName="program-db"

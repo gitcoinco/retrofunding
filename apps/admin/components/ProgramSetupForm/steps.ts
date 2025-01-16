@@ -1,5 +1,5 @@
-import { FormStep } from "gitcoin-ui/setup-progress-form";
 import { FormField } from "gitcoin-ui/form";
+import { FormStep } from "gitcoin-ui/generic-progress-form";
 
 const programDetailsFields: FormField[] = [
   {
@@ -51,7 +51,7 @@ const manageAdminsFields: FormField[] = [
   {
     field: {
       name: "admins",
-      label: "",
+      label: "Admins",
       validation: {
         arrayValidation: {
           itemType: "address",
@@ -71,19 +71,13 @@ const manageAdminsArgs = {
   persistKey: "program-setup-manage-admins",
 };
 
-const deployArgs = {
-  fields: [],
-  persistKey: "program-setup-deploy",
-};
-
 export const programSetupSteps = [
   {
     name: "Program details",
     formProps: programDetailsArgs,
     stepProps: {
       formTitle: "Program details",
-      formDescription:
-        "A grants program will house and organize your retrofunding rounds.",
+      formDescription: "A grants program will house and organize your retrofunding rounds.",
     },
   },
   {
@@ -93,15 +87,6 @@ export const programSetupSteps = [
       formTitle: "Manage admins",
       formDescription:
         "Program admins will automatically have admin addcess to all of the rounds nexted under this program.",
-    },
-  },
-  {
-    name: "Review",
-    formProps: deployArgs,
-    stepProps: {
-      formTitle: "Review your program and deploy onchain",
-      formDescription:
-        "Use the sidebar menu to edit any part of your program. Changes can also be made after your program has been deployed.",
     },
   },
 ] satisfies FormStep[];
