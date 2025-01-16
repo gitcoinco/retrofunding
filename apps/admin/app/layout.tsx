@@ -1,27 +1,22 @@
-import "@rainbow-me/rainbowkit/styles.css";
-import "gitcoin-ui/styles.css";
-import "./globals.css";
-import type { Metadata } from "next";
 import { MainLayout } from "@/layouts/MainLayout";
-import { Providers } from "@/providers";
+import { ThemeProvider, Web3Providers } from "@/providers";
+import "@/styles/globals.css";
+import { getMetadata } from "@/utils/getMetadata";
 
-export const metadata: Metadata = {
-  title: "Retrofunding",
-  description: "Powered by Gitcoin",
-};
+export const metadata = getMetadata({ title: "Retrofunding", description: "Powered by Gitcoin" });
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>): React.ReactNode {
+const App = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en">
-      <body suppressHydrationWarning>
-        <Providers>
-          <MainLayout>{children}</MainLayout>
-        </Providers>
+    <html suppressHydrationWarning>
+      <body>
+        <ThemeProvider enableSystem>
+          <Web3Providers>
+            <MainLayout>{children}</MainLayout>
+          </Web3Providers>
+        </ThemeProvider>
       </body>
     </html>
   );
-}
+};
+
+export default App;
