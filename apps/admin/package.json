@@ -16,7 +16,6 @@
     "@allo-team/allo-v2-sdk": "1.0.79",
     "@gitcoin/gitcoin-chain-data": "^1.0.43",
     "@rainbow-me/rainbowkit": "^2.2.0",
-    "@repo/ui": "workspace:*",
     "@tanstack/react-query": "^5.61.5",
     "blo": "~1.2.0",
     "burner-connector": "^0.0.9",
