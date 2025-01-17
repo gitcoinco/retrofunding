@@ -7,7 +7,6 @@ import {
   safeWallet,
   walletConnectWallet,
 } from "@rainbow-me/rainbowkit/wallets";
-import { rainbowkitBurnerWallet } from "burner-connector";
 import config from "@/config";
 
 const wallets = [
@@ -17,7 +16,6 @@ const wallets = [
   coinbaseWallet,
   rainbowWallet,
   safeWallet,
-  rainbowkitBurnerWallet,
 ];
 
 /**
