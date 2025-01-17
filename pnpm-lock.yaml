@@ -48,8 +48,8 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
       gitcoin-ui:
-        specifier: ^3.2.0
-        version: 3.2.0(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.5.0(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.14)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.14)(jiti@1.21.7)(yaml@2.7.0))
+        specifier: ^3.2.1
+        version: 3.2.1(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.5.0(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.14)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.14)(jiti@1.21.7)(yaml@2.7.0))
       next:
         specifier: 14.2.23
         version: 14.2.23(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3771,8 +3771,8 @@ packages:
     resolution: {integrity: sha512-E1b1lFFLvLgak2whF2xDBcOy6NLVGZBqqjJjsIhvopKfWWEi64pLVTWWehV8KlLerZkfNTA95sTe2OdJKm1OzQ==}
     engines: {node: '>= 14'}
 
-  gitcoin-ui@3.2.0:
-    resolution: {integrity: sha512-ILOSM695SlDS8J+rOjMX0DV80xy9qGnQJ2uvu7Nj+ybiHzlHaEmSYiSQYBxjGCOUAfpQbguSTFEZzFQseS3nzA==}
+  gitcoin-ui@3.2.1:
+    resolution: {integrity: sha512-r/D36TcoKBn4Bt4U17Iaz/sR3PLsRU8j0jorxir3UrZ9BgChq8PoQ7ThjOfv3qgv4ZJ4ZaH4LNkR3S0YbBf/Dg==}
     peerDependencies:
       react: 18.3.1
       react-dom: 18.3.1
@@ -11196,7 +11196,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  gitcoin-ui@3.2.0(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.5.0(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.14)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.14)(jiti@1.21.7)(yaml@2.7.0)):
+  gitcoin-ui@3.2.1(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.30.1)(storybook@8.5.0(bufferutil@4.0.9)(prettier@3.4.2)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@20.17.14)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.0.7(@types/node@20.17.14)(jiti@1.21.7)(yaml@2.7.0)):
     dependencies:
       '@gitcoin/gitcoin-chain-data': 1.0.43(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.1)
       '@heroicons/react': 1.0.6(react@18.3.1)
