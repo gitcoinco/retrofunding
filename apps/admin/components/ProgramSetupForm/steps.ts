@@ -1,5 +1,4 @@
-import { FormField } from "gitcoin-ui/form";
-import { FormStep } from "gitcoin-ui/generic-progress-form";
+import { FormField, FormStep } from "gitcoin-ui/types";
 
 const programDetailsFields: FormField[] = [
   {
@@ -71,7 +70,7 @@ const manageAdminsArgs = {
   persistKey: "program-setup-manage-admins",
 };
 
-export const programSetupSteps = [
+export const programSetupSteps: FormStep[] = [
   {
     name: "Program details",
     formProps: programDetailsArgs,

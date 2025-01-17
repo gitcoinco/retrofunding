@@ -1,7 +1,15 @@
 "use client";
 
-import { GenericProgressForm } from "gitcoin-ui/generic-progress-form";
+import dynamic from "next/dynamic";
 import { programSetupSteps } from "./steps";
+
+const GenericProgressForm = dynamic(
+  async () => {
+    const mod = await import("gitcoin-ui/client");
+    return mod.GenericProgressForm;
+  },
+  { ssr: false },
+);
 
 export const ProgramSetupForm = (): React.ReactNode => {
   const handleSubmit = async (values: any) => {
