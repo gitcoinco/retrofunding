@@ -1,18 +1,12 @@
-import { Chain, createClient, fallback, http } from "viem";
-import { mainnet } from "viem/chains";
+import { createClient, fallback, http } from "viem";
 import { createConfig } from "wagmi";
-import config from "@/config";
+import { config } from "@/config";
 import { wagmiConnectors } from "./wagmiConnectors";
 
 const { targetNetworks } = config;
 
-// We always want to have mainnet enabled (ENS resolution, ETH price, etc). But only once.
-export const enabledChains = targetNetworks.find((network: Chain) => network.id === 1)
-  ? targetNetworks
-  : ([...targetNetworks, mainnet] as const);
-
 export const wagmiConfig = createConfig({
-  chains: enabledChains,
+  chains: targetNetworks,
   connectors: wagmiConnectors,
   ssr: true,
   client({ chain }) {
