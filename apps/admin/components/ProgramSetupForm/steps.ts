@@ -1,4 +1,8 @@
+"use client";
+
 import { FormField, FormStep } from "gitcoin-ui/types";
+import { renderChainIcon } from "@/components";
+import { targetNetworks } from "@/services/web3/chains";
 
 const programDetailsFields: FormField[] = [
   {
@@ -16,45 +20,41 @@ const programDetailsFields: FormField[] = [
   },
   {
     field: {
-      name: "network",
+      name: "chainId",
       label: "Select network",
       validation: { required: true },
     },
     component: "Select",
     options: [
       {
-        items: [
-          { label: "Ethereum", value: "ethereum" },
-          { label: "Optimism", value: "optimism" },
-          { label: "Base", value: "base" },
-          { label: "Polygon", value: "polygon" },
-          { label: "Arbitrum", value: "arbitrum" },
-        ],
+        items: targetNetworks.map((network) => ({
+          label: network.name,
+          value: network.id.toString(),
+          icon: renderChainIcon(network.id),
+          iconPosition: "left",
+        })),
       },
     ],
-    placeholder: "Select",
-    className: "bg-white border-grey-300",
+    placeholder: "Select network",
+    className: "bg-white border-grey-300 flex",
     size: "md",
   },
-];
+] satisfies FormField[];
 
 const programDetailsArgs = {
   fields: programDetailsFields,
   persistKey: "program-setup-program-details",
-  defaultValues: {
-    network: "ethereum",
-  },
 };
 
 const manageAdminsFields: FormField[] = [
   {
     field: {
       name: "admins",
-      label: "Admins",
+      label: "",
       validation: {
         arrayValidation: {
           itemType: "address",
-          minItems: 1,
+          minItems: 2,
           maxItems: 100,
           minItemsMessage: "At least one admin is required",
           maxItemsMessage: "Maximum of 100 admins allowed",
@@ -68,6 +68,11 @@ const manageAdminsFields: FormField[] = [
 const manageAdminsArgs = {
   fields: manageAdminsFields,
   persistKey: "program-setup-manage-admins",
+};
+
+const publishProgramArgs = {
+  fields: [],
+  persistKey: "",
 };
 
 export const programSetupSteps: FormStep[] = [
@@ -86,6 +91,14 @@ export const programSetupSteps: FormStep[] = [
       formTitle: "Manage admins",
       formDescription:
         "Program admins will automatically have admin addcess to all of the rounds nexted under this program.",
+    },
+  },
+  {
+    name: "Publish program",
+    formProps: publishProgramArgs,
+    stepProps: {
+      formTitle: "Publish program",
+      formDescription: "Publish your program to the public.",
     },
   },
 ] satisfies FormStep[];

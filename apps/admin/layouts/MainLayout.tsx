@@ -1,11 +1,12 @@
 "use client";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Navbar } from "gitcoin-ui";
+import { Navbar, Toaster } from "gitcoin-ui";
 
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex min-h-screen flex-col" suppressHydrationWarning>
+      <Toaster />
       <Navbar
         text={{ text: "Retrofunding" }}
         primaryLogo={{
