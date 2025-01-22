@@ -4,13 +4,14 @@ import { useMutation } from "@tanstack/react-query";
 import { ProgressStatus } from "gitcoin-ui/types";
 import { Address, createPublicClient, http } from "viem";
 import { useWalletClient } from "wagmi";
+import { RoundSetupFormData } from "@/components/RoundSetupForm/types";
 import { uploadData } from "@/services/ipfs/upload";
 import { targetNetworks } from "@/services/web3/chains";
+import { mapFormDataToRoundMetadata } from "@/utils/transformRoundMetadata";
 import { waitUntilIndexerSynced, getCreateRoundProgressSteps } from "../utils";
 
 export type CreateRoundParams = {
-  chainId: number;
-  // Add round creation params here
+  data: RoundSetupFormData;
 };
 
 export const useCreateRound = () => {
@@ -28,10 +29,12 @@ export const useCreateRound = () => {
   const { data: walletClient } = useWalletClient();
 
   const createRoundMutation = useMutation({
-    mutationFn: async ({ chainId }: CreateRoundParams) => {
+    mutationFn: async ({ data }: CreateRoundParams) => {
       if (!walletClient) {
         throw new Error("WalletClient is undefined");
       }
+
+      const chainId = data.program.chainId;
       if (walletClient.chain.id !== chainId) {
         await walletClient.switchChain({
           id: chainId,
@@ -50,8 +53,11 @@ export const useCreateRound = () => {
         transport: http(),
       });
 
-      const roundMetadata = {};
-      const roundMetadataIpfs = await uploadData(roundMetadata);
+      // metadata
+      const { roundMetadata, applicationQuestions } = mapFormDataToRoundMetadata(data);
+      const roundMetadataIpfs = await uploadData(
+        JSON.stringify({ round: roundMetadata, application: applicationQuestions }),
+      );
 
       if (roundMetadataIpfs.type === "error") {
         setUploadMetadataStatus(ProgressStatus.IS_ERROR);
@@ -115,6 +121,8 @@ export const useCreateRound = () => {
       setIndexingStatus(ProgressStatus.IS_SUCCESS);
 
       setFinishingStatus(ProgressStatus.IN_PROGRESS);
+
+      // TODO: wire in backend call to create pool
 
       setFinishingStatus(ProgressStatus.IS_SUCCESS);
     },

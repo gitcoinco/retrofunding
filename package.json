@@ -13,7 +13,10 @@
     "husky": "~8.0.3",
     "prettier": "^3.2.5",
     "turbo": "^2.3.3",
-    "typescript": "5.5.4"
+    "typescript": "5.5.4",
+    "moment": "2.30.1",
+    "moment-timezone": "^0.5.46",
+    "graphql-request": "^5.2.0"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
