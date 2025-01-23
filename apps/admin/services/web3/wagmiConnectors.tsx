@@ -7,7 +7,7 @@ import {
   safeWallet,
   walletConnectWallet,
 } from "@rainbow-me/rainbowkit/wallets";
-import config from "@/config";
+import { config } from "@/config";
 
 const wallets = [
   metaMaskWallet,
