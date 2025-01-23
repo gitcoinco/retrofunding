@@ -4,7 +4,7 @@ import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { BlockieAvatar } from "@/components/BlockieAvatar";
-import { wagmiConfig } from "./wagmiConfig";
+import { wagmiConfig } from "@/services/web3/wagmiConfig";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
