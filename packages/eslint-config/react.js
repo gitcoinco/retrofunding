@@ -32,12 +32,15 @@ export const reactJsConfig = [
       "react-hooks": pluginReactHooks,
       "react-refresh": pluginReactRefresh,
     },
+    settings: { react: { version: "detect" } },
     rules: {
       ...pluginReactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },
       ],
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-no-target-blank": "off",
     },
   },
 ];

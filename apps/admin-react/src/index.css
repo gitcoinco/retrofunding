@@ -1,0 +1,30 @@
+@import "@rainbow-me/rainbowkit/styles.css";
+@import "gitcoin-ui/styles.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply font-ui-sans box-border;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+  ul {
+    @apply list-disc;
+    @apply my-4 pl-10;
+  }
+  ol {
+    @apply list-decimal;
+    @apply my-4 pl-10;
+  }
+}
+
+.rainbow-button {
+  @apply rounded-lg p-px;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%),
+    linear-gradient(124deg, #ff9776 17.77%, #5f94bc 35.47%, #25bdce 59.3%, #deab0c 91.61%);
+}
