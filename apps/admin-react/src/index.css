@@ -12,6 +12,7 @@
 @layer base {
   :root {
     --radius: 0.5rem;
+    @apply w-screen;
   }
   ul {
     @apply list-disc;
