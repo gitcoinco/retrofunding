@@ -1,12 +1,10 @@
-"use client";
-
-import { NavLink } from "react-router";
+import { Link } from "react-router";
 import { CreateButton } from "gitcoin-ui";
 
 export const CreateNewProgramButton = () => {
   return (
-    <NavLink to="/create-program" style={{ cursor: "pointer" }}>
+    <Link to="/create-program">
       <CreateButton>Create New Program</CreateButton>
-    </NavLink>
+    </Link>
   );
 };
