@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Registry } from "@allo-team/allo-v2-sdk";
 import { useMutation } from "@tanstack/react-query";
-import { ProgressStatus } from "gitcoin-ui";
+import { ProgressStatus } from "gitcoin-ui/types";
 import { Address, createPublicClient, http } from "viem";
 import { useWalletClient } from "wagmi";
 import { uploadData } from "@/services/ipfs/upload";

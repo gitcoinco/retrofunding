@@ -2,8 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { ProgressModal } from "gitcoin-ui";
-import { useToast } from "gitcoin-ui/hooks";
+import { useToast } from "gitcoin-ui/hooks/useToast";
 import { deleteDBValues } from "gitcoin-ui/lib";
 import { Address } from "viem";
 import { useCreateProgram } from "@/hooks/contracts";
@@ -13,6 +12,14 @@ const GenericProgressForm = dynamic(
   async () => {
     const mod = await import("gitcoin-ui/client");
     return mod.GenericProgressForm;
+  },
+  { ssr: false },
+);
+
+const ProgressModal = dynamic(
+  async () => {
+    const mod = await import("gitcoin-ui/client");
+    return mod.ProgressModal;
   },
   { ssr: false },
 );
