@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useAccount } from "wagmi";
-import { Landing } from "@/pages";
+import { Admin, Landing } from "@/pages";
 
 const App = () => {
   const { isConnected, isConnecting, isReconnecting } = useAccount();
@@ -17,6 +17,9 @@ const App = () => {
     return null; // implement loading button
   }
 
+  if (isConnected) {
+    return <Admin />;
+  }
   return <Landing />;
 };
 
