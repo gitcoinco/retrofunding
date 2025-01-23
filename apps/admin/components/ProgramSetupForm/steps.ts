@@ -54,7 +54,7 @@ const manageAdminsFields: FormField[] = [
       validation: {
         arrayValidation: {
           itemType: "address",
-          minItems: 2,
+          minItems: 1,
           maxItems: 100,
           minItemsMessage: "At least one admin is required",
           maxItemsMessage: "Maximum of 100 admins allowed",
