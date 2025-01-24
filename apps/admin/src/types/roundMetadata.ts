@@ -20,6 +20,7 @@ export interface RoundMetadata {
     requirements: Array<{ requirement: string }>;
   };
   projectId: string;
+  programContractAddress: string;
   retroFundingConfig: {
     program: {
       chainId: number;
@@ -28,13 +29,15 @@ export interface RoundMetadata {
     };
     roundName: string;
     payoutToken: string;
-    coverImage: Record<string, unknown>;
+    coverImage?: Record<string, unknown>;
     impactMetrics: string[];
   };
-  support: {
+  support?: {
     type: string;
     info: string;
   };
+  feesAddress: string;
+  feesPercentage: number;
 }
 
 export type Requirement = {
