@@ -5,8 +5,9 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "dev:admin": "turbo dev --filter=retrofunding-admin",
+    "dev:voting": "turbo dev --filter=retrofunding-vote",
     "lint": "turbo lint",
-    "pre-commit": "pnpm run --filter=retrofunding-admin pre-commit",
+    "pre-commit": "pnpm run --filter={retrofunding-admin,retrofunding-vote} pre-commit",
     "prepare": "husky && husky install"
   },
   "devDependencies": {

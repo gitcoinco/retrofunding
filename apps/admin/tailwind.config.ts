@@ -1,20 +1,10 @@
+import { colors } from "gitcoin-ui/theme";
 import type { Config } from "tailwindcss";
 
 export default {
-  content: [
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./utils/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  darkTheme: "dark",
-  darkMode: ["selector", "[data-theme='dark']"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
-    },
+    colors: colors,
   },
   plugins: [],
 } satisfies Config;
