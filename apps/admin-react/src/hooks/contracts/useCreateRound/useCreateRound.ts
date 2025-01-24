@@ -1,16 +1,18 @@
 import { useState, useEffect, useMemo } from "react";
-import { Allo } from "@allo-team/allo-v2-sdk";
+import { Allo, TransactionData } from "@allo-team/allo-v2-sdk";
 import { EasyRetroFundingStrategy } from "@allo-team/allo-v2-sdk";
+import { InitializeData } from "@allo-team/allo-v2-sdk/dist/strategies/EasyRetroFunding/types";
 import { getChainById } from "@gitcoin/gitcoin-chain-data";
 import { useMutation } from "@tanstack/react-query";
 import { ProgressStatus } from "gitcoin-ui/types";
-import { Address, createPublicClient, http } from "viem";
+import moment from "moment-timezone";
+import { createPublicClient, Hex, http, zeroAddress } from "viem";
 import { useWalletClient } from "wagmi";
 import { uploadData } from "@/services/ipfs/upload";
 import { targetNetworks } from "@/services/web3/chains";
-import { RoundSetupFormData } from "@/types";
+import { AnyJson, RoundSetupFormData } from "@/types";
 import { mapFormDataToRoundMetadata } from "@/utils/transformRoundMetadata";
-import { waitUntilIndexerSynced, getCreateRoundProgressSteps } from "../utils";
+import { waitUntilIndexerSynced, getCreateRoundProgressSteps, UINT64_MAX } from "../utils";
 
 export type CreateRoundParams = {
   data: RoundSetupFormData;
@@ -37,6 +39,7 @@ export const useCreateRound = () => {
       }
 
       const chainId = data.program.chainId;
+
       if (walletClient.chain.id !== chainId) {
         await walletClient.switchChain({
           id: chainId,
@@ -44,8 +47,8 @@ export const useCreateRound = () => {
       }
 
       const chain = targetNetworks.find((chain) => chain.id === chainId);
-
       const account = walletClient.account;
+
       if (!account) {
         throw new Error("WalletClient account is undefined");
       }
@@ -55,11 +58,8 @@ export const useCreateRound = () => {
         transport: http(),
       });
 
-      // metadata
-      const { roundMetadata, applicationQuestions } = mapFormDataToRoundMetadata(data);
-      const roundMetadataIpfs = await uploadData(
-        JSON.stringify({ round: roundMetadata, application: applicationQuestions }),
-      );
+      const mappedMetadata = mapFormDataToRoundMetadata(data);
+      const roundMetadataIpfs = await uploadData(mappedMetadata as unknown as AnyJson);
 
       if (roundMetadataIpfs.type === "error") {
         setUploadMetadataStatus(ProgressStatus.IS_ERROR);
@@ -67,7 +67,6 @@ export const useCreateRound = () => {
       }
 
       setUploadMetadataStatus(ProgressStatus.IS_SUCCESS);
-
       const roundMetadataIpfsCid = roundMetadataIpfs.value;
 
       const allo = new Allo({
@@ -85,27 +84,57 @@ export const useCreateRound = () => {
         address: strategyAddress,
       });
 
-      const nonce = BigInt(Math.floor(Math.random() * 1000000000));
+      const dates = data.roundDates;
+      const timezone = data.timezone;
 
-      // const txData = allo.createRound({});
-      // TODO: Implement this
-      const txData = {
-        data: "0x" as Address,
+      const registrationStartTime = BigInt(moment.tz(dates.applications.start, timezone).unix());
+      const registrationEndTime = BigInt(moment.tz(dates.applications.end, timezone).unix());
+      const poolStartTime = BigInt(moment.tz(dates.round.start, timezone).unix());
+      const poolEndTime = dates.round.noEndDate
+        ? UINT64_MAX
+        : BigInt(moment.tz(dates.round.end, timezone).unix());
+
+      const initializeData: InitializeData = {
+        useRegistryAnchor: true,
+        metadataRequired: true,
+        registrationStartTime,
+        registrationEndTime,
+        poolStartTime,
+        poolEndTime,
       };
+
+      const initData = await retroFunding.getInitializeData(initializeData);
+      let txData: TransactionData;
+
+      try {
+        txData = allo.createPool({
+          profileId: data.program.programId as Hex,
+          strategy: strategyAddress,
+          initStrategyData: initData,
+          token: zeroAddress, // TODO: payout token should be an address and no name
+          amount: BigInt(0),
+          metadata: {
+            protocol: 1n,
+            pointer: roundMetadataIpfsCid,
+          },
+          managers: [], // TODO: do we need managers in our form?
+        });
+      } catch (e) {
+        setContractUpdatingStatus(ProgressStatus.IS_ERROR);
+        throw new Error("Failed to update application status");
+      }
 
       setContractUpdatingStatus(ProgressStatus.IN_PROGRESS);
 
       let txHash;
-
       try {
         txHash = await walletClient.sendTransaction({
           account: account,
-          to: allo.address(),
+          to: txData.to,
           data: txData.data,
           chain: chain,
         });
       } catch (e) {
-        console.log(e);
         setContractUpdatingStatus(ProgressStatus.IS_ERROR);
         throw new Error("Failed to update application status");
       }
@@ -120,23 +149,17 @@ export const useCreateRound = () => {
       setContractUpdatingStatus(ProgressStatus.IS_SUCCESS);
       setIndexingStatus(ProgressStatus.IN_PROGRESS);
 
-      // Wait until indexer is synced
       try {
         await waitUntilIndexerSynced({
           chainId,
           blockNumber: receipt.blockNumber,
         });
       } catch (e) {
-        console.error(e);
         setIndexingStatus(ProgressStatus.IS_ERROR);
       }
 
       setIndexingStatus(ProgressStatus.IS_SUCCESS);
-
       setFinishingStatus(ProgressStatus.IN_PROGRESS);
-
-      // TODO: wire in backend call to create pool
-
       setFinishingStatus(ProgressStatus.IS_SUCCESS);
     },
   });

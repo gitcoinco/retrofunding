@@ -36,21 +36,54 @@ export const mapFormQuestionToApplicationQuestion = (
   }
 };
 
+export const mapRequirements = (requirements: {
+  twitter?: { required?: boolean; verification?: boolean };
+  github?: { required?: boolean; verification?: boolean };
+}) => {
+  return {
+    twitter: {
+      required: requirements.twitter?.required ?? false,
+      verification: requirements.twitter?.verification ?? false,
+    },
+    github: {
+      required: requirements.github?.required ?? false,
+      verification: requirements.github?.verification ?? false,
+    },
+  };
+};
+
 interface MappedRoundMetadata {
-  roundMetadata: RoundMetadata;
-  applicationQuestions: RoundApplicationQuestion[];
+  round: RoundMetadata;
+  application: {
+    version: string;
+    lastUpdatedOn: number;
+    applicationSchema: {
+      questions: RoundApplicationQuestion[];
+      requirements: {
+        github: {
+          required: boolean;
+          verification: boolean;
+        };
+        twitter: {
+          required: boolean;
+          verification: boolean;
+        };
+      };
+    };
+  };
 }
 
 export const mapFormDataToRoundMetadata = (formData: RoundSetupFormData): MappedRoundMetadata => {
   return {
-    roundMetadata: {
+    round: {
       name: formData.roundName,
-      roundType: "public", // TODO: add to / get from form
+      roundType: "private", // TODO: add to / get from form
       eligibility: {
         description: formData.description,
         requirements: formData.requirements.map((req: string) => ({ requirement: req })),
       },
       projectId: formData.program.programId,
+      programContractAddress: formData.program.programId,
       retroFundingConfig: {
         program: {
           chainId: formData.program.chainId,
@@ -59,17 +92,26 @@ export const mapFormDataToRoundMetadata = (formData: RoundSetupFormData): Mapped
         },
         roundName: formData.roundName,
         payoutToken: formData.payoutToken,
-        coverImage: formData.coverImage, // TODO: get/upload image
+        // coverImage: formData.coverImage, // TODO: get/upload image
         impactMetrics: formData.impactMetrics,
       },
-      support: {
-        // TODO: add to / get from form
-        type: "",
-        info: "",
+      feesAddress: "",
+      feesPercentage: 0,
+      // support: {
+      //   // TODO: add to / get from form
+      //   type: "",
+      //   info: "",
+      // },
+    },
+    application: {
+      version: "2.0.0",
+      lastUpdatedOn: Math.floor(Date.now() / 1000),
+      applicationSchema: {
+        questions: formData.applicationQuestions.questions.map(
+          mapFormQuestionToApplicationQuestion,
+        ),
+        requirements: mapRequirements(formData.applicationQuestions.requirements),
       },
     },
-    applicationQuestions: formData.applicationQuestions.questions.map(
-      mapFormQuestionToApplicationQuestion,
-    ),
   };
 };
