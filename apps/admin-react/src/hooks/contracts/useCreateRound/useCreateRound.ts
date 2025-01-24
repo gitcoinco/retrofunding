@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Allo } from "@allo-team/allo-v2-sdk";
+import { EasyRetroFundingStrategy } from "@allo-team/allo-v2-sdk";
+import { getChainById } from "@gitcoin/gitcoin-chain-data";
 import { useMutation } from "@tanstack/react-query";
 import { ProgressStatus } from "gitcoin-ui/types";
 import { Address, createPublicClient, http } from "viem";
@@ -70,6 +72,17 @@ export const useCreateRound = () => {
 
       const allo = new Allo({
         chain: chainId,
+      });
+
+      const strategyAddress = getChainById(chainId).contracts.retroFunding;
+
+      if (!strategyAddress) {
+        throw new Error("Strategy address is undefined for chainId: " + chainId);
+      }
+
+      const retroFunding = new EasyRetroFundingStrategy({
+        chain: chainId,
+        address: strategyAddress,
       });
 
       const nonce = BigInt(Math.floor(Math.random() * 1000000000));
