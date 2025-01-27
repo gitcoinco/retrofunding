@@ -11,3 +11,26 @@ export const getMetricsQuery = gql`
     }
   }
 `;
+
+export const getPoolQuery = gql`
+  query getPoolMetrics($alloPoolId: String!, $chainId: Int!) {
+    pools(filter: { alloPoolId: { equalTo: $alloPoolId }, chainId: { equalTo: $chainId } }) {
+      alloPoolId
+      chainId
+      eligibilityCriteria {
+        eligibilityType
+        data
+      }
+      metricIdentifiers
+      distributionData
+    }
+  }
+`;
+
+export const getPoolDistributionQuery = gql`
+  query getPoolDistribution($alloPoolId: String!, $chainId: Int!) {
+    pools(filter: { alloPoolId: { equalTo: $alloPoolId }, chainId: { equalTo: $chainId } }) {
+      distributionData
+    }
+  }
+`;
