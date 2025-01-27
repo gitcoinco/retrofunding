@@ -27,11 +27,18 @@ export const getProgramsAndRoundsByUserAndTagQuery = gql`
       ) {
         id
         roundMetadata
+        matchTokenAddress
         applicationsEndTime
         applicationsStartTime
         donationsEndTime
         donationsStartTime
         createdAtBlock
+        strategyName
+        project {
+          id
+          name
+          chainId
+        }
         roles {
           address
           role
@@ -63,6 +70,31 @@ export const getProgramByIdAndChainIdQuery = gql`
       metadata
       chainId
       id
+    }
+  }
+`;
+
+export const getRoundByChainIdAndPoolIdQuery = gql`
+  query ($chainId: Int!, $poolId: String!) {
+    round(id: $poolId, chainId: $chainId) {
+      id
+      roundMetadata
+      matchTokenAddress
+      applicationsEndTime
+      applicationsStartTime
+      donationsEndTime
+      donationsStartTime
+      createdAtBlock
+      strategyName
+      project {
+        id
+        name
+        chainId
+      }
+      roles {
+        address
+        role
+      }
     }
   }
 `;

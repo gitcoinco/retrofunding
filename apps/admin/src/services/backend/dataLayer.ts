@@ -15,7 +15,8 @@ export const getMetrics = async (): Promise<Metric[]> => {
 export const getPool = async (alloPoolId: string, chainId: number): Promise<Pool> => {
   try {
     const response = await executeQuery(getPoolQuery, { alloPoolId, chainId });
-    const pool = response.pool[0];
+    console.log("===<", response);
+    const pool = response.pools[0];
     pool.metricIdentifiers = pool.metricIdentifiers.split(",");
     pool.distributionData = JSON.parse(pool.distributionData) as PoolDistribution;
     return pool;
