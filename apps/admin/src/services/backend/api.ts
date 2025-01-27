@@ -1,4 +1,10 @@
-import { CalculatePoolBody, CalculatePoolResponse, CreatePoolBody, SyncPoolBody } from "@/types";
+import {
+  CalculatePoolBody,
+  Distribution,
+  CreatePoolBody,
+  SyncPoolBody,
+  UpdatePoolEligibilityBody,
+} from "@/types";
 
 export async function createPool(createPoolBody: CreatePoolBody): Promise<boolean> {
   const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/pool`;
@@ -50,9 +56,7 @@ export async function syncPool(syncPoolBody: SyncPoolBody): Promise<boolean> {
   }
 }
 
-export async function calculatePool(
-  calculatePoolBody: CalculatePoolBody,
-): Promise<CalculatePoolResponse> {
+export async function calculatePool(calculatePoolBody: CalculatePoolBody): Promise<Distribution[]> {
   const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/pool/calculate`;
   try {
     const response = await fetch(url, {
@@ -73,6 +77,33 @@ export async function calculatePool(
     return response.json();
   } catch (error) {
     console.error("Error calculating pool:", error);
+    throw error;
+  }
+}
+
+export async function updatePoolEligibility(
+  updatePoolEligibilityBody: UpdatePoolEligibilityBody,
+): Promise<boolean> {
+  const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/pool/eligibility`;
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...updatePoolEligibilityBody,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error: ${response.status} - ${errorData.message || "Unknown error"}`);
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error updating pool eligibility:", error);
     throw error;
   }
 }

@@ -1,29 +1,4 @@
-import { CalculatePoolBody, CalculatePoolResponse, CreatePoolBody, SyncPoolBody } from "@/types";
-
-export async function createPool(createPoolBody: CreatePoolBody): Promise<boolean> {
-  const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/pool`;
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...createPoolBody,
-      }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Error: ${response.status} - ${errorData.message || "Unknown error"}`);
-    }
-
-    return true;
-  } catch (error) {
-    console.error("Error creating pool:", error);
-    throw error;
-  }
-}
+import { PredictDistributionBody, Distribution, SyncPoolBody, VoteBody } from "@/types";
 
 export async function syncPool(syncPoolBody: SyncPoolBody): Promise<boolean> {
   const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/pool/sync`;
@@ -50,10 +25,8 @@ export async function syncPool(syncPoolBody: SyncPoolBody): Promise<boolean> {
   }
 }
 
-export async function calculatePool(
-  calculatePoolBody: CalculatePoolBody,
-): Promise<CalculatePoolResponse> {
-  const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/pool/calculate`;
+export async function vote(voteBody: VoteBody): Promise<boolean> {
+  const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/vote`;
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -61,7 +34,34 @@ export async function calculatePool(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...calculatePoolBody,
+        ...voteBody,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error: ${response.status} - ${errorData.message || "Unknown error"}`);
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error voting:", error);
+    throw error;
+  }
+}
+
+export async function predictDistribution(
+  predictDistributionBody: PredictDistributionBody,
+): Promise<Distribution[]> {
+  const url = `${import.meta.env.VITE_RETROFUNDING_URL}/vote/predict`;
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...predictDistributionBody,
       }),
     });
 
@@ -72,7 +72,7 @@ export async function calculatePool(
 
     return response.json();
   } catch (error) {
-    console.error("Error calculating pool:", error);
+    console.error("Error predicting distribution:", error);
     throw error;
   }
 }
