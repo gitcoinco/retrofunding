@@ -1,9 +1,16 @@
-import { FormField, FormStep } from "gitcoin-ui/types";
+import { FormField, FormStep } from "@gitcoin/ui/types";
 import moment from "moment-timezone";
+import { getProgramByIdAndChainId } from "@/services/allo-indexer/dataLayer";
 import { getMetrics } from "@/services/backend/dataLayer";
-import { Program } from "@/types";
 
-export const getRoundSetupSteps = async (program: Program): Promise<FormStep[]> => {
+export const getRoundSetupSteps = async ({
+  programId,
+  chainId,
+}: {
+  programId: string;
+  chainId: number;
+}): Promise<FormStep[]> => {
+  const program = await getProgramByIdAndChainId(programId, chainId);
   const roundDetailsFields: FormField[] = [
     {
       field: {
@@ -51,11 +58,14 @@ export const getRoundSetupSteps = async (program: Program): Promise<FormStep[]> 
         label: "Cover image",
         className: "border-grey-300",
         validation: {
-          isObject: true,
+          fileValidation: {
+            allowedTypesMessage: "Only PNG and JPEG images are allowed",
+          },
           required: true,
         },
       },
       component: "FileUpload",
+      mimeTypes: ["image/*"],
     },
   ];
 
@@ -82,9 +92,11 @@ export const getRoundSetupSteps = async (program: Program): Promise<FormStep[]> 
     fields: roundDatesFields,
     persistKey: "round-setup-round-dates",
     defaultValues: {
-      timezone: moment.tz.guess(),
       roundDates: {
-        noEndDate: true,
+        timezone: moment.tz.guess(),
+        round: {
+          noEndDate: false,
+        },
       },
     },
   };
@@ -104,7 +116,7 @@ export const getRoundSetupSteps = async (program: Program): Promise<FormStep[]> 
         name: "requirements",
         label: "What requirements do you have from applicants?",
         className: "border-grey-300",
-        validation: { arrayValidation: { minItems: 1 } },
+        validation: { arrayValidation: { minItems: 0 } },
       },
       component: "FieldArray",
       placeholder: "Enter an eligibility requirement",

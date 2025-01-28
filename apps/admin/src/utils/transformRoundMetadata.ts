@@ -73,7 +73,10 @@ interface MappedRoundMetadata {
   };
 }
 
-export const mapFormDataToRoundMetadata = (formData: RoundSetupFormData): MappedRoundMetadata => {
+export const mapFormDataToRoundMetadata = (
+  formData: RoundSetupFormData,
+  roundCoverImageCid: string,
+): MappedRoundMetadata => {
   return {
     round: {
       name: formData.roundName,
@@ -92,7 +95,7 @@ export const mapFormDataToRoundMetadata = (formData: RoundSetupFormData): Mapped
         },
         roundName: formData.roundName,
         payoutToken: formData.payoutToken,
-        // coverImage: formData.coverImage, // TODO: get/upload image
+        coverImage: roundCoverImageCid,
         impactMetrics: formData.impactMetrics,
       },
       feesAddress: "",

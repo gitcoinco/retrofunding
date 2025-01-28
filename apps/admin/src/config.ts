@@ -40,5 +40,5 @@ export const config = {
 
   pinataUploadUrl: import.meta.env.VITE_PINATA_UPLOAD_URL!,
 
-  availableNetworks: [10, 11155111],
+  availableNetworks: targetNetworks.map((chain) => chain.id),
 } as const satisfies Config;

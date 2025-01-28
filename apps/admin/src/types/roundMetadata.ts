@@ -8,7 +8,7 @@ export interface RetroFundingConfig {
   };
   roundName: string;
   payoutToken: string;
-  coverImage: Record<string, unknown>;
+  coverImage: string;
   impactMetrics: string[];
 }
 
@@ -29,7 +29,7 @@ export interface RoundMetadata {
     };
     roundName: string;
     payoutToken: string;
-    coverImage?: Record<string, unknown>;
+    coverImage?: string;
     impactMetrics: string[];
   };
   support?: {

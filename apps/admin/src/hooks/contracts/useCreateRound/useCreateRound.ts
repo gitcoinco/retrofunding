@@ -3,8 +3,8 @@ import { Allo, TransactionData } from "@allo-team/allo-v2-sdk";
 import { EasyRetroFundingStrategy } from "@allo-team/allo-v2-sdk";
 import { InitializeData } from "@allo-team/allo-v2-sdk/dist/strategies/EasyRetroFunding/types";
 import { getChainById } from "@gitcoin/gitcoin-chain-data";
+import { ProgressStatus } from "@gitcoin/ui/types";
 import { useMutation } from "@tanstack/react-query";
-import { ProgressStatus } from "gitcoin-ui/types";
 import moment from "moment-timezone";
 import { createPublicClient, Hex, http, zeroAddress } from "viem";
 import { useWalletClient } from "wagmi";
@@ -54,12 +54,24 @@ export const useCreateRound = () => {
         throw new Error("WalletClient account is undefined");
       }
 
+      setUploadMetadataStatus(ProgressStatus.IN_PROGRESS);
+
       const publicClient = createPublicClient({
         chain,
         transport: http(),
       });
 
-      const mappedMetadata = mapFormDataToRoundMetadata(data);
+      const roundImageIpfs = await uploadData(data.coverImage);
+
+      if (roundImageIpfs.type === "error") {
+        setUploadMetadataStatus(ProgressStatus.IS_ERROR);
+        return { status: "error", error: new Error("Failed to upload round image to IPFS") };
+      }
+
+      const mappedMetadata = mapFormDataToRoundMetadata(data, roundImageIpfs.value);
+
+      mappedMetadata.round.retroFundingConfig.coverImage = roundImageIpfs.value;
+
       const roundMetadataIpfs = await uploadData(mappedMetadata as unknown as AnyJson);
 
       if (roundMetadataIpfs.type === "error") {

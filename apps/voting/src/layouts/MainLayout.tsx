@@ -1,7 +1,7 @@
 "use client";
 
 import { Outlet } from "react-router";
-import { Toaster } from "gitcoin-ui";
+import { Toaster } from "@gitcoin/ui";
 import { Navbar } from "@/components/Navbar";
 import { Web3Providers } from "@/providers";
 

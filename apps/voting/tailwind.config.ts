@@ -1,4 +1,4 @@
-import { colors } from "gitcoin-ui/theme";
+import { colors } from "@gitcoin/ui/theme";
 import type { Config } from "tailwindcss";
 
 export default {
