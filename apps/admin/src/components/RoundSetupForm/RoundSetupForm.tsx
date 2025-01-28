@@ -21,9 +21,9 @@ export const RoundSetupForm = (): React.ReactNode => {
   const programId = searchParams.get("programId");
   const chainId = searchParams.get("chainId");
   const FORM_NAME = "Round Setup";
-
   const DB_NAME = `round-db-${programId}-${chainId}`;
   const STORE_NAME = `new-round`;
+  const STEPS_PERSIST_KEY = `round-setup-steps-${programId}-${chainId}`;
 
   useEffect(() => {
     const fetchSteps = async () => {
@@ -53,7 +53,7 @@ export const RoundSetupForm = (): React.ReactNode => {
         status: "success",
         description: "Round created successfully",
       });
-      await deleteDBValues([FORM_NAME], "formProgressDB", "formProgress");
+      await deleteDBValues([STEPS_PERSIST_KEY], "formProgressDB", "formProgress");
       await deleteDBValues(roundSetupKeys, DB_NAME, STORE_NAME);
       navigate("/");
     } catch (error) {
@@ -73,6 +73,7 @@ export const RoundSetupForm = (): React.ReactNode => {
         dbName={DB_NAME}
         storeName={STORE_NAME}
         steps={roundSteps}
+        stepsPersistKey={STEPS_PERSIST_KEY}
       />
       <ProgressModal isOpen={isCreating} steps={steps} />
     </>
