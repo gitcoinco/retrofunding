@@ -1,4 +1,4 @@
-import { ProgressStatus, Step } from "gitcoin-ui/types";
+import { ProgressStatus, Step } from "@gitcoin/ui/types";
 
 export const getCreateRoundProgressSteps = ({
   uploadMetadataStatus,

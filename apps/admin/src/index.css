@@ -1,5 +1,5 @@
 @import "@rainbow-me/rainbowkit/styles.css";
-@import "gitcoin-ui/styles.css";
+@import "@gitcoin/ui/styles.css";
 
 @tailwind base;
 @tailwind components;

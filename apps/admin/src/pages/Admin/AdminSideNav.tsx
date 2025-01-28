@@ -1,14 +1,14 @@
 "use client";
 
 import { useMemo } from "react";
-import { IconType, SideNav, SideNavItem } from "gitcoin-ui";
+import { IconType, SideNav, SideNavItem } from "@gitcoin/ui";
 
 export const AdminSideNav = ({
-  programs = [],
-  rounds = [],
+  programItems = [],
+  roundItems = [],
 }: {
-  programs: { name: string; id: string }[];
-  rounds: { name: string; id: string }[];
+  programItems: { name: string; id: string; iconType?: IconType }[];
+  roundItems: { name: string; id: string; iconType?: IconType }[];
 }) => {
   const items = useMemo<SideNavItem[]>(
     () => [
@@ -21,22 +21,24 @@ export const AdminSideNav = ({
         content: "My Programs",
         id: "/my-programs",
         iconType: IconType.BRIEFCASE,
-        items: programs.map(({ name, id }) => ({
+        items: programItems.map(({ name, id, iconType }) => ({
           content: name,
           id: `/my-programs/${id}`,
+          iconType,
         })),
       },
       {
         content: "My Rounds",
         id: "/my-rounds",
         iconType: IconType.COLLECTION,
-        items: rounds.map(({ name, id }) => ({
+        items: roundItems.map(({ name, id, iconType }) => ({
           content: name,
           id: `/my-rounds/${id}`,
+          iconType,
         })),
       },
     ],
-    [programs, rounds],
+    [programItems, roundItems],
   );
 
   return <SideNav className="w-72" items={items} onClick={() => {}} />;

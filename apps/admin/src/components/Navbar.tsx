@@ -1,8 +1,8 @@
 "use client";
 
+import { Navbar as GitcoinNavbar } from "@gitcoin/ui";
+import { RetrofundingLogoLockup } from "@gitcoin/ui/logos";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Navbar as GitcoinNavbar } from "gitcoin-ui";
-import { RetrofundingLogoLockup } from "gitcoin-ui/logos";
 
 // TODO: use new navbar and wrap the logo with NavLink of react-router
 export const Navbar = () => {

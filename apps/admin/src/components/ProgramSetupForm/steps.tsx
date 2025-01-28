@@ -1,4 +1,4 @@
-import { FormField, FormStep } from "gitcoin-ui/types";
+import { FormField, FormStep } from "@gitcoin/ui/types";
 import { ChainIcon } from "@/components/ChainIcon";
 import { targetNetworks } from "@/services/web3/chains";
 

@@ -12,7 +12,7 @@ export interface RoundSetupFormData {
   };
   roundName: string;
   payoutToken: string;
-  coverImage: Record<string, unknown>;
+  coverImage: File;
   timezone: string;
   roundDates: {
     noEndDate: boolean;

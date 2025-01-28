@@ -1,43 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { GenericProgressForm, ProgressModal } from "gitcoin-ui/client";
-import { useToast } from "gitcoin-ui/hooks/useToast";
-import { deleteDBValues } from "gitcoin-ui/lib";
-import { FormStep } from "gitcoin-ui/types";
+import { useNavigate, useSearchParams } from "react-router";
+import { GenericProgressForm, ProgressModal } from "@gitcoin/ui/client";
+import { useToast } from "@gitcoin/ui/hooks/useToast";
+import { deleteDBValues } from "@gitcoin/ui/lib";
+import { FormStep } from "@gitcoin/ui/types";
+import { useAccount } from "wagmi";
 import { useCreateRound } from "@/hooks";
-import { Program, RoundSetupFormData } from "@/types";
+import { RoundSetupFormData } from "@/types";
 import { getRoundSetupSteps } from "./steps";
-
-const program: Program = {
-  chainId: 11155111,
-  programId: "0xb818ee969595f1a10364d8978717935e08d42725bc72dbb7c376c3044b3f6be5",
-  programName: "Random Program Name",
-};
-
-const FORM_NAME = "Round Setup";
-const STORE_NAME = "new-round";
-const DB_NAME = "round-db";
 
 export const RoundSetupForm = (): React.ReactNode => {
   const { toast } = useToast();
+  const { address } = useAccount();
   const navigate = useNavigate();
   const [roundSteps, setRoundSteps] = useState<FormStep[] | null>(null);
   const [roundSetupKeys, setRoundSetupKeys] = useState<string[] | null>(null);
   const { steps, createRoundMutation } = useCreateRound();
   const { mutateAsync: createRound, isPending: isCreating } = createRoundMutation;
+  const [searchParams] = useSearchParams();
+  const programId = searchParams.get("programId");
+  const chainId = searchParams.get("chainId");
+  const FORM_NAME = "Round Setup";
+
+  const DB_NAME = `round-db-${programId}-${chainId}`;
+  const STORE_NAME = `new-round`;
 
   useEffect(() => {
     const fetchSteps = async () => {
-      const resolvedSteps = await getRoundSetupSteps(program);
+      const resolvedSteps = await getRoundSetupSteps({
+        programId: programId || "",
+        chainId: Number(chainId),
+      });
       setRoundSteps(resolvedSteps);
       setRoundSetupKeys(resolvedSteps.map((step) => step.formProps.persistKey));
     };
     fetchSteps();
   }, []);
 
-  if (!roundSteps || !roundSetupKeys) {
+  if (!roundSteps || !roundSetupKeys || !programId || !chainId || !address) {
     // TODO: show loading state
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   const handleSubmit = async (values: RoundSetupFormData) => {
@@ -51,7 +53,7 @@ export const RoundSetupForm = (): React.ReactNode => {
         status: "success",
         description: "Round created successfully",
       });
-      await deleteDBValues([FORM_NAME], DB_NAME, "formProgressDB");
+      await deleteDBValues([FORM_NAME], "formProgressDB", "formProgress");
       await deleteDBValues(roundSetupKeys, DB_NAME, STORE_NAME);
       navigate("/");
     } catch (error) {

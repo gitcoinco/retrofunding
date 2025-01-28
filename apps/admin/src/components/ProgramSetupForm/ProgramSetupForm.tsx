@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
-import { ProgressModal } from "gitcoin-ui/client";
-import { GenericProgressForm } from "gitcoin-ui/client";
-import { useToast } from "gitcoin-ui/hooks/useToast";
-import { deleteDBValues } from "gitcoin-ui/lib";
+import { ProgressModal } from "@gitcoin/ui/client";
+import { GenericProgressForm } from "@gitcoin/ui/client";
+import { useToast } from "@gitcoin/ui/hooks/useToast";
+import { deleteDBValues } from "@gitcoin/ui/lib";
 import { Address } from "viem";
 import { useCreateProgram } from "@/hooks";
 import { programSetupSteps } from "./steps";
