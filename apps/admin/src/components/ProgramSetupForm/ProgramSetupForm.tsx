@@ -9,6 +9,7 @@ import { programSetupSteps } from "./steps";
 
 const DB_NAME = "program-db";
 const STORE_NAME = "new-program";
+const STEPS_PERSIST_KEY = "program-setup-progress";
 const PROGRAM_SETUP_KEYS = programSetupSteps.map((step) => step.formProps.persistKey);
 
 const PROGRESS_DB_NAME = "formProgressDB";
@@ -33,7 +34,7 @@ export const ProgramSetupForm = (): React.ReactNode => {
         status: "success",
         description: "Program created successfully",
       });
-      await deleteDBValues([PROGRESS_FORM_NAME], PROGRESS_DB_NAME, PROGRESS_STORE_NAME);
+      await deleteDBValues([STEPS_PERSIST_KEY], PROGRESS_DB_NAME, PROGRESS_STORE_NAME);
       await deleteDBValues(PROGRAM_SETUP_KEYS, DB_NAME, STORE_NAME);
       navigate("/");
     } catch (error) {
@@ -53,6 +54,7 @@ export const ProgramSetupForm = (): React.ReactNode => {
         dbName={DB_NAME}
         storeName={STORE_NAME}
         steps={programSetupSteps}
+        stepsPersistKey={STEPS_PERSIST_KEY}
       />
       <ProgressModal isOpen={isCreating} steps={steps} />
     </div>
