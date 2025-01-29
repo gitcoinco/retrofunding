@@ -1,21 +1,18 @@
-import { Allo, EasyRetroFundingStrategy, Registry } from "@allo-team/allo-v2-sdk";
+import { Allo, EasyRetroFundingStrategy } from "@allo-team/allo-v2-sdk";
 import { InitializeData } from "@allo-team/allo-v2-sdk/dist/strategies/EasyRetroFunding/types";
 import { getChainById } from "@gitcoin/gitcoin-chain-data";
 import { useMutation } from "@tanstack/react-query";
 import moment from "moment";
-import { Address, Hex, zeroAddress } from "viem";
-import { useAccount } from "wagmi";
+import { Hex, zeroAddress } from "viem";
 import { getCreateRoundProgressSteps } from "@/hooks";
 import { uploadData } from "@/services/ipfs/upload";
+import { RoundSetupFormData } from "@/types";
 import { mapFormDataToRoundMetadata } from "@/utils/transformRoundMetadata";
 import { UINT64_MAX } from "@/utils/utils";
 import { useContractInteraction } from "../useContractInteraction/useContractInteraction";
-import { CreateRoundParams } from "./useCreateRound.old";
 
-export type CreateProgramParams = {
-  chainId: number;
-  programName: string;
-  members: Address[];
+export type CreateRoundParams = {
+  data: RoundSetupFormData;
 };
 
 export const useCreateRound = () => {
