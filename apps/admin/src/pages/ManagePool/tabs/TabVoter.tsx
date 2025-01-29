@@ -26,11 +26,16 @@ export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string 
 
   const voterAllowlistArgs = {
     fields: voterAllowlistFields,
-    persistKey: "round-edit-voter-allowlist",
-    dbName: "round-edit-db",
-    storeName: "round-edit-store",
     defaultValues: {
       voterAllowlist: pool?.eligibilityCriteria.data.voters,
+    },
+  };
+
+  const voterStep = {
+    formProps: voterAllowlistArgs,
+    stepProps: {
+      formTitle: "Voters",
+      formDescription: "Set the application and funding period dates for your round.",
     },
   };
 
@@ -41,10 +46,5 @@ export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string 
     return <div>Loading...</div>;
   }
 
-  return (
-    <div className="inline-flex w-full flex-col justify-start gap-6 rounded-3xl bg-[#f7f7f7] p-6">
-      <div className="text-2xl font-medium leading-loose text-black">Voters</div>
-      <Form {...voterAllowlistArgs} />
-    </div>
-  );
+  return <Form step={voterStep} onSubmit={async (values: any) => console.log(values)} />;
 };

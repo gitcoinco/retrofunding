@@ -1,7 +1,7 @@
 "use client";
 
-import { useNavigate } from "react-router";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { Typography } from "@gitcoin/ui";
 import { ProgramList } from "@gitcoin/ui/client";
 import { PoolList } from "@gitcoin/ui/client";
@@ -31,7 +31,7 @@ export const AdminContent = ({
   const updatedPools = pools.map((pool) => ({
     ...pool,
     onClick: () => {
-      navigate(`/${pool.chainId}/${pool.roundId}/manage`);
+      navigate(`/${pool.chainId}/${pool.roundId}/manage-round`);
     },
   }));
 

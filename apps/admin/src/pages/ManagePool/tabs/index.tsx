@@ -1,4 +1,4 @@
-import { VerticalTabs, Icon } from "@gitcoin/ui";
+import { VerticalTabs, Icon, IconType } from "@gitcoin/ui";
 import { RetroRound } from "@/types";
 import { TabApplication } from "./TabApplication";
 import { TabDistribute } from "./TabDistribute";
@@ -22,14 +22,14 @@ export const PoolTabs = ({
         tabs={[
           {
             tabContent: <TabApplication chainId={chainId} poolId={poolId} />,
-            tabIcon: <Icon type="document-duplicate" />,
+            tabIcon: <Icon type={IconType.DOCUMENT_DUPLICATE} />,
             tabKey: "applications",
             tabSubtitle: "Review and approve applications",
             tabTitle: "Applications",
           },
           {
             tabContent: <TabRoundDetail poolData={poolData} />,
-            tabIcon: <Icon type="pencil" />,
+            tabIcon: <Icon type={IconType.PENCIL} />,
             tabKey: "round-details",
             tabSubtitle: "Configure name and description",
             tabTitle: "Round details",
@@ -37,7 +37,7 @@ export const PoolTabs = ({
           // tab round date
           {
             tabContent: <TabRoundDate poolData={poolData} />,
-            tabIcon: <Icon type="calendar" />,
+            tabIcon: <Icon type={IconType.CALENDAR} />,
             tabKey: "round-date",
             tabSubtitle: "Adjust round and application dates",
             tabTitle: "Round dates",
@@ -45,7 +45,7 @@ export const PoolTabs = ({
           // tab voter
           {
             tabContent: <TabVoter chainId={chainId} poolId={poolId} />,
-            tabIcon: <Icon type="users" />,
+            tabIcon: <Icon type={IconType.USERS} />,
             tabKey: "voter",
             tabSubtitle: "Configure voter settings",
             tabTitle: "Voters",
@@ -53,7 +53,7 @@ export const PoolTabs = ({
           ///tab Distribute
           {
             tabContent: <TabDistribute />,
-            tabIcon: <Icon type="cash" />,
+            tabIcon: <Icon type={IconType.CASH} />,
             tabKey: "distribute",
             tabSubtitle: "Fund your round and distribute tokens",
             tabTitle: "Fund and distribute",

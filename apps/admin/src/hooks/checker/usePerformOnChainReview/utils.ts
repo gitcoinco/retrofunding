@@ -6,8 +6,8 @@ import {
   EasyRetroFundingStrategy,
   EasyRetroFundingStrategyAbi,
 } from "@allo-team/allo-v2-sdk";
-import { ProgressStatus, Step } from "@gitcoin/ui";
 import { ApplicationStatus, ApplicationStatusType, PoolCategory } from "@gitcoin/ui/checker";
+import { ProgressStatus, Step } from "@gitcoin/ui/types";
 import { EventEmitter } from "events";
 import { Abi, Address, createPublicClient, encodeFunctionData, http, WalletClient } from "viem";
 

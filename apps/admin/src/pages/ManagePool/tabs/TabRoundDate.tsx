@@ -17,12 +17,9 @@ export const TabRoundDate = ({ poolData }: { poolData: RetroRound }) => {
 
   const roundDatesArgs = {
     fields: roundDatesFields,
-    persistKey: "round-edit-round-dates",
-    dbName: "round-edit-db",
-    storeName: "round-edit-store",
     defaultValues: {
-      timezone: moment.tz.guess(),
       roundDates: {
+        timezone: moment.tz.guess(),
         applications: {
           start: poolData.applicationsStartTime,
           end: poolData.applicationsEndTime,
@@ -35,10 +32,13 @@ export const TabRoundDate = ({ poolData }: { poolData: RetroRound }) => {
     },
   };
 
-  return (
-    <div className="inline-flex w-full flex-col justify-start gap-6 rounded-3xl bg-[#f7f7f7] p-6">
-      <div className="text-2xl font-medium leading-loose text-black">Round Dates</div>
-      <Form {...roundDatesArgs} />
-    </div>
-  );
+  const roundStep = {
+    formProps: roundDatesArgs,
+    stepProps: {
+      formTitle: "Round dates",
+      formDescription: "Set the application and funding period dates for your round.",
+    },
+  };
+
+  return <Form step={roundStep} onSubmit={async (values: any) => console.log(values)} />;
 };

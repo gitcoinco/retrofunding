@@ -1,15 +1,24 @@
 "use client";
 
 import { useMemo } from "react";
+import { useNavigate } from "react-router";
 import { IconType, SideNav, SideNavItem } from "@gitcoin/ui";
 
 export const AdminSideNav = ({
   programItems = [],
   roundItems = [],
 }: {
-  programItems: { name: string; id: string; iconType?: IconType }[];
-  roundItems: { name: string; id: string; iconType?: IconType }[];
+  programItems: { name: string; chainId: number; programId: string; iconType?: IconType }[];
+  roundItems: { name: string; chainId: number; roundId: string; iconType?: IconType }[];
 }) => {
+  const navigate = useNavigate();
+
+  const onClick = (id: string | undefined) => {
+    if (id) {
+      navigate(id);
+    }
+  };
+
   const items = useMemo<SideNavItem[]>(
     () => [
       {
@@ -21,9 +30,9 @@ export const AdminSideNav = ({
         content: "My Programs",
         id: "/my-programs",
         iconType: IconType.BRIEFCASE,
-        items: programItems.map(({ name, id, iconType }) => ({
+        items: programItems.map(({ name, chainId, programId, iconType }) => ({
           content: name,
-          id: `/my-programs/${id}`,
+          id: `/${chainId}/${programId}/manage-program`,
           iconType,
         })),
       },
@@ -31,9 +40,9 @@ export const AdminSideNav = ({
         content: "My Rounds",
         id: "/my-rounds",
         iconType: IconType.COLLECTION,
-        items: roundItems.map(({ name, id, iconType }) => ({
+        items: roundItems.map(({ name, chainId, roundId, iconType }) => ({
           content: name,
-          id: `/my-rounds/${id}`,
+          id: `/${chainId}/${roundId}/manage-round`,
           iconType,
         })),
       },
@@ -41,5 +50,5 @@ export const AdminSideNav = ({
     [programItems, roundItems],
   );
 
-  return <SideNav className="w-72" items={items} onClick={() => {}} />;
+  return <SideNav className="w-72" items={items} onClick={(id) => onClick(id)} />;
 };

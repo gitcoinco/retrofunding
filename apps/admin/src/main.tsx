@@ -18,7 +18,9 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/" element={<App />} />
           <Route path="/create-program" element={<CreateProgram />} />
           <Route path="/create-round" element={<CreateRound />} />
-          <Route path="/:chainId/:poolId/manage" element={<ManagePool />} />
+          {/* TODO: create manage program page */}
+          {/* <Route path="/:chainId/:programId/manage-program" element={<ManageProgram />} /> */}
+          <Route path="/:chainId/:poolId/manage-round" element={<ManagePool />} />
         </Route>
       </Routes>
     </BrowserRouter>

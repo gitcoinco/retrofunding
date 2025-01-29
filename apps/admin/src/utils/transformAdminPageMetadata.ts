@@ -39,14 +39,16 @@ export const getProgramsAndRoundsItems = (programs: ProgramWithRounds[]) => {
     .map((program) =>
       program.retroRounds.map((round: RetroRound) => ({
         name: round.roundMetadata?.name,
-        id: round.id,
+        roundId: round.id,
+        chainId: program.chainId,
         iconType: getChainInfo(program.chainId).icon,
       })),
     )
     .flat();
   const programsItems = programs.map((program) => ({
     name: program.metadata.name,
-    id: program.id,
+    programId: program.id,
+    chainId: program.chainId,
     iconType: getChainInfo(program.chainId).icon,
   }));
   return { roundsItems, programsItems };

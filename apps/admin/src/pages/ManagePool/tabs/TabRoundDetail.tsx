@@ -1,19 +1,11 @@
-import { useEffect, useState } from "react";
 import { getTokenByChainIdAndAddress } from "@gitcoin/gitcoin-chain-data";
-import { Button } from "@gitcoin/ui";
-import { Form, FormProps } from "@gitcoin/ui/client";
-import { deleteDBValues } from "@gitcoin/ui/lib";
+import { Form } from "@gitcoin/ui/client";
 import { FormField } from "@gitcoin/ui/types";
 import { Hex } from "viem";
-import { MessagePage } from "@/components/Message";
+import { config } from "@/config";
 import { RetroRound } from "@/types";
 
-const persistKey = "round-edit-round-details";
-const dbName = "round-edit-db";
-const storeName = "round-edit-store";
-
 export const TabRoundDetail = ({ poolData }: { poolData: RetroRound }) => {
-  const [roundDetailArgs, setRoundDetailArgs] = useState<FormProps | null>(null);
   const roundEditDetailsFields: FormField[] = [
     {
       field: {
@@ -83,37 +75,29 @@ export const TabRoundDetail = ({ poolData }: { poolData: RetroRound }) => {
   const tokenAddress = poolData.matchTokenAddress as Hex;
   const token = getTokenByChainIdAndAddress(poolData.project.chainId, tokenAddress);
 
-  useEffect(() => {
-    if (poolData) {
-      deleteDBValues([persistKey], dbName, storeName);
-      setRoundDetailArgs({
-        fields: roundEditDetailsFields,
-        persistKey: persistKey,
-        dbName: dbName,
-        storeName: storeName,
-        defaultValues: {
-          roundName: poolData.roundMetadata.name,
-          program: {
-            programId: poolData.project.id,
-            chainId: poolData.project.chainId,
-            programName: poolData.project.name,
-          },
-          payoutToken: token.code,
-          description: poolData.roundMetadata.eligibility.description,
-        },
-      } as FormProps);
-    }
-  }, [poolData]);
+  const roundDetailsArgs = {
+    fields: roundEditDetailsFields,
 
-  if (!roundDetailArgs) {
-    return <MessagePage title="Loading Pool Data" message="Loading pool data..." />;
-  }
+    defaultValues: {
+      roundName: poolData.roundMetadata.name,
+      program: {
+        programId: poolData.project.id,
+        chainId: poolData.project.chainId,
+        programName: poolData.project.name,
+      },
+      payoutToken: token.code, // TODO: use token name
+      coverImage: `${config.pinataBaseUrl}/${poolData.roundMetadata.retroFundingConfig?.coverImage}`,
+      description: poolData.roundMetadata.eligibility.description,
+    },
+  };
+  const roundStep = {
+    formProps: roundDetailsArgs,
+    stepProps: {
+      formTitle: "Round details",
+      formDescription:
+        "Fill out the details about your round. You can change most of these at any time.",
+    },
+  };
   // store round details in db
-  return (
-    <div className="flex flex-col gap-6 bg-[#f7f7f7] p-6">
-      <div className="text-2xl font-medium leading-loose text-black">Round details</div>
-      <Form {...roundDetailArgs} />
-      <Button>Save</Button>
-    </div>
-  );
+  return <Form step={roundStep} onSubmit={async (values: any) => console.log(values)} />;
 };

@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
-import { ProgressModal } from "@gitcoin/ui/client";
-import { GenericProgressForm } from "@gitcoin/ui/client";
+import { ProgressForm, ProgressModal } from "@gitcoin/ui/client";
 import { useToast } from "@gitcoin/ui/hooks/useToast";
 import { deleteDBValues } from "@gitcoin/ui/lib";
 import { Address } from "viem";
@@ -48,7 +47,7 @@ export const ProgramSetupForm = (): React.ReactNode => {
 
   return (
     <div>
-      <GenericProgressForm
+      <ProgressForm
         name={PROGRESS_FORM_NAME}
         onSubmit={handleSubmit}
         dbName={DB_NAME}
