@@ -5,7 +5,8 @@ import { useToast } from "@gitcoin/ui/hooks/useToast";
 import { deleteDBValues } from "@gitcoin/ui/lib";
 import { FormWithPersistStep as FormStep } from "@gitcoin/ui/types";
 import { useAccount } from "wagmi";
-import { useCreateRound } from "@/hooks/contracts/useCreateRound/useCreateRound";
+import { MessagePage } from "@/components/Message";
+import { useCreateRound } from "@/hooks";
 import { RoundSetupFormData } from "@/types";
 import { getRoundSetupSteps } from "./steps";
 
@@ -38,8 +39,7 @@ export const RoundSetupForm = (): React.ReactNode => {
   }, []);
 
   if (!roundSteps || !roundSetupKeys || !programId || !chainId || !address) {
-    // TODO: show loading state
-    return <div></div>;
+    return <MessagePage title="Loading..." message="Loading..." />;
   }
 
   const handleSubmit = async (values: RoundSetupFormData) => {

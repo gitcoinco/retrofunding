@@ -85,7 +85,6 @@ export const TabRoundDetail = ({
     },
   ];
 
-  // TODO: convert to file and pass as default
   const tokenAddress = poolData.matchTokenAddress as Hex;
   const token = getTokenByChainIdAndAddress(poolData.project.chainId, tokenAddress);
 

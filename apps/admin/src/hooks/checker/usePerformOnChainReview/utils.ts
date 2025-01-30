@@ -147,7 +147,7 @@ export const waitUntilIndexerSynced = async ({
   chainId: number;
   blockNumber: bigint;
 }) => {
-  const endpoint = "https://grants-stack-indexer-v2.gitcoin.co/graphql"; // todo: add endpoint
+  const endpoint = `${import.meta.env.VITE_INDEXER_V2_API_URL}/graphql`;
   const pollIntervalInMs = 1000;
 
   async function pollIndexer() {
