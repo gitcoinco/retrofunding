@@ -1,9 +1,20 @@
-import { Form } from "@gitcoin/ui/client";
+import { Form, ProgressModal } from "@gitcoin/ui/client";
+import { toast } from "@gitcoin/ui/hooks/useToast";
 import { FormField } from "@gitcoin/ui/types";
 import moment from "moment-timezone";
-import { RetroRound } from "@/types";
+import { useUpdateTimestamps } from "@/hooks";
+import { RetroRound, RoundDates } from "@/types";
 
-export const TabRoundDate = ({ poolData }: { poolData: RetroRound }) => {
+export const TabRoundDate = ({
+  poolData,
+  onUpdate,
+}: {
+  poolData: RetroRound;
+  onUpdate: () => void;
+}) => {
+  const { steps, updateTimestampsMutation } = useUpdateTimestamps();
+  const { mutateAsync: updateTimestamps, isPending: isUpdating } = updateTimestampsMutation;
+
   const roundDatesFields: FormField[] = [
     {
       field: {
@@ -40,5 +51,30 @@ export const TabRoundDate = ({ poolData }: { poolData: RetroRound }) => {
     },
   };
 
-  return <Form step={roundStep} onSubmit={async (values: any) => console.log(values)} />;
+  return (
+    <>
+      <Form
+        step={roundStep}
+        onSubmit={async (values: any) => {
+          const roundDates: RoundDates = values.roundDates;
+          await updateTimestamps({
+            data: {
+              ...roundDates,
+            },
+            poolId: poolData.id,
+            chainId: poolData.chainId,
+            strategyAddress: poolData.strategyAddress,
+          });
+
+          toast({
+            status: "success",
+            description: "Round dates updated successfully",
+          });
+
+          onUpdate();
+        }}
+      />
+      <ProgressModal isOpen={isUpdating} steps={steps} />
+    </>
+  );
 };

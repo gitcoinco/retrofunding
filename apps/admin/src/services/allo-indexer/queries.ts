@@ -78,6 +78,8 @@ export const getRoundByChainIdAndPoolIdQuery = gql`
   query ($chainId: Int!, $poolId: String!) {
     round(id: $poolId, chainId: $chainId) {
       id
+      chainId
+      strategyAddress
       roundMetadata
       applicationMetadata
       matchTokenAddress

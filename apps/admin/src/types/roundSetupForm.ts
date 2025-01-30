@@ -4,6 +4,20 @@ export type Program = {
   programName: string;
 };
 
+export interface RoundDates {
+  noEndDate: boolean;
+  timezone: string;
+  applications: {
+    start: string;
+    end: string;
+  };
+  round: {
+    start: string;
+    noEndDate: boolean;
+    end: string;
+  };
+}
+
 export interface RoundSetupFormData {
   program: {
     chainId: number;
@@ -14,19 +28,7 @@ export interface RoundSetupFormData {
   payoutToken: string;
   coverImage: File;
   timezone: string;
-  roundDates: {
-    noEndDate: boolean;
-    timezone: string;
-    applications: {
-      start: string;
-      end: string;
-    };
-    round: {
-      start: string;
-      noEndDate: boolean;
-      end: string;
-    };
-  };
+  roundDates: RoundDates;
   description: string;
   requirements: string[];
   impactMetrics: string[];

@@ -38,7 +38,7 @@ export const PoolTabs = ({
           },
           // tab round date
           {
-            tabContent: <TabRoundDate poolData={poolData} />,
+            tabContent: <TabRoundDate poolData={poolData} onUpdate={onUpdate} />,
             tabIcon: <Icon type={IconType.CALENDAR} />,
             tabKey: "round-date",
             tabSubtitle: "Adjust round and application dates",

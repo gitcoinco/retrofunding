@@ -22,6 +22,8 @@ export type ProgramWithRounds = {
 
 export type RetroRound = {
   id: string;
+  chainId: number;
+  strategyAddress: string;
   roundMetadata: RoundMetadata;
   applicationMetadata: ApplicationMetadata;
   matchTokenAddress: string;
