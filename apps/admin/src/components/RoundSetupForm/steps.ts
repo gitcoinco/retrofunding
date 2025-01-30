@@ -1,4 +1,4 @@
-import { FormField, FormStep } from "@gitcoin/ui/types";
+import { FormField, FormWithPersistStep as FormStep } from "@gitcoin/ui/types";
 import moment from "moment-timezone";
 import { getProgramByIdAndChainId } from "@/services/allo-indexer/dataLayer";
 import { getMetrics } from "@/services/backend/dataLayer";

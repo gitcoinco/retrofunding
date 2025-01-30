@@ -5,6 +5,7 @@ import { MainLayout } from "@/layouts/MainLayout";
 import App from "./App";
 import { CreateProgram } from "./pages/CreateProgram";
 import { CreateRound } from "./pages/CreateRound";
+import { ManagePool } from "./pages/ManagePool";
 import "./index.css";
 
 // TODO: Add route protection when the user is not connected
@@ -17,6 +18,9 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/" element={<App />} />
           <Route path="/create-program" element={<CreateProgram />} />
           <Route path="/create-round" element={<CreateRound />} />
+          {/* TODO: create manage program page */}
+          {/* <Route path="/:chainId/:programId/manage-program" element={<ManageProgram />} /> */}
+          <Route path="/:chainId/:poolId/manage-round" element={<ManagePool />} />
         </Route>
       </Routes>
     </BrowserRouter>

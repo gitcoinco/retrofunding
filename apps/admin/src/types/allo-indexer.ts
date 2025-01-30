@@ -1,3 +1,5 @@
+import { RoundMetadata } from "./roundMetadata";
+
 export type ProgramWithRounds = {
   id: string;
   chainId: number;
@@ -20,19 +22,21 @@ export type ProgramWithRounds = {
 
 export type RetroRound = {
   id: string;
-  roundMetadata: {
-    name: string;
-    retroFundingConfig: {
-      coverImage: string;
-    };
-  };
+  roundMetadata: RoundMetadata;
+  matchTokenAddress: string;
   roles: {
     address: string;
     role: string;
   }[];
-  applicationsEndTime: number;
-  applicationsStartTime: number;
-  donationsEndTime: number;
-  donationsStartTime: number;
+  applicationsEndTime: string;
+  applicationsStartTime: string;
+  donationsEndTime: string;
+  donationsStartTime: string;
   createdAtBlock: number;
+  strategyName: string;
+  project: {
+    id: string;
+    name: string;
+    chainId: number;
+  };
 };

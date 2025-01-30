@@ -27,9 +27,18 @@ export const AdminContent = ({
     setIsOpen(true);
   };
 
+  // add onClick to every pool pushing to /chainId/poolId/manage
+  const updatedPools = pools.map((pool) => ({
+    ...pool,
+    onClick: () => {
+      navigate(`/${pool.chainId}/${pool.roundId}/manage-round`);
+    },
+  }));
+
   const handleClickProgram = (program: ProgramCardProps) => {
     navigate(`/create-round?programId=${program.id}&chainId=${program.chainId}`);
   };
+
   const programsLength = programs.length;
   return (
     <div className={cn("flex w-full max-w-[960px] flex-col gap-8", className)}>
@@ -56,7 +65,7 @@ export const AdminContent = ({
         </div>
       )}
       {programsLength > 0 && (
-        <PoolList pools={pools} noPoolsPlaceholder="No rounds found" title="Rounds" />
+        <PoolList pools={updatedPools} noPoolsPlaceholder="No rounds found" title="Rounds" />
       )}
       {programsLength > 0 && (
         <ProgramList

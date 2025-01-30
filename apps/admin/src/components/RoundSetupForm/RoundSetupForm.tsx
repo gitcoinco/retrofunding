@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import { GenericProgressForm, ProgressModal } from "@gitcoin/ui/client";
+import { ProgressForm, ProgressModal } from "@gitcoin/ui/client";
 import { useToast } from "@gitcoin/ui/hooks/useToast";
 import { deleteDBValues } from "@gitcoin/ui/lib";
-import { FormStep } from "@gitcoin/ui/types";
+import { FormWithPersistStep as FormStep } from "@gitcoin/ui/types";
 import { useAccount } from "wagmi";
 import { useCreateRound } from "@/hooks";
 import { RoundSetupFormData } from "@/types";
@@ -67,7 +67,7 @@ export const RoundSetupForm = (): React.ReactNode => {
 
   return (
     <>
-      <GenericProgressForm
+      <ProgressForm
         name={FORM_NAME}
         onSubmit={handleSubmit}
         dbName={DB_NAME}
