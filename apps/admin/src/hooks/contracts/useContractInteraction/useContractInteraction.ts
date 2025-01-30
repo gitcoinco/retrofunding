@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { TransactionData } from "@allo-team/allo-v2-sdk";
 import { ProgressStatus, Step } from "@gitcoin/ui/types";
 import { useMutation } from "@tanstack/react-query";
-import { createPublicClient, Hex, http } from "viem";
+import { createPublicClient, Hex, http, TransactionReceipt } from "viem";
 import { useWalletClient } from "wagmi";
 import { uploadData } from "@/services/ipfs/upload";
 import { targetNetworks } from "@/services/web3/chains";
@@ -53,6 +53,7 @@ export const useContractInteraction = () => {
       metadata,
       transactionData,
       getProgressSteps,
+      postIndexerHook,
     }: {
       chainId: number;
       metadata?: any;
@@ -68,6 +69,7 @@ export const useContractInteraction = () => {
         indexingStatus: ProgressStatus;
         finishingStatus: ProgressStatus;
       }) => Step[];
+      postIndexerHook?: (receipt: TransactionReceipt) => Promise<void>;
     }) => {
       if (!walletClient) {
         throw new Error("WalletClient is undefined");
@@ -122,6 +124,7 @@ export const useContractInteraction = () => {
       }
 
       const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
+      console.log("receipt", receipt);
       if (!receipt.status) {
         setContractUpdatingStatus(ProgressStatus.IS_ERROR);
         throw new Error("Transaction failed");
@@ -138,6 +141,10 @@ export const useContractInteraction = () => {
       } catch (e) {
         setIndexingStatus(ProgressStatus.IS_ERROR);
         throw new Error("Failed to sync with indexer");
+      }
+
+      if (postIndexerHook) {
+        await postIndexerHook(receipt);
       }
 
       setIndexingStatus(ProgressStatus.IS_SUCCESS);

@@ -27,7 +27,7 @@ export const ManagePool = () => {
   } = useGetRoundByChainIdAndPoolId(chainIdNumber, poolId);
 
   if (isLoading) {
-    return <div>Loading...</div>; // Show loading state while data is being fetched
+    return <MessagePage title="Loading..." message="Loading..." />;
   }
 
   if (isError || !poolData || !poolData.project || !poolData.roundMetadata) {
