@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import moment from "moment";
 import { Hex, TransactionReceipt, zeroAddress, decodeEventLog } from "viem";
 import { getCreateRoundProgressSteps } from "@/hooks";
+import { createPool } from "@/services/backend/api";
 import { uploadData } from "@/services/ipfs/upload";
 import { targetNetworks } from "@/services/web3/chains";
 import { RoundSetupFormData } from "@/types";
@@ -74,7 +75,6 @@ export const useCreateRound = () => {
 
           const initData = await retroFunding.getInitializeData(initializeData);
 
-          ///
           if (!metadataCid) throw new Error("Metadata CID is required");
 
           return allo.createPool({
@@ -92,21 +92,33 @@ export const useCreateRound = () => {
         },
         getProgressSteps: getCreateRoundProgressSteps,
         postIndexerHook: async (receipt: TransactionReceipt) => {
-          let poolId: bigint | undefined = undefined;
+          let poolId: string | undefined = undefined;
           receipt.logs.forEach((log) => {
-            const event = decodeEventLog({
-              abi: AlloAbi,
-              data: log.data,
-              topics: log.topics,
-            });
-            if (event.eventName === "PoolCreated") {
-              poolId = event.args.poolId;
+            try {
+              const event = decodeEventLog({
+                abi: AlloAbi,
+                data: log.data,
+                topics: log.topics,
+              });
+              if (event.eventName === "PoolCreated") {
+                poolId = event.args.poolId.toString();
+              }
+            } catch (e) {
+              console.log("Skipping event log", e);
             }
           });
 
           if (!poolId) throw new Error("Pool ID is undefined");
 
-          // your code here
+          await createPool({
+            alloPoolId: poolId,
+            chainId: data.program.chainId,
+            eligibilityType: "linear",
+            eligibilityData: {
+              voters: data.voterAllowlist as Hex[],
+            },
+            metricIdentifiers: data.impactMetrics,
+          });
         },
       });
     },

@@ -1,5 +1,6 @@
 import { Form } from "@gitcoin/ui/client";
 import { FormField } from "@gitcoin/ui/types";
+import { MessagePage } from "@/components/Message";
 import { useGetPool } from "@/hooks/backend/useGetPool";
 
 export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string }) => {
@@ -43,7 +44,7 @@ export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string 
   console.log(pool);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <MessagePage title="Loading..." message="Loading..." />;
   }
 
   return <Form step={voterStep} onSubmit={async (values: any) => console.log(values)} />;

@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { useAccount } from "wagmi";
+import { MessagePage } from "@/components/Message";
 import { useGetUserProgramsAndRounds } from "@/hooks/allo-indexer/getUserProgramsAndRounds";
 import {
   transformProgramData,
@@ -25,7 +26,7 @@ export const Admin = () => {
   }, [programsAndRounds]);
 
   // TODO add loading state to the Admin Content
-  if (isLoadingProgramsAndRounds) return <div>Loading...</div>;
+  if (isLoadingProgramsAndRounds) return <MessagePage title="Loading..." message="Loading..." />;
 
   return (
     <div className="flex items-start justify-center gap-6 px-20 pt-[52px]">
