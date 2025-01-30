@@ -79,6 +79,7 @@ export const getRoundByChainIdAndPoolIdQuery = gql`
     round(id: $poolId, chainId: $chainId) {
       id
       roundMetadata
+      applicationMetadata
       matchTokenAddress
       applicationsEndTime
       applicationsStartTime

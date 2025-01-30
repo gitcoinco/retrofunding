@@ -12,6 +12,20 @@ export interface RetroFundingConfig {
   impactMetrics: string[];
 }
 
+export interface ApplicationMetadata {
+  version: string;
+  lastUpdatedOn: number;
+  applicationSchema: {
+    questions: RoundApplicationQuestion[];
+    requirements: {
+      github: {
+        required: boolean;
+        verification: boolean;
+      };
+    };
+  };
+}
+
 export interface RoundMetadata {
   name: string;
   roundType: string;

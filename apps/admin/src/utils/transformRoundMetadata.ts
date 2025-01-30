@@ -1,4 +1,4 @@
-import { RoundSetupFormData } from "@/types";
+import { ApplicationMetadata, RoundSetupFormData } from "@/types";
 import { RoundApplicationQuestion, RoundMetadata } from "@/types";
 
 export const mapFormQuestionToApplicationQuestion = (
@@ -52,25 +52,9 @@ export const mapRequirements = (requirements: {
   };
 };
 
-interface MappedRoundMetadata {
+export interface MappedRoundMetadata {
   round: RoundMetadata;
-  application: {
-    version: string;
-    lastUpdatedOn: number;
-    applicationSchema: {
-      questions: RoundApplicationQuestion[];
-      requirements: {
-        github: {
-          required: boolean;
-          verification: boolean;
-        };
-        twitter: {
-          required: boolean;
-          verification: boolean;
-        };
-      };
-    };
-  };
+  application: ApplicationMetadata;
 }
 
 export const mapFormDataToRoundMetadata = (
