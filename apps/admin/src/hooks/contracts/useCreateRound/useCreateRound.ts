@@ -7,7 +7,6 @@ import { Hex, TransactionReceipt, zeroAddress, decodeEventLog } from "viem";
 import { getCreateRoundProgressSteps } from "@/hooks";
 import { createPool } from "@/services/backend/api";
 import { uploadData } from "@/services/ipfs/upload";
-import { targetNetworks } from "@/services/web3/chains";
 import { RoundSetupFormData } from "@/types";
 import { mapFormDataToRoundMetadata } from "@/utils/transformRoundMetadata";
 import { UINT64_MAX } from "@/utils/utils";

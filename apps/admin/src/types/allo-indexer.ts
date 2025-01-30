@@ -1,4 +1,4 @@
-import { RoundMetadata } from "./roundMetadata";
+import { ApplicationMetadata, RoundMetadata } from "./roundMetadata";
 
 export type ProgramWithRounds = {
   id: string;
@@ -22,7 +22,10 @@ export type ProgramWithRounds = {
 
 export type RetroRound = {
   id: string;
+  chainId: number;
+  strategyAddress: string;
   roundMetadata: RoundMetadata;
+  applicationMetadata: ApplicationMetadata;
   matchTokenAddress: string;
   roles: {
     address: string;

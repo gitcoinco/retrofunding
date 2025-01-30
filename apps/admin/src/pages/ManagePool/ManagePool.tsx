@@ -7,6 +7,13 @@ import { MessagePage } from "@/components/Message";
 import { useGetRoundByChainIdAndPoolId } from "@/hooks/allo-indexer/getRoundByChainIdAndPoolId";
 import { PoolTabs } from "./tabs";
 
+interface PoolTabsProps {
+  chainId: number;
+  poolId: string;
+  poolData: any; // replace 'any' with your actual type
+  onUpdate: () => void;
+}
+
 export const ManagePool = () => {
   const { chainId, poolId } = useParams();
 
@@ -24,6 +31,7 @@ export const ManagePool = () => {
     data: poolData,
     isLoading,
     isError,
+    refetch,
   } = useGetRoundByChainIdAndPoolId(chainIdNumber, poolId);
 
   if (isLoading) {
@@ -54,7 +62,12 @@ export const ManagePool = () => {
         donationsEndTime={poolData.donationsEndTime}
       />
 
-      <PoolTabs chainId={chainIdNumber} poolId={poolId} poolData={poolData} />
+      <PoolTabs
+        chainId={chainIdNumber}
+        poolId={poolId}
+        poolData={poolData}
+        onUpdate={() => refetch()}
+      />
     </div>
   );
 };

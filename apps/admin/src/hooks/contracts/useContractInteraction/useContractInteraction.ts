@@ -124,7 +124,6 @@ export const useContractInteraction = () => {
       }
 
       const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
-      console.log("receipt", receipt);
       if (!receipt.status) {
         setContractUpdatingStatus(ProgressStatus.IS_ERROR);
         throw new Error("Transaction failed");

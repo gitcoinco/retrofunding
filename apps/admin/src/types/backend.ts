@@ -27,7 +27,7 @@ export type SyncPoolBody = AlloPoolIdChainId;
 
 export interface UpdatePoolEligibilityBody extends AlloPoolIdChainId {
   eligibilityType: string;
-  eligibilityData: LinearEligibilityData;
+  data: LinearEligibilityData;
 }
 
 export type CalculatePoolBody = AlloPoolIdChainId;

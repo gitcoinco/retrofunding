@@ -1,11 +1,25 @@
+import React from "react";
 import { getTokenByChainIdAndAddress } from "@gitcoin/gitcoin-chain-data";
-import { Form } from "@gitcoin/ui/client";
+import { Form, ProgressModal } from "@gitcoin/ui/client";
+import { toast } from "@gitcoin/ui/hooks/useToast";
 import { FormField } from "@gitcoin/ui/types";
 import { Hex } from "viem";
 import { config } from "@/config";
+import { useUpdateRoundMetadata } from "@/hooks/contracts/useUpdateRoundMetadata/useUpdateRoundMetadata";
 import { RetroRound } from "@/types";
+import { MappedRoundMetadata } from "@/utils/transformRoundMetadata";
 
-export const TabRoundDetail = ({ poolData }: { poolData: RetroRound }) => {
+export const TabRoundDetail = ({
+  poolData,
+  poolId,
+  onUpdate,
+}: {
+  poolData: RetroRound;
+  poolId: string;
+  onUpdate: () => void;
+}) => {
+  const { steps, updateRoundMetadataMutation } = useUpdateRoundMetadata();
+  const { mutateAsync: updateRoundMetadata, isPending: isUpdating } = updateRoundMetadataMutation;
   const roundEditDetailsFields: FormField[] = [
     {
       field: {
@@ -99,5 +113,42 @@ export const TabRoundDetail = ({ poolData }: { poolData: RetroRound }) => {
     },
   };
   // store round details in db
-  return <Form step={roundStep} onSubmit={async (values: any) => console.log(values)} />;
+  return (
+    <>
+      <Form
+        step={roundStep}
+        onSubmit={async (values: any) => {
+          const updatedMetadata: MappedRoundMetadata = {
+            round: {
+              ...poolData.roundMetadata,
+              name: values.roundName,
+              eligibility: {
+                ...poolData.roundMetadata.eligibility,
+                description: values.description,
+              },
+              retroFundingConfig: {
+                ...poolData.roundMetadata.retroFundingConfig,
+                coverImage: values.coverImage,
+              },
+            },
+            application: {
+              ...poolData.applicationMetadata,
+            },
+          };
+          await updateRoundMetadata({
+            data: updatedMetadata,
+            poolId: BigInt(poolId),
+          });
+
+          toast({
+            status: "success",
+            description: "Round updated successfully",
+          });
+
+          onUpdate();
+        }}
+      />
+      <ProgressModal isOpen={isUpdating} steps={steps} />
+    </>
+  );
 };

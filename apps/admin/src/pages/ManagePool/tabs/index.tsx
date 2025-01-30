@@ -10,10 +10,12 @@ export const PoolTabs = ({
   chainId,
   poolId,
   poolData,
+  onUpdate,
 }: {
   chainId: number;
   poolId: string;
   poolData: RetroRound;
+  onUpdate: () => void;
 }) => {
   return (
     <div className="px-20">
@@ -28,7 +30,7 @@ export const PoolTabs = ({
             tabTitle: "Applications",
           },
           {
-            tabContent: <TabRoundDetail poolData={poolData} />,
+            tabContent: <TabRoundDetail poolData={poolData} poolId={poolId} onUpdate={onUpdate} />,
             tabIcon: <Icon type={IconType.PENCIL} />,
             tabKey: "round-details",
             tabSubtitle: "Configure name and description",
@@ -36,7 +38,7 @@ export const PoolTabs = ({
           },
           // tab round date
           {
-            tabContent: <TabRoundDate poolData={poolData} />,
+            tabContent: <TabRoundDate poolData={poolData} onUpdate={onUpdate} />,
             tabIcon: <Icon type={IconType.CALENDAR} />,
             tabKey: "round-date",
             tabSubtitle: "Adjust round and application dates",

@@ -5,7 +5,7 @@ import { useToast } from "@gitcoin/ui/hooks/useToast";
 import { deleteDBValues } from "@gitcoin/ui/lib";
 import { FormWithPersistStep as FormStep } from "@gitcoin/ui/types";
 import { useAccount } from "wagmi";
-import { useCreateRound } from "@/hooks";
+import { useCreateRound } from "@/hooks/contracts/useCreateRound/useCreateRound";
 import { RoundSetupFormData } from "@/types";
 import { getRoundSetupSteps } from "./steps";
 
