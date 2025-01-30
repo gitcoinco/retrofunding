@@ -3,15 +3,7 @@ import { InitializeData } from "@allo-team/allo-v2-sdk/dist/strategies/EasyRetro
 import { getChainById } from "@gitcoin/gitcoin-chain-data";
 import { useMutation } from "@tanstack/react-query";
 import moment from "moment";
-import {
-  createPublicClient,
-  Hex,
-  http,
-  TransactionReceipt,
-  zeroAddress,
-  getContract,
-  decodeEventLog,
-} from "viem";
+import { Hex, TransactionReceipt, zeroAddress, decodeEventLog } from "viem";
 import { getCreateRoundProgressSteps } from "@/hooks";
 import { uploadData } from "@/services/ipfs/upload";
 import { targetNetworks } from "@/services/web3/chains";
