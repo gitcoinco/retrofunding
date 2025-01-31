@@ -1,3 +1,5 @@
+import { Hex } from "viem";
+
 export type Program = {
   chainId: number;
   programId: string;
@@ -25,7 +27,7 @@ export interface RoundSetupFormData {
     programName: string;
   };
   roundName: string;
-  payoutToken: string;
+  payoutToken: Hex;
   coverImage: File;
   timezone: string;
   roundDates: RoundDates;

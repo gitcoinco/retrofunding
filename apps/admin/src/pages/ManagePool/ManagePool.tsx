@@ -39,7 +39,6 @@ export const ManagePool = () => {
   }
 
   if (isError || !poolData || !poolData.project || !poolData.roundMetadata) {
-    // TODO: redirect to 404 page
     return (
       <MessagePage
         title="Pool Missing Data"

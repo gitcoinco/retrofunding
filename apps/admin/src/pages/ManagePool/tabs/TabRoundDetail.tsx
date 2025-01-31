@@ -52,15 +52,6 @@ export const TabRoundDetail = ({
       },
       disabled: true,
       component: "Input",
-      // options: [
-      // {
-      //   // TODO: populate from chain-data
-      //   items: [{ label: "Ethereum", value: "ethereum" }],
-      // },
-      // ],
-      // placeholder: "Select",
-      // className: "bg-white border-grey-300",
-      // size: "md",
     },
     {
       field: {
@@ -85,7 +76,6 @@ export const TabRoundDetail = ({
     },
   ];
 
-  // TODO: convert to file and pass as default
   const tokenAddress = poolData.matchTokenAddress as Hex;
   const token = getTokenByChainIdAndAddress(poolData.project.chainId, tokenAddress);
 
@@ -99,7 +89,7 @@ export const TabRoundDetail = ({
         chainId: poolData.project.chainId,
         programName: poolData.project.name,
       },
-      payoutToken: token.code, // TODO: use token name
+      payoutToken: `${token.code} (${token.address})`,
       coverImage: `${config.pinataBaseUrl}/${poolData.roundMetadata.retroFundingConfig?.coverImage}`,
       description: poolData.roundMetadata.eligibility.description,
     },

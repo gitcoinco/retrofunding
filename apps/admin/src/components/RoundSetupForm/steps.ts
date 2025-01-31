@@ -1,3 +1,4 @@
+import { getTokensByChainId } from "@gitcoin/gitcoin-chain-data";
 import { FormField, FormWithPersistStep as FormStep } from "@gitcoin/ui/types";
 import moment from "moment-timezone";
 import { getProgramByIdAndChainId } from "@/services/allo-indexer/dataLayer";
@@ -11,6 +12,8 @@ export const getRoundSetupSteps = async ({
   chainId: number;
 }): Promise<FormStep[]> => {
   const program = await getProgramByIdAndChainId(programId, chainId);
+  const tokens = getTokensByChainId(chainId);
+
   const roundDetailsFields: FormField[] = [
     {
       field: {
@@ -44,8 +47,11 @@ export const getRoundSetupSteps = async ({
       component: "Select",
       options: [
         {
-          // TODO: populate from chain-data
-          items: [{ label: "Ethereum", value: "ethereum" }],
+          items: tokens.map((token) => ({
+            label: token.code,
+            value: token.address,
+            icon: token.icon,
+          })),
         },
       ],
       placeholder: "Select",
