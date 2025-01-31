@@ -50,7 +50,7 @@ export const getRoundSetupSteps = async ({
           items: tokens.map((token) => ({
             label: token.code,
             value: token.address,
-            icon: token.icon,
+            iconSvg: token.icon,
           })),
         },
       ],
