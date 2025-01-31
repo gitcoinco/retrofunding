@@ -80,7 +80,7 @@ export const useCreateRound = () => {
             profileId: data.program.programId as Hex,
             strategy: strategyAddress,
             initStrategyData: initData,
-            token: zeroAddress, // TODO: payout token should be an address and no name
+            token: data.payoutToken, // TODO: payout token should be an address and no name
             amount: BigInt(0),
             metadata: {
               protocol: 1n,
