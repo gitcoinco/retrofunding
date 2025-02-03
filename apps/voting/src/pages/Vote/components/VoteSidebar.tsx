@@ -5,16 +5,18 @@ import { RetroVote } from "@/types";
 import { usePredictionMetricSidebar } from "@/hooks";
 
 export const VoteSidebar = ({
+  isLoading,
   poolId,
   chainId,
   ballot,
 }: {
+  isLoading: boolean;
   poolId?: string;
   chainId?: number;
   ballot?: RetroVote[];
 }) => {
 
-  const { sortedProjects, chartData, isAscending, toggleSort, isLoading } = usePredictionMetricSidebar({
+  const { sortedProjects, chartData, isAscending, toggleSort, isLoading: predictionIsLoading } = usePredictionMetricSidebar({
     poolId,
     chainId,
     ballot,
@@ -22,7 +24,7 @@ export const VoteSidebar = ({
 
   return (
     <AllocationSidebar
-      isLoading={isLoading}
+      isLoading={isLoading || predictionIsLoading}
       title="Allocation preview"
       description="This is a preview of the allocation"
       projects={sortedProjects}

@@ -12,6 +12,6 @@ export const useGetMetrics = ({
   return useQuery({
     enabled,
     queryKey: ["metrics", identifiers],
-    queryFn: () => getMetrics({ identifiers }),
+    queryFn: () => getMetrics(identifiers),
   });
 };

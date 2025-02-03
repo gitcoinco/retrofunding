@@ -2,7 +2,7 @@ import { PoolDistribution, Metric, Pool } from "@/types";
 import { getMetricsQuery, getFilteredMetricsQuery, getPoolDistributionQuery, getPoolQuery } from "./queries";
 import { executeQuery } from "./retrofundingClient";
 
-export const getMetrics = async ({ identifiers }: { identifiers?: string[] }): Promise<Metric[]> => {
+export const getMetrics = async (identifiers?: string[]): Promise<Metric[]> => {
   try {
     if (!identifiers || identifiers.length === 0) {
       const response = await executeQuery(getMetricsQuery, {});

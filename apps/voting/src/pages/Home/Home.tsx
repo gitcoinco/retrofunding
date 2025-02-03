@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router";
+import { Button } from "@gitcoin/ui";
 import { LandingPage } from "@gitcoin/ui/retrofunding";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import { useGetRoundWithApplications } from "@/hooks";
 
 export const Home = () => {
-  const [roundId, setRoundId] = useState<string>("");
-  const [chainId, setChainId] = useState<string>("");
   const navigate = useNavigate();
   const { roundId: roundIdParam, chainId: chainIdParam } = useParams();
   const { isConnected } = useAccount();
@@ -20,52 +19,39 @@ export const Home = () => {
     }
   }, [roundIdParam, chainIdParam, navigate, isConnected]);
 
-  const { data: round, isLoading } = useGetRoundWithApplications({
+  const { data: round } = useGetRoundWithApplications({
     roundId: roundIdParam as string,
     chainId: parseInt(chainIdParam as string),
   });
 
-  const { name, description } = useMemo<{ name?: string; description?: string }>(() => {
-    return {
-      name: round?.roundMetadata?.name,
-      description: round?.roundMetadata?.eligibility?.description,
-    };
-  }, [round]);
+  const { name, description } = round ?? {};
 
-  const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault();
-      if (roundId && chainId) {
-        navigate(`/${chainId}/${roundId}`, { replace: true });
-      }
-    },
-    [roundId, chainId, navigate],
-  );
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    const chainId = formData.get("chainId") as string;
+    const poolId = formData.get("poolId") as string;
+    if (poolId && chainId) {
+      navigate(`/${chainId}/${poolId}`, { replace: true });
+    }
+  };
+
+  const isShowForm = !roundIdParam || !chainIdParam;
 
   const actionButton = useMemo(
     () =>
-      roundIdParam && chainIdParam ? (
-        <ConnectButton />
-      ) : (
+      isShowForm ? (
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={chainId}
-            onChange={(e) => setChainId(e.target.value)}
-            placeholder="Enter Chain ID"
-            required
-          />
-          <input
-            type="text"
-            value={roundId}
-            onChange={(e) => setRoundId(e.target.value)}
-            placeholder="Enter Round ID"
-            required
-          />
-          <button type="submit">Go to Round</button>
+          <div className="flex items-center gap-2">
+            <input type="text" name="chainId" placeholder="Enter Chain ID" required />
+            <input type="text" name="poolId" placeholder="Enter Round ID" required />
+            <Button type="submit" value="Go to Round" />
+          </div>
         </form>
+      ) : (
+        <ConnectButton />
       ),
-    [roundId, chainId, roundIdParam, chainIdParam, handleSubmit],
+    [roundIdParam, chainIdParam, handleSubmit],
   );
 
   return (

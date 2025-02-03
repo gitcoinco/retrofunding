@@ -38,9 +38,9 @@ export const usePredictionMetricSidebar = ({
     if (!applications || !prediction) return [];
     return prediction.map(({ alloApplicationId, distributionPercentage }) => ({
       id: alloApplicationId,
-      name: applications[alloApplicationId].metadata.application.project.title,
+      name: applications[alloApplicationId].title,
       amount: distributionPercentage / 100,
-      image: applications[alloApplicationId].metadata.application.project.logoImg,
+      image: applications[alloApplicationId].logoImg,
     }));
   }, [applications, prediction]);
 

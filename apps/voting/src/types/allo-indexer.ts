@@ -9,7 +9,7 @@ export type ProgramWithRounds = {
     role: string;
   }[];
   createdAtBlock: number;
-  retroRounds: RetroRound[];
+  retroRounds: APIRetroRound[];
   qfRounds: {
     id: string;
   }[];
@@ -18,14 +18,14 @@ export type ProgramWithRounds = {
   }[];
 };
 
-type TImpactMetricId = string;
-type TPayoutToken = string;
-type TStrategyName = string;
-type TChainId = number;
+export type ImpactMetricId = string;
+export type PayoutToken = string;
+export type StrategyName = string;
+export type ChainId = number;
 
-export interface RetroRound {
+export interface APIRetroRound {
   id: string;
-  strategyName: TStrategyName;
+  strategyName: StrategyName;
   applicationsEndTime: Date;
   applicationsStartTime: Date;
   donationsEndTime: Date;
@@ -42,11 +42,11 @@ export interface RetroRound {
     };
     retroFundingConfig: {
       coverImage: string;
-      impactMetrics: TImpactMetricId[];
-      payoutToken: TPayoutToken;
+      impactMetrics: ImpactMetricId[];
+      payoutToken: PayoutToken;
       roundName: string;
       program: {
-        chainId: TChainId;
+        chainId: ChainId;
         programId: string;
         programName: string;
       };
@@ -60,11 +60,11 @@ export interface RetroRound {
   createdAtBlock: number;
 }
 
-export interface RetroRoundWithApplications extends RetroRound {
-  applications: RetroApplication[];
+export interface APIRetroRoundWithApplications extends APIRetroRound {
+  applications: APIRetroApplication[];
 }
 
-export interface RetroApplication {
+export interface APIRetroApplication {
   id: string;
   metadata: {
     signature: string
@@ -91,7 +91,7 @@ export interface RetroApplication {
   }
 }
 
-interface ApplicationAnswer {
+export interface ApplicationAnswer {
   type: string;
   questionId: number;
   question: string;
