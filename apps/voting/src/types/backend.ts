@@ -36,17 +36,17 @@ export interface Pool extends AlloPoolIdChainId, PoolDistribution {
   metricIdentifiers: string[];
 }
 
-export interface VoteBody extends AlloPoolIdChainId {
+export interface RetroVoteBody extends AlloPoolIdChainId {
   voter: Hex;
-  signer: string;
-  ballot: Vote[];
+  signature: string;
+  ballot: RetroVote[];
 }
 
 export interface PredictDistributionBody extends AlloPoolIdChainId {
-  ballot: Vote[];
+  ballot: RetroVote[];
 }
 
-interface Vote {
+export interface RetroVote {
   metricIdentifier: string;
   voteShare: number;
 }
