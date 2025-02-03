@@ -7,14 +7,23 @@ import { LandingPage } from "@gitcoin/ui/retrofunding";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import { useGetRoundWithApplications } from "@/hooks";
+import { useIsVoter } from "@/hooks/useIsVoter";
+import { Hex } from "viem";
 
 export const Home = () => {
   const navigate = useNavigate();
   const { roundId: roundIdParam, chainId: chainIdParam } = useParams();
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
+  const { data } = useIsVoter({
+    alloPoolId: roundIdParam as string,
+    chainId: parseInt(chainIdParam as string),
+    address: address as Hex,
+  });
+
+  const isVoter = data?.isVoter;
 
   useEffect(() => {
-    if (isConnected && roundIdParam && chainIdParam) {
+    if (isConnected && roundIdParam && chainIdParam && isVoter) {
       navigate(`/${chainIdParam}/${roundIdParam}/vote`, { replace: true });
     }
   }, [roundIdParam, chainIdParam, navigate, isConnected]);
@@ -40,6 +49,9 @@ export const Home = () => {
 
   const actionButton = useMemo(
     () =>
+      isVoter === false?
+      <p>You are not a voter</p> // TODO: add the modal based on designs
+      :
       isShowForm ? (
         <form onSubmit={handleSubmit}>
           <div className="flex items-center gap-2">
