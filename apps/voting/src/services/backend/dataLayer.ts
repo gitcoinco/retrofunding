@@ -1,10 +1,14 @@
 import { PoolDistribution, Metric, Pool } from "@/types";
-import { getMetricsQuery, getPoolDistributionQuery, getPoolQuery } from "./queries";
+import { getMetricsQuery, getFilteredMetricsQuery, getPoolDistributionQuery, getPoolQuery } from "./queries";
 import { executeQuery } from "./retrofundingClient";
 
-export const getMetrics = async (): Promise<Metric[]> => {
+export const getMetrics = async ({ identifiers }: { identifiers?: string[] }): Promise<Metric[]> => {
   try {
-    const response = await executeQuery(getMetricsQuery, {});
+    if (!identifiers || identifiers.length === 0) {
+      const response = await executeQuery(getMetricsQuery, {});
+      return response.metrics;
+    }
+    const response = await executeQuery(getFilteredMetricsQuery, { identifiers });
     return response.metrics;
   } catch (error) {
     console.error("Error fetching metrics:", error);

@@ -12,6 +12,25 @@ export const getMetricsQuery = gql`
   }
 `;
 
+export const getFilteredMetricsQuery = gql`
+  query getFilteredMetrics($identifiers: [String!]!) {
+    metrics(
+      filter: {
+        and: [
+          { enabled: { equalTo: true } },
+          { identifier: { in: $identifiers } }
+        ]
+      }
+    ) {
+      id
+      identifier
+      title
+      description
+      orientation
+    }
+  }
+`;
+
 export const getPoolQuery = gql`
   query getPoolMetrics($alloPoolId: String!, $chainId: Int!) {
     pools(filter: { alloPoolId: { equalTo: $alloPoolId }, chainId: { equalTo: $chainId } }) {

@@ -1,4 +1,4 @@
-import { PredictDistributionBody, Distribution, SyncPoolBody, VoteBody } from "@/types";
+import { PredictDistributionBody, Distribution, SyncPoolBody, RetroVoteBody } from "@/types";
 
 export async function syncPool(syncPoolBody: SyncPoolBody): Promise<boolean> {
   const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/pool/sync`;
@@ -25,7 +25,7 @@ export async function syncPool(syncPoolBody: SyncPoolBody): Promise<boolean> {
   }
 }
 
-export async function vote(voteBody: VoteBody): Promise<boolean> {
+export async function vote(voteBody: RetroVoteBody): Promise<boolean> {
   const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/vote`;
   try {
     const response = await fetch(url, {
@@ -53,16 +53,14 @@ export async function vote(voteBody: VoteBody): Promise<boolean> {
 export async function predictDistribution(
   predictDistributionBody: PredictDistributionBody,
 ): Promise<Distribution[]> {
-  const url = `${import.meta.env.VITE_RETROFUNDING_URL}/vote/predict`;
+  const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/vote/predict`;
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        ...predictDistributionBody,
-      }),
+      body: JSON.stringify(predictDistributionBody),
     });
 
     if (!response.ok) {
