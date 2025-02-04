@@ -7,7 +7,7 @@ import { Hex } from "viem";
 import { config } from "@/config";
 import { useUpdateRoundMetadata } from "@/hooks/contracts/useUpdateRoundMetadata/useUpdateRoundMetadata";
 import { RetroRound } from "@/types";
-import { MappedRoundMetadata } from "@/utils/transformRoundMetadata";
+import { MappedRoundMetadata, supportTypes } from "@/utils/transformRoundMetadata";
 
 export const TabRoundDetail = ({
   poolData,
@@ -43,6 +43,36 @@ export const TabRoundDetail = ({
     },
     {
       field: {
+        name: "supportType",
+        label: "Support Type",
+        className: "border-grey-300",
+        validation: {
+          required: true,
+        },
+      },
+      component: "Select",
+      options: [
+        {
+          items: supportTypes,
+        },
+      ],
+      placeholder: "Select",
+      className: "bg-white border-grey-300",
+      size: "md",
+    },
+    {
+      field: {
+        name: "supportInfo",
+        label: "Support Info",
+        className: "border-grey-300",
+        validation: {
+          required: true,
+        },
+      },
+      component: "Input",
+    },
+    {
+      field: {
         name: "payoutToken",
         label: "Payout token",
         className: "border-grey-300",
@@ -74,6 +104,14 @@ export const TabRoundDetail = ({
       },
       component: "MarkdownEditor",
     },
+    {
+      field: {
+        name: "managers",
+        label: "Round Managers",
+        validation: { isObject: true },
+      },
+      component: "DisabledProgramInput",
+    },
   ];
 
   const tokenAddress = poolData.matchTokenAddress as Hex;
@@ -89,6 +127,8 @@ export const TabRoundDetail = ({
         chainId: poolData.project.chainId,
         programName: poolData.project.name,
       },
+      supportType: poolData.roundMetadata.support?.type,
+      supportInfo: poolData.roundMetadata.support?.info,
       payoutToken: `${token.code} (${token.address})`,
       coverImage: `${config.pinataBaseUrl}/${poolData.roundMetadata.retroFundingConfig?.coverImage}`,
       description: poolData.roundMetadata.eligibility.description,
@@ -102,7 +142,7 @@ export const TabRoundDetail = ({
         "Fill out the details about your round. You can change most of these at any time.",
     },
   };
-  // store round details in db
+
   return (
     <>
       <Form

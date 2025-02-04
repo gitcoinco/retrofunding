@@ -42,4 +42,8 @@ export type RetroRound = {
     name: string;
     chainId: number;
   };
+  support: {
+    type: string;
+    info: string;
+  };
 };

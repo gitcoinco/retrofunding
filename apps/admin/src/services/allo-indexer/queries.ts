@@ -70,6 +70,10 @@ export const getProgramByIdAndChainIdQuery = gql`
       metadata
       chainId
       id
+      roles {
+        address
+        role
+      }
     }
   }
 `;

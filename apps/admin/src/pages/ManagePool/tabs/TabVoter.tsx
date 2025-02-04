@@ -1,6 +1,7 @@
 import { Form } from "@gitcoin/ui/client";
 import { toast } from "@gitcoin/ui/hooks/useToast";
 import { FormField } from "@gitcoin/ui/types";
+import { Hex } from "viem";
 import { MessagePage } from "@/components/Message";
 import { useGetPool } from "@/hooks/backend/useGetPool";
 import { updatePoolEligibility } from "@/services/backend/api";
@@ -52,7 +53,7 @@ export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string 
       chainId: chainId,
       eligibilityType: "linear",
       data: {
-        voters: values.voterAllowlist,
+        voters: values.voterAllowlist.map((voter: Hex) => voter.trim()),
       },
     });
 

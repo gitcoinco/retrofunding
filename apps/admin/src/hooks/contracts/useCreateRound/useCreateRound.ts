@@ -86,7 +86,7 @@ export const useCreateRound = () => {
               protocol: 1n,
               pointer: metadataCid,
             },
-            managers: [], // TODO: do we need managers in our form?
+            managers: data.managers,
           });
         },
         getProgressSteps: getCreateRoundProgressSteps,
@@ -114,7 +114,7 @@ export const useCreateRound = () => {
             chainId: data.program.chainId,
             eligibilityType: "linear",
             eligibilityData: {
-              voters: data.voterAllowlist as Hex[],
+              voters: data.voterAllowlist.map((voter: string) => voter.trim()) as Hex[],
             },
             metricIdentifiers: data.impactMetrics,
           });
