@@ -114,7 +114,7 @@ export const useCreateRound = () => {
             chainId: data.program.chainId,
             eligibilityType: "linear",
             eligibilityData: {
-              voters: data.voterAllowlist as Hex[],
+              voters: data.voterAllowlist.map((voter: string) => voter.trim()) as Hex[],
             },
             metricIdentifiers: data.impactMetrics,
           });
