@@ -3,6 +3,7 @@ import { FormField, FormWithPersistStep as FormStep } from "@gitcoin/ui/types";
 import moment from "moment-timezone";
 import { getProgramByIdAndChainId } from "@/services/allo-indexer/dataLayer";
 import { getMetrics } from "@/services/backend/dataLayer";
+import { supportTypes } from "@/utils/transformRoundMetadata";
 
 export const getRoundSetupSteps = async ({
   programId,
@@ -31,6 +32,37 @@ export const getRoundSetupSteps = async ({
         validation: {
           required: true,
           stringValidation: { minLength: 5 },
+        },
+      },
+      component: "Input",
+    },
+    {
+      field: {
+        name: "supportType",
+        label: "Support Type",
+        className: "border-grey-300",
+        validation: {
+          required: true,
+        },
+      },
+      component: "Select",
+      options: [
+        {
+          items: supportTypes,
+        },
+      ],
+      placeholder: "Select",
+      className: "bg-white border-grey-300",
+      size: "md",
+    },
+    {
+      field: {
+        name: "supportInfo",
+        label: "Contact Information",
+        className: "border-grey-300",
+        validation: {
+          required: true,
+          stringValidation: { minLength: 2 },
         },
       },
       component: "Input",

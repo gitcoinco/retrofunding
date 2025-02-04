@@ -1,6 +1,25 @@
 import { ApplicationMetadata, RoundSetupFormData } from "@/types";
 import { RoundApplicationQuestion, RoundMetadata } from "@/types";
 
+export const supportTypes = [
+  {
+    label: "Email",
+    value: "email",
+  },
+  {
+    label: "Link",
+    value: "link",
+  },
+  {
+    label: "Discord Group Invite Link",
+    value: "discord",
+  },
+  {
+    label: "Telegram Group Invite Link",
+    value: "telegram",
+  },
+];
+
 export const mapFormQuestionToApplicationQuestion = (
   question: RoundSetupFormData["applicationQuestions"]["questions"][0],
 ): RoundApplicationQuestion => {
@@ -84,11 +103,10 @@ export const mapFormDataToRoundMetadata = (
       },
       feesAddress: "",
       feesPercentage: 0,
-      // support: {
-      //   // TODO: add to / get from form
-      //   type: "",
-      //   info: "",
-      // },
+      support: {
+        type: formData.supportType,
+        info: formData.supportInfo,
+      },
     },
     application: {
       version: "2.0.0",

@@ -27,6 +27,8 @@ export interface RoundSetupFormData {
     programName: string;
   };
   roundName: string;
+  supportType: string;
+  supportInfo: string;
   payoutToken: Hex;
   coverImage: File;
   timezone: string;
