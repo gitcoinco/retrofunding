@@ -11,7 +11,7 @@ export const MainLayout = () => {
       <Web3Providers>
         <Toaster />
         <Navbar />
-        <main className="relative flex flex-1 flex-col">
+        <main className="flex flex-1 flex-col">
           <Outlet />
         </main>
       </Web3Providers>

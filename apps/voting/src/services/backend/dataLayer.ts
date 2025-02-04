@@ -1,10 +1,19 @@
 import { PoolDistribution, Metric, Pool } from "@/types";
-import { getMetricsQuery, getPoolDistributionQuery, getPoolQuery } from "./queries";
+import { getMetricsQuery, getFilteredMetricsQuery, getPoolDistributionQuery, getPoolQuery, getVotersQuery } from "./queries";
 import { executeQuery } from "./retrofundingClient";
 
-export const getMetrics = async (): Promise<Metric[]> => {
+export const getVoters = async (alloPoolId: string, chainId: number): Promise<string[]> => {
+  const response = await executeQuery(getVotersQuery, { alloPoolId, chainId });
+  return response.pools[0].eligibilityCriteria.data.voters;
+};
+
+export const getMetrics = async (identifiers?: string[]): Promise<Metric[]> => {
   try {
-    const response = await executeQuery(getMetricsQuery, {});
+    if (!identifiers || identifiers.length === 0) {
+      const response = await executeQuery(getMetricsQuery, {});
+      return response.metrics;
+    }
+    const response = await executeQuery(getFilteredMetricsQuery, { identifiers });
     return response.metrics;
   } catch (error) {
     console.error("Error fetching metrics:", error);
