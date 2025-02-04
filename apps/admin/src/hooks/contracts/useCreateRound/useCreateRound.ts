@@ -86,7 +86,7 @@ export const useCreateRound = () => {
               protocol: 1n,
               pointer: metadataCid,
             },
-            managers: [], // TODO: do we need managers in our form?
+            managers: data.managers,
           });
         },
         getProgressSteps: getCreateRoundProgressSteps,

@@ -30,6 +30,9 @@ export const getProgramByIdAndChainId = async (programId: string, chainId: numbe
     chainId,
   })) as {
     projects: {
+      roles: {
+        address: string;
+      }[];
       metadata: {
         name: string;
       };
@@ -42,6 +45,7 @@ export const getProgramByIdAndChainId = async (programId: string, chainId: numbe
     programName: program.metadata.name,
     chainId: program.chainId,
     programId: program.id,
+    members: program.roles.map((role) => role.address),
   };
 };
 

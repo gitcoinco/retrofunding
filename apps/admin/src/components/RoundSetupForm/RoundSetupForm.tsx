@@ -31,6 +31,7 @@ export const RoundSetupForm = (): React.ReactNode => {
       const resolvedSteps = await getRoundSetupSteps({
         programId: programId || "",
         chainId: Number(chainId),
+        address: address,
       });
       setRoundSteps(resolvedSteps);
       setRoundSetupKeys(resolvedSteps.map((step) => step.formProps.persistKey));

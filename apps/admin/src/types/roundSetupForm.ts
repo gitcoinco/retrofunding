@@ -56,4 +56,5 @@ export interface RoundSetupFormData {
     }>;
   };
   voterAllowlist: string[];
+  managers: Hex[];
 }

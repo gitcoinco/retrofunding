@@ -104,6 +104,14 @@ export const TabRoundDetail = ({
       },
       component: "MarkdownEditor",
     },
+    {
+      field: {
+        name: "managers",
+        label: "Round Managers",
+        validation: { isObject: true },
+      },
+      component: "DisabledProgramInput",
+    },
   ];
 
   const tokenAddress = poolData.matchTokenAddress as Hex;
@@ -134,7 +142,7 @@ export const TabRoundDetail = ({
         "Fill out the details about your round. You can change most of these at any time.",
     },
   };
-  // store round details in db
+
   return (
     <>
       <Form

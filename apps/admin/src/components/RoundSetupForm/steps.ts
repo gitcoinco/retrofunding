@@ -1,6 +1,7 @@
 import { getTokensByChainId } from "@gitcoin/gitcoin-chain-data";
 import { FormField, FormWithPersistStep as FormStep } from "@gitcoin/ui/types";
 import moment from "moment-timezone";
+import { Hex, getAddress } from "viem";
 import { getProgramByIdAndChainId } from "@/services/allo-indexer/dataLayer";
 import { getMetrics } from "@/services/backend/dataLayer";
 import { supportTypes } from "@/utils/transformRoundMetadata";
@@ -8,12 +9,18 @@ import { supportTypes } from "@/utils/transformRoundMetadata";
 export const getRoundSetupSteps = async ({
   programId,
   chainId,
+  address,
 }: {
   programId: string;
   chainId: number;
+  address?: Hex;
 }): Promise<FormStep[]> => {
   const program = await getProgramByIdAndChainId(programId, chainId);
   const tokens = getTokensByChainId(chainId);
+
+  const poolMembers = program.members
+    .map((member) => getAddress(member))
+    .filter((member) => !address || member !== getAddress(address));
 
   const roundDetailsFields: FormField[] = [
     {
@@ -105,6 +112,20 @@ export const getRoundSetupSteps = async ({
       component: "FileUpload",
       mimeTypes: ["image/*"],
     },
+    {
+      field: {
+        name: "managers",
+        label: `Wallet addresses${poolMembers.length > 0 ? ` (auto-filled with ${program.programName} members)` : ""} for round management.`,
+        validation: {
+          arrayValidation: {
+            itemType: "address",
+            maxItems: 20,
+            maxItemsMessage: "Maximum of 20 admins allowed",
+          },
+        },
+      },
+      component: "Allowlist",
+    },
   ];
 
   const roundDetailsArgs = {
@@ -112,6 +133,7 @@ export const getRoundSetupSteps = async ({
     persistKey: "round-setup-round-details",
     defaultValues: {
       program: program,
+      managers: poolMembers,
     },
   };
 
