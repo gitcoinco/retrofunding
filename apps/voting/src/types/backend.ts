@@ -50,3 +50,8 @@ export interface RetroVote {
   metricIdentifier: string;
   voteShare: number;
 }
+
+export interface GetVoteResponse {
+  updatedAt: Date;
+  ballot: RetroVote[];
+}
