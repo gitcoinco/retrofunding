@@ -1,6 +1,24 @@
+import { Hex } from "viem";
 import { PoolDistribution, Metric, Pool } from "@/types";
-import { getMetricsQuery, getFilteredMetricsQuery, getPoolDistributionQuery, getPoolQuery, getVotersQuery } from "./queries";
+import { GetVoteResponse } from "@/types";
+import {
+  getMetricsQuery,
+  getFilteredMetricsQuery,
+  getPoolDistributionQuery,
+  getPoolQuery,
+  getVotersQuery,
+  getVoteQuery,
+} from "./queries";
 import { executeQuery } from "./retrofundingClient";
+
+export const getVote = async (
+  alloPoolId: string,
+  chainId: number,
+  address: Hex,
+): Promise<GetVoteResponse> => {
+  const response = await executeQuery(getVoteQuery, { alloPoolId, chainId, address });
+  return response.votes[0];
+};
 
 export const getVoters = async (alloPoolId: string, chainId: number): Promise<string[]> => {
   const response = await executeQuery(getVotersQuery, { alloPoolId, chainId });

@@ -1,5 +1,20 @@
 import { gql } from "graphql-request";
 
+export const getVoteQuery = gql`
+  query getVote($alloPoolId: String!, $chainId: Int!, $address: String!) {
+    votes(
+      filter: {
+        alloPoolId: { equalTo: $alloPoolId }
+        chainId: { equalTo: $chainId }
+        voter: { equalTo: $address }
+      }
+    ) {
+      updatedAt
+      ballot
+    }
+  }
+`;
+
 export const getVotersQuery = gql`
   query getVoters($alloPoolId: String!, $chainId: Int!) {
     pools(filter: { alloPoolId: { equalTo: $alloPoolId }, chainId: { equalTo: $chainId } }) {
@@ -25,12 +40,7 @@ export const getMetricsQuery = gql`
 export const getFilteredMetricsQuery = gql`
   query getFilteredMetrics($identifiers: [String!]!) {
     metrics(
-      filter: {
-        and: [
-          { enabled: { equalTo: true } },
-          { identifier: { in: $identifiers } }
-        ]
-      }
+      filter: { and: [{ enabled: { equalTo: true } }, { identifier: { in: $identifiers } }] }
     ) {
       id
       identifier
