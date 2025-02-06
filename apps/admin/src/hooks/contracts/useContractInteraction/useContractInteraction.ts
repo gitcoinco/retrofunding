@@ -2,11 +2,11 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { TransactionData } from "@allo-team/allo-v2-sdk";
 import { ProgressStatus, Step } from "@gitcoin/ui/types";
 import { useMutation } from "@tanstack/react-query";
-import { createPublicClient, Hex, http, TransactionReceipt } from "viem";
+import { createPublicClient, http, TransactionReceipt } from "viem";
 import { useWalletClient } from "wagmi";
 import { uploadData } from "@/services/ipfs/upload";
 import { targetNetworks } from "@/services/web3/chains";
-import { waitUntilIndexerSynced } from "../utils";
+import { waitUntilIndexerSynced } from "../utils/indexer";
 
 interface GetProgressSteps {
   (args: {
@@ -51,13 +51,17 @@ export const useContractInteraction = () => {
     mutationFn: async ({
       chainId,
       metadata,
-      transactionData,
+      transactionsData,
       getProgressSteps,
       postIndexerHook,
     }: {
       chainId: number;
       metadata?: any;
-      transactionData: (metadataCid?: string) => Promise<TransactionData>;
+      transactionsData: (metadataCid?: string) => Promise<
+        (TransactionData & {
+          skip?: boolean;
+        })[]
+      >;
       getProgressSteps: ({
         uploadMetadataStatus,
         contractUpdatingStatus,
@@ -107,42 +111,49 @@ export const useContractInteraction = () => {
         setUploadMetadataStatus(ProgressStatus.IS_SUCCESS);
       }
 
-      const txData = await transactionData(metadataCid);
+      const txDatas = await transactionsData(metadataCid);
       setContractUpdatingStatus(ProgressStatus.IN_PROGRESS);
+      let receipt: TransactionReceipt | undefined;
+      for (const txData of txDatas) {
+        let txHash;
+        try {
+          txHash = await walletClient.sendTransaction({
+            account,
+            to: txData.to,
+            data: txData.data,
+            value: BigInt(txData.value),
+            chain,
+          });
+        } catch (e) {
+          setContractUpdatingStatus(ProgressStatus.IS_ERROR);
+          console.log(txData);
+          throw new Error("Failed to send transaction");
+        }
 
-      let txHash;
-      try {
-        txHash = await walletClient.sendTransaction({
-          account,
-          to: txData.to,
-          data: txData.data,
-          chain,
-        });
-      } catch (e) {
-        setContractUpdatingStatus(ProgressStatus.IS_ERROR);
-        throw new Error("Failed to send transaction");
+        receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
+        if (!receipt.status) {
+          setContractUpdatingStatus(ProgressStatus.IS_ERROR);
+          throw new Error("Transaction failed");
+        }
+
+        if (!txData.skip) {
+          setContractUpdatingStatus(ProgressStatus.IS_SUCCESS);
+
+          setIndexingStatus(ProgressStatus.IN_PROGRESS);
+
+          try {
+            await waitUntilIndexerSynced({
+              chainId,
+              blockNumber: receipt.blockNumber,
+            });
+          } catch (e) {
+            setIndexingStatus(ProgressStatus.IS_ERROR);
+            throw new Error("Failed to sync with indexer");
+          }
+        }
       }
 
-      const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
-      if (!receipt.status) {
-        setContractUpdatingStatus(ProgressStatus.IS_ERROR);
-        throw new Error("Transaction failed");
-      }
-
-      setContractUpdatingStatus(ProgressStatus.IS_SUCCESS);
-      setIndexingStatus(ProgressStatus.IN_PROGRESS);
-
-      try {
-        await waitUntilIndexerSynced({
-          chainId,
-          blockNumber: receipt.blockNumber,
-        });
-      } catch (e) {
-        setIndexingStatus(ProgressStatus.IS_ERROR);
-        throw new Error("Failed to sync with indexer");
-      }
-
-      if (postIndexerHook) {
+      if (postIndexerHook && receipt) {
         await postIndexerHook(receipt);
       }
 

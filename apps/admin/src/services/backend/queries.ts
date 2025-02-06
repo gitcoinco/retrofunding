@@ -31,6 +31,7 @@ export const getPoolDistributionQuery = gql`
   query getPoolDistribution($alloPoolId: String!, $chainId: Int!) {
     pools(filter: { alloPoolId: { equalTo: $alloPoolId }, chainId: { equalTo: $chainId } }) {
       distributionData
+      customDistributionData
     }
   }
 `;

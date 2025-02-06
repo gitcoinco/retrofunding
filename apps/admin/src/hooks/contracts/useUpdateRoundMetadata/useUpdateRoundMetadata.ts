@@ -3,7 +3,7 @@ import { getChainById } from "@gitcoin/gitcoin-chain-data";
 import { useMutation } from "@tanstack/react-query";
 import { uploadData } from "@/services/ipfs/upload";
 import { MappedRoundMetadata } from "@/utils/transformRoundMetadata";
-import { useContractInteraction } from "../useContractInteraction/useContractInteraction";
+import { useContractInteraction } from "../useContractInteraction";
 import { getUpdateRoundProgressSteps } from "../utils/updateRoundSteps";
 
 export type UpdateRoundMetadataParams = {
@@ -37,7 +37,7 @@ export const useUpdateRoundMetadata = () => {
       return contractInteractionMutation.mutateAsync({
         chainId,
         metadata: metadataWithRoundImage,
-        transactionData: async (metadataCid?: string) => {
+        transactionsData: async (metadataCid?: string) => {
           const allo = new Allo({
             chain: chainId,
           });
@@ -50,10 +50,12 @@ export const useUpdateRoundMetadata = () => {
 
           if (!metadataCid) throw new Error("Metadata CID is required");
 
-          return allo.updatePoolMetadata({
-            poolId,
-            metadata: { protocol: 1n, pointer: metadataCid },
-          });
+          return [
+            allo.updatePoolMetadata({
+              poolId,
+              metadata: { protocol: 1n, pointer: metadataCid },
+            }),
+          ];
         },
         getProgressSteps: getUpdateRoundProgressSteps,
       });

@@ -1,4 +1,4 @@
-import { Metric, Pool, PoolDistribution } from "@/types";
+import { DistributionData, Metric, Pool } from "@/types";
 import { getMetricsQuery, getPoolQuery, getPoolDistributionQuery } from "./queries";
 import { executeQuery } from "./retrofundingClient";
 
@@ -17,7 +17,7 @@ export const getPool = async (alloPoolId: string, chainId: number): Promise<Pool
     const response = await executeQuery(getPoolQuery, { alloPoolId, chainId });
     const pool = response.pools[0];
     pool.metricIdentifiers = pool.metricIdentifiers.split(",");
-    pool.distributionData = JSON.parse(pool.distributionData) as PoolDistribution;
+    pool.distributionData = JSON.parse(pool.distributionData) as DistributionData;
     return pool;
   } catch (error) {
     console.error("Error fetching metrics:", error);
@@ -28,10 +28,21 @@ export const getPool = async (alloPoolId: string, chainId: number): Promise<Pool
 export const getPoolDistribution = async (
   alloPoolId: string,
   chainId: number,
-): Promise<PoolDistribution> => {
+): Promise<{
+  distributionData: DistributionData;
+  customDistributionData?: DistributionData;
+}> => {
   try {
     const response = await executeQuery(getPoolDistributionQuery, { alloPoolId, chainId });
-    return response.pools[0].distributionData.json();
+    const pool = response.pools[0];
+    const distributionData = JSON.parse(pool.distributionData);
+    const customDistributionData = pool.customDistributionData
+      ? JSON.parse(pool.customDistributionData)
+      : undefined;
+    return {
+      distributionData,
+      customDistributionData,
+    };
   } catch (error) {
     console.error("Error fetching pool distribution:", error);
     throw error;

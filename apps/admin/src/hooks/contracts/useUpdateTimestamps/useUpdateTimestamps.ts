@@ -4,7 +4,7 @@ import moment from "moment";
 import { Hex } from "viem";
 import { RoundDates } from "@/types";
 import { UINT64_MAX } from "@/utils/utils";
-import { useContractInteraction } from "../useContractInteraction/useContractInteraction";
+import { useContractInteraction } from "../useContractInteraction";
 import { getUpdateTimestampsProgressSteps } from "../utils/updateTimestampsSteps";
 
 export type UpdateTimestampsParams = {
@@ -21,14 +21,11 @@ export const useUpdateTimestamps = () => {
     mutationFn: async ({ data, chainId, strategyAddress }: UpdateTimestampsParams) => {
       return contractInteractionMutation.mutateAsync({
         chainId,
-        transactionData: async (metadataCid?: string) => {
+        transactionsData: async () => {
           const retroFunding = new EasyRetroFundingStrategy({
             chain: chainId,
             address: strategyAddress as Hex,
           });
-
-          console.log("data", data);
-
           const dates = data;
           const timezone = data.timezone;
 
@@ -41,12 +38,14 @@ export const useUpdateTimestamps = () => {
             ? UINT64_MAX
             : BigInt(moment.tz(dates.round.end, timezone).unix());
 
-          return retroFunding.updatePoolTimestamps(
-            registrationStartTime,
-            registrationEndTime,
-            poolStartTime,
-            poolEndTime,
-          );
+          return [
+            retroFunding.updatePoolTimestamps(
+              registrationStartTime,
+              registrationEndTime,
+              poolStartTime,
+              poolEndTime,
+            ),
+          ];
         },
         getProgressSteps: getUpdateTimestampsProgressSteps,
       });

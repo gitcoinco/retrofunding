@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Address } from "viem";
 import { useAccount } from "wagmi";
 import { getCreateProgramProgressSteps } from "@/hooks";
-import { useContractInteraction } from "../useContractInteraction/useContractInteraction";
+import { useContractInteraction } from "../useContractInteraction";
 
 export type CreateProgramParams = {
   chainId: number;
@@ -30,17 +30,19 @@ export const useCreateProgram = () => {
           name: programName,
           type: "program",
         },
-        transactionData: async (metadataCid?: string) => {
+        transactionsData: async (metadataCid?: string) => {
           if (!metadataCid) throw new Error("Metadata CID is required");
           const nonce = BigInt(Math.floor(Math.random() * 1000000000));
 
-          return registry.createProfile({
-            nonce,
-            name: programName,
-            metadata: { protocol: 1n, pointer: metadataCid },
-            owner: accountAddress,
-            members,
-          });
+          return [
+            registry.createProfile({
+              nonce,
+              name: programName,
+              metadata: { protocol: 1n, pointer: metadataCid },
+              owner: accountAddress,
+              members,
+            }),
+          ];
         },
         getProgressSteps: getCreateProgramProgressSteps,
       });

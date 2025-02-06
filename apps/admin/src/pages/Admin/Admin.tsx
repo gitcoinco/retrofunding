@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useAccount } from "wagmi";
 import { MessagePage } from "@/components/Message";
-import { useGetUserProgramsAndRounds } from "@/hooks/allo-indexer/getUserProgramsAndRounds";
+import { useGetUserProgramsAndRounds } from "@/hooks/allo-indexer";
 import {
   transformProgramData,
   getProgramsAndRoundsItems,

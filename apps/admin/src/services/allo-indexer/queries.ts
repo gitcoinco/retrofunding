@@ -102,6 +102,13 @@ export const getRoundByChainIdAndPoolIdQuery = gql`
         address
         role
       }
+      applications {
+        id
+        anchorAddress
+        metadata
+        status
+        distributionTransaction
+      }
     }
   }
 `;

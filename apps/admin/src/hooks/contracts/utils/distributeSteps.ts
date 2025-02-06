@@ -1,6 +1,6 @@
 import { ProgressStatus, Step } from "@gitcoin/ui/types";
 
-export const getUpdateTimestampsProgressSteps = ({
+export const getDistributeProgressSteps = ({
   contractUpdatingStatus,
   indexingStatus,
   finishingStatus,
@@ -11,8 +11,8 @@ export const getUpdateTimestampsProgressSteps = ({
 }): Step[] => {
   return [
     {
-      name: "Updating Timestamps",
-      description: `Updating timestamps on the contract.`,
+      name: "Distributing",
+      description: `Distributing the funds to the recipients.`,
       status: contractUpdatingStatus,
     },
     {

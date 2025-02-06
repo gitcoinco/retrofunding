@@ -23,12 +23,12 @@ export const AdminSideNav = ({
     () => [
       {
         content: "Home",
-        id: "/home",
+        id: "/",
         iconType: IconType.HOME,
       },
       {
         content: "My Programs",
-        id: "/my-programs",
+        id: "/",
         iconType: IconType.BRIEFCASE,
         items: programItems.map(({ name, chainId, programId, iconType }) => ({
           content: name,
@@ -38,7 +38,7 @@ export const AdminSideNav = ({
       },
       {
         content: "My Rounds",
-        id: "/my-rounds",
+        id: "/",
         iconType: IconType.COLLECTION,
         items: roundItems.map(({ name, chainId, roundId, iconType }) => ({
           content: name,

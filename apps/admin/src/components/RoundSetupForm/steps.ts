@@ -14,7 +14,7 @@ export const getRoundSetupSteps = async ({
   programId: string;
   chainId: number;
   address?: Hex;
-}): Promise<FormStep[]> => {
+}): Promise<{ roundSetupSteps: FormStep[]; managers: Hex[] }> => {
   const program = await getProgramByIdAndChainId(programId, chainId);
   const tokens = getTokensByChainId(chainId);
 
@@ -46,7 +46,7 @@ export const getRoundSetupSteps = async ({
     {
       field: {
         name: "supportType",
-        label: "Support Type",
+        label: "Preferred grantee contact method",
         className: "border-grey-300",
         validation: {
           required: true,
@@ -65,15 +65,49 @@ export const getRoundSetupSteps = async ({
     {
       field: {
         name: "supportInfo",
-        label: "Contact Information",
+        label: "Contact details",
         className: "border-grey-300",
         validation: {
           required: true,
-          stringValidation: { minLength: 2 },
+          stringValidation: {
+            pattern:
+              /^(?:(?:https?:\/\/)(?:[\da-z.-]+)\.(?:[a-z.]{2,})(?:[/\w .-]*)*\/?|[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
+            patternMessage: "Invalid email or URL",
+          },
         },
       },
       component: "Input",
+      placeholder:
+        "Enter your email, Telegram handle, or website link based on your selected contact method.",
     },
+    {
+      field: {
+        name: "coverImage",
+        label: "Cover image",
+        className: "border-grey-300",
+        validation: {
+          fileValidation: {
+            allowedTypesMessage: "Only PNG and JPEG images are allowed",
+          },
+          required: true,
+        },
+      },
+      component: "FileUpload",
+      mimeTypes: ["image/*"],
+    },
+  ];
+
+  const roundDetailsArgs = {
+    fields: roundDetailsFields,
+    persistKey: "round-setup-round-details",
+    defaultValues: {
+      program: program,
+      managers: poolMembers,
+      roundFundingAmount: 0,
+    },
+  };
+
+  const fundRoundFields: FormField[] = [
     {
       field: {
         name: "payoutToken",
@@ -99,41 +133,28 @@ export const getRoundSetupSteps = async ({
     },
     {
       field: {
-        name: "coverImage",
-        label: "Cover image",
-        className: "border-grey-300",
+        name: "fundingAmount",
+        label: `Funding amount`,
         validation: {
-          fileValidation: {
-            allowedTypesMessage: "Only PNG and JPEG images are allowed",
-          },
           required: true,
-        },
-      },
-      component: "FileUpload",
-      mimeTypes: ["image/*"],
-    },
-    {
-      field: {
-        name: "managers",
-        label: `Wallet addresses${poolMembers.length > 0 ? ` (auto-filled with ${program.programName} members)` : ""} for round management.`,
-        validation: {
-          arrayValidation: {
-            itemType: "address",
-            maxItems: 20,
-            maxItemsMessage: "Maximum of 20 admins allowed",
+          numberValidation: {
+            min: 0,
+            minMessage: "Minimum funding amount is 0",
           },
         },
       },
-      component: "Allowlist",
+      component: "Input",
+      type: "number",
+      min: 0,
+      placeholder: "Set funding amount",
     },
   ];
 
-  const roundDetailsArgs = {
-    fields: roundDetailsFields,
-    persistKey: "round-setup-round-details",
+  const fundRoundArgs = {
+    fields: fundRoundFields,
+    persistKey: "round-setup-fund-round",
     defaultValues: {
-      program: program,
-      managers: poolMembers,
+      payoutToken: tokens[0].address,
     },
   };
 
@@ -276,6 +297,14 @@ export const getRoundSetupSteps = async ({
       },
     },
     {
+      name: "Fund round",
+      formProps: fundRoundArgs,
+      stepProps: {
+        formTitle: "Fund your round",
+        formDescription: "Set the total funding amount to be distributed to grantees.",
+      },
+    },
+    {
       name: "Round dates",
       formProps: roundDatesArgs,
       stepProps: {
@@ -327,5 +356,5 @@ export const getRoundSetupSteps = async ({
     },
   ] satisfies FormStep[];
 
-  return roundSetupSteps;
+  return { roundSetupSteps, managers: poolMembers };
 };

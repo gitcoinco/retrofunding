@@ -30,6 +30,7 @@ export interface RoundSetupFormData {
   supportType: string;
   supportInfo: string;
   payoutToken: Hex;
+  fundingAmount: number;
   coverImage: File;
   timezone: string;
   roundDates: RoundDates;
