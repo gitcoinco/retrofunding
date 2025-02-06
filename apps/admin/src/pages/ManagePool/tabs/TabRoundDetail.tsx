@@ -1,5 +1,4 @@
-import React from "react";
-import { getTokenByChainIdAndAddress } from "@gitcoin/gitcoin-chain-data";
+import { getTokenByChainIdAndAddress, getTokensByChainId } from "@gitcoin/gitcoin-chain-data";
 import { Form, ProgressModal } from "@gitcoin/ui/client";
 import { toast } from "@gitcoin/ui/hooks/useToast";
 import { FormField } from "@gitcoin/ui/types";
@@ -20,6 +19,8 @@ export const TabRoundDetail = ({
 }) => {
   const { steps, updateRoundMetadataMutation } = useUpdateRoundMetadata();
   const { mutateAsync: updateRoundMetadata, isPending: isUpdating } = updateRoundMetadataMutation;
+  const tokens = getTokensByChainId(poolData.project.chainId);
+
   const roundEditDetailsFields: FormField[] = [
     {
       field: {
@@ -43,8 +44,47 @@ export const TabRoundDetail = ({
     },
     {
       field: {
+        name: "payoutToken",
+        label: "Payout token",
+        validation: {
+          required: true,
+        },
+      },
+      component: "Select",
+      options: [
+        {
+          items: tokens.map((token) => ({
+            label: token.code,
+            value: token.address,
+            icon: token.icon,
+          })),
+        },
+      ],
+      disabled: true,
+      placeholder: "Select",
+      size: "md",
+    },
+    {
+      field: {
+        name: "fundingAmount",
+        label: `Round funding amount`,
+        validation: {
+          required: true,
+          numberValidation: {
+            min: 0,
+            minMessage: "Minimum funding amount is 0",
+          },
+        },
+      },
+      component: "Input",
+      type: "number",
+      min: 0,
+      defaultValue: 0,
+    },
+    {
+      field: {
         name: "supportType",
-        label: "Support Type",
+        label: "Preferred grantee contact method",
         className: "border-grey-300",
         validation: {
           required: true,
@@ -63,25 +103,20 @@ export const TabRoundDetail = ({
     {
       field: {
         name: "supportInfo",
-        label: "Support Info",
+        label: "Contact details",
         className: "border-grey-300",
         validation: {
           required: true,
+          stringValidation: {
+            pattern:
+              /^(?:(?:https?:\/\/)(?:[\da-z.-]+)\.(?:[a-z.]{2,})(?:[/\w .-]*)*\/?|[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
+            patternMessage: "Invalid email or URL",
+          },
         },
       },
       component: "Input",
-    },
-    {
-      field: {
-        name: "payoutToken",
-        label: "Payout token",
-        className: "border-grey-300",
-        validation: {
-          required: true,
-        },
-      },
-      disabled: true,
-      component: "Input",
+      placeholder:
+        "Enter your email, Telegram group link, or website link based on your selected contact method.",
     },
     {
       field: {
@@ -104,14 +139,6 @@ export const TabRoundDetail = ({
       },
       component: "MarkdownEditor",
     },
-    {
-      field: {
-        name: "managers",
-        label: "Round Managers",
-        validation: { isObject: true },
-      },
-      component: "DisabledProgramInput",
-    },
   ];
 
   const tokenAddress = poolData.matchTokenAddress as Hex;
@@ -127,9 +154,10 @@ export const TabRoundDetail = ({
         chainId: poolData.project.chainId,
         programName: poolData.project.name,
       },
-      supportType: poolData.roundMetadata.support?.type,
-      supportInfo: poolData.roundMetadata.support?.info,
-      payoutToken: `${token.code} (${token.address})`,
+      fundingAmount: poolData.roundMetadata.retroFundingConfig.fundingAmount ?? 0,
+      supportType: poolData.roundMetadata?.support?.type,
+      supportInfo: poolData.roundMetadata?.support?.info,
+      payoutToken: token.address,
       coverImage: `${config.pinataBaseUrl}/${poolData.roundMetadata.retroFundingConfig?.coverImage}`,
       description: poolData.roundMetadata.eligibility.description,
     },
@@ -159,6 +187,12 @@ export const TabRoundDetail = ({
               retroFundingConfig: {
                 ...poolData.roundMetadata.retroFundingConfig,
                 coverImage: values.coverImage,
+                fundingAmount: values.fundingAmount,
+              },
+              support: {
+                ...poolData.roundMetadata.support,
+                info: values.supportInfo,
+                type: values.supportType,
               },
             },
             application: {

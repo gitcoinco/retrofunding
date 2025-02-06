@@ -43,6 +43,7 @@ export interface RoundMetadata {
     };
     roundName: string;
     payoutToken: string;
+    fundingAmount: number;
     coverImage?: string;
     impactMetrics: string[];
   };

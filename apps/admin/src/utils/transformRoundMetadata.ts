@@ -98,6 +98,7 @@ export const mapFormDataToRoundMetadata = (
         },
         roundName: formData.roundName,
         payoutToken: formData.payoutToken,
+        fundingAmount: formData.fundingAmount,
         coverImage: roundCoverImageCid,
         impactMetrics: formData.impactMetrics,
       },
