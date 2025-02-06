@@ -32,20 +32,29 @@ export interface UpdatePoolEligibilityBody extends AlloPoolIdChainId {
 
 export type CalculatePoolBody = AlloPoolIdChainId;
 
-export interface Distribution {
+export interface DistributionItem {
   alloApplicationId: string;
   distributionPercentage: number;
 }
 
-export interface PoolDistribution {
+export interface DistributionData {
   lastUpdated: string;
-  distributions: Distribution[];
+  distribution: DistributionItem[];
 }
 
-export interface Pool extends AlloPoolIdChainId, PoolDistribution {
+export interface Pool extends AlloPoolIdChainId, DistributionData {
   eligibilityCriteria: {
     eligibilityType: string;
     data: LinearEligibilityData;
   };
   metricIdentifiers: string[];
+}
+
+export interface UpdateCustomDistributionBody extends AlloPoolIdChainId {
+  signature: Hex;
+  distribution: DistributionItem[];
+}
+
+export interface DeleteCustomDistributionBody extends AlloPoolIdChainId {
+  signature: Hex;
 }
