@@ -1,9 +1,11 @@
 import {
   CalculatePoolBody,
-  Distribution,
+  DistributionItem,
   CreatePoolBody,
   SyncPoolBody,
   UpdatePoolEligibilityBody,
+  UpdateCustomDistributionBody,
+  DeleteCustomDistributionBody,
 } from "@/types";
 
 export async function createPool(createPoolBody: CreatePoolBody): Promise<boolean> {
@@ -56,7 +58,9 @@ export async function syncPool(syncPoolBody: SyncPoolBody): Promise<boolean> {
   }
 }
 
-export async function calculatePool(calculatePoolBody: CalculatePoolBody): Promise<Distribution[]> {
+export async function calculatePool(
+  calculatePoolBody: CalculatePoolBody,
+): Promise<DistributionItem[]> {
   const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/pool/calculate`;
   try {
     const response = await fetch(url, {
@@ -104,6 +108,60 @@ export async function updatePoolEligibility(
     return true;
   } catch (error) {
     console.error("Error updating pool eligibility:", error);
+    throw error;
+  }
+}
+
+export async function updateCustomDistribution(
+  updateCustomDistributionBody: UpdateCustomDistributionBody,
+): Promise<boolean> {
+  const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/pool/set-distribution`;
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...updateCustomDistributionBody,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error: ${response.status} - ${errorData.message || "Unknown error"}`);
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error updating custom distribution:", error);
+    throw error;
+  }
+}
+
+export async function deleteCustomDistribution(
+  deleteCustomDistributionBody: DeleteCustomDistributionBody,
+): Promise<boolean> {
+  const url = `${import.meta.env.VITE_RETROFUNDING_URL}/api/pool/delete-distribution`;
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...deleteCustomDistributionBody,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error: ${response.status} - ${errorData.message || "Unknown error"}`);
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error deleting custom distribution:", error);
     throw error;
   }
 }

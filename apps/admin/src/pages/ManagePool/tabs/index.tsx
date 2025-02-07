@@ -1,4 +1,6 @@
 import { VerticalTabs, Icon, IconType } from "@gitcoin/ui";
+import { RefetchOptions } from "@tanstack/react-query";
+import { QueryObserverResult } from "@tanstack/react-query";
 import { RetroRound } from "@/types";
 import { TabApplication } from "./TabApplication";
 import { TabDistribute } from "./TabDistribute";
@@ -6,17 +8,16 @@ import { TabRoundDate } from "./TabRoundDate";
 import { TabRoundDetail } from "./TabRoundDetail";
 import { TabVoter } from "./TabVoter";
 
-export const PoolTabs = ({
-  chainId,
-  poolId,
-  poolData,
-  onUpdate,
-}: {
+interface PoolTabsProps {
   chainId: number;
   poolId: string;
   poolData: RetroRound;
-  onUpdate: () => void;
-}) => {
+  onUpdate: (
+    options?: RefetchOptions | undefined,
+  ) => Promise<QueryObserverResult<RetroRound, Error>>;
+}
+
+export const PoolTabs = ({ chainId, poolId, poolData, onUpdate }: PoolTabsProps) => {
   return (
     <div className="px-20">
       <VerticalTabs
@@ -54,7 +55,7 @@ export const PoolTabs = ({
           },
           ///tab Distribute
           {
-            tabContent: <TabDistribute />,
+            tabContent: <TabDistribute roundData={poolData} onUpdate={onUpdate} />,
             tabIcon: <Icon type={IconType.CASH} />,
             tabKey: "distribute",
             tabSubtitle: "Fund your round and distribute tokens",

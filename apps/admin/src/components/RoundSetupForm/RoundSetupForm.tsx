@@ -4,6 +4,7 @@ import { ProgressForm, ProgressModal } from "@gitcoin/ui/client";
 import { useToast } from "@gitcoin/ui/hooks/useToast";
 import { deleteDBValues } from "@gitcoin/ui/lib";
 import { FormWithPersistStep as FormStep } from "@gitcoin/ui/types";
+import { Hex } from "viem";
 import { useAccount } from "wagmi";
 import { MessagePage } from "@/components/Message";
 import { useCreateRound } from "@/hooks";
@@ -16,6 +17,7 @@ export const RoundSetupForm = (): React.ReactNode => {
   const navigate = useNavigate();
   const [roundSteps, setRoundSteps] = useState<FormStep[] | null>(null);
   const [roundSetupKeys, setRoundSetupKeys] = useState<string[] | null>(null);
+  const [managers, setManagers] = useState<Hex[]>([]);
   const { steps, createRoundMutation } = useCreateRound();
   const { mutateAsync: createRound, isPending: isCreating } = createRoundMutation;
   const [searchParams] = useSearchParams();
@@ -33,8 +35,9 @@ export const RoundSetupForm = (): React.ReactNode => {
         chainId: Number(chainId),
         address: address,
       });
-      setRoundSteps(resolvedSteps);
-      setRoundSetupKeys(resolvedSteps.map((step) => step.formProps.persistKey));
+      setRoundSteps(resolvedSteps.roundSetupSteps);
+      setRoundSetupKeys(resolvedSteps.roundSetupSteps.map((step) => step.formProps.persistKey));
+      setManagers(resolvedSteps.managers);
     };
     fetchSteps();
   }, []);
@@ -48,6 +51,7 @@ export const RoundSetupForm = (): React.ReactNode => {
       await createRound({
         data: {
           ...values,
+          managers: managers,
         },
       });
       toast({

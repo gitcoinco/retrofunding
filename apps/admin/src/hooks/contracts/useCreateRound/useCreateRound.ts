@@ -3,14 +3,14 @@ import { InitializeData } from "@allo-team/allo-v2-sdk/dist/strategies/EasyRetro
 import { getChainById } from "@gitcoin/gitcoin-chain-data";
 import { useMutation } from "@tanstack/react-query";
 import moment from "moment";
-import { Hex, TransactionReceipt, zeroAddress, decodeEventLog } from "viem";
+import { Hex, TransactionReceipt, decodeEventLog } from "viem";
 import { getCreateRoundProgressSteps } from "@/hooks";
 import { createPool } from "@/services/backend/api";
 import { uploadData } from "@/services/ipfs/upload";
 import { RoundSetupFormData } from "@/types";
 import { mapFormDataToRoundMetadata } from "@/utils/transformRoundMetadata";
 import { UINT64_MAX } from "@/utils/utils";
-import { useContractInteraction } from "../useContractInteraction/useContractInteraction";
+import { useContractInteraction } from "../useContractInteraction";
 
 export type CreateRoundParams = {
   data: RoundSetupFormData;
@@ -35,7 +35,7 @@ export const useCreateRound = () => {
       return contractInteractionMutation.mutateAsync({
         chainId,
         metadata: mappedMetadata,
-        transactionData: async (metadataCid?: string) => {
+        transactionsData: async (metadataCid?: string) => {
           const allo = new Allo({
             chain: chainId,
           });
@@ -76,18 +76,20 @@ export const useCreateRound = () => {
 
           if (!metadataCid) throw new Error("Metadata CID is required");
 
-          return allo.createPool({
-            profileId: data.program.programId as Hex,
-            strategy: strategyAddress,
-            initStrategyData: initData,
-            token: data.payoutToken,
-            amount: BigInt(0),
-            metadata: {
-              protocol: 1n,
-              pointer: metadataCid,
-            },
-            managers: data.managers,
-          });
+          return [
+            allo.createPool({
+              profileId: data.program.programId as Hex,
+              strategy: strategyAddress,
+              initStrategyData: initData,
+              token: data.payoutToken,
+              amount: BigInt(0),
+              metadata: {
+                protocol: 1n,
+                pointer: metadataCid,
+              },
+              managers: data.managers,
+            }),
+          ];
         },
         getProgressSteps: getCreateRoundProgressSteps,
         postIndexerHook: async (receipt: TransactionReceipt) => {

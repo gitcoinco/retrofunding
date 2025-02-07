@@ -2,17 +2,9 @@
 
 import { useParams } from "react-router";
 import { PoolSummary } from "@gitcoin/ui/pool";
-import { PoolType } from "@gitcoin/ui/types";
 import { MessagePage } from "@/components/Message";
-import { useGetRoundByChainIdAndPoolId } from "@/hooks/allo-indexer/getRoundByChainIdAndPoolId";
+import { useGetRoundByChainIdAndPoolId } from "@/hooks/allo-indexer";
 import { PoolTabs } from "./tabs";
-
-interface PoolTabsProps {
-  chainId: number;
-  poolId: string;
-  poolData: any; // replace 'any' with your actual type
-  onUpdate: () => void;
-}
 
 export const ManagePool = () => {
   const { chainId, poolId } = useParams();
@@ -61,12 +53,7 @@ export const ManagePool = () => {
         donationsEndTime={poolData.donationsEndTime}
       />
 
-      <PoolTabs
-        chainId={chainIdNumber}
-        poolId={poolId}
-        poolData={poolData}
-        onUpdate={() => refetch()}
-      />
+      <PoolTabs chainId={chainIdNumber} poolId={poolId} poolData={poolData} onUpdate={refetch} />
     </div>
   );
 };

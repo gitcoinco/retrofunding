@@ -1,3 +1,4 @@
+import { Address, Hex } from "viem";
 import { ApplicationMetadata, RoundMetadata } from "./roundMetadata";
 
 export type ProgramWithRounds = {
@@ -46,4 +47,20 @@ export type RetroRound = {
     type: string;
     info: string;
   };
+  applications: {
+    id: string;
+    anchorAddress: Address;
+    metadata: {
+      application: {
+        project: {
+          title: string;
+          logoImg?: string;
+          bannerImg?: string;
+        };
+        recipient: Address;
+      };
+    };
+    status: string;
+    distributionTransaction?: Hex;
+  }[];
 };
