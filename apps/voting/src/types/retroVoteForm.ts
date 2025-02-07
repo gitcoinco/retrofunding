@@ -1,9 +1,6 @@
-interface RetroVoteValue {
+export interface BallotValues {
   metricId: string;
   name: string;
-  amount: number;
-}
-
-export interface RetroVoteFormData {
-  metrics: RetroVoteValue[];
+  amount?: number;
+  locked?: boolean;
 }

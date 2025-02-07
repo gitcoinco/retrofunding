@@ -16,7 +16,8 @@ export const getPool = async (alloPoolId: string, chainId: number): Promise<Pool
   try {
     const response = await executeQuery(getPoolQuery, { alloPoolId, chainId });
     const pool = response.pools[0];
-    pool.metricIdentifiers = pool.metricIdentifiers.split(",");
+    const metrics = pool?.metricIdentifiers;
+    pool.metricIdentifiers = metrics ? metrics.split(",") : [];
     pool.distributionData = JSON.parse(pool.distributionData) as DistributionData;
     return pool;
   } catch (error) {

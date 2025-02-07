@@ -8,8 +8,10 @@ const chainData = getChains();
 const { alchemyId, infuraId, isDevelopment, availableNetworks } = {
   alchemyId: import.meta.env.VITE_ALCHEMY_ID,
   infuraId: import.meta.env.VITE_INFURA_ID,
-  isDevelopment: import.meta.env.VITE_MODE === "development",
-  availableNetworks: [10, 11155111],
+  isDevelopment: import.meta.env.VITE_ENV === "development",
+  availableNetworks: chainData
+    .filter((chain) => Boolean(chain.contracts.retroFunding))
+    .map((chain) => chain.id),
 };
 
 interface RpcConfig {

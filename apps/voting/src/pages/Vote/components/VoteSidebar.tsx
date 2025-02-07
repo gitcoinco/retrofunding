@@ -1,8 +1,8 @@
 "use client";
 
 import { AllocationSidebar } from "@gitcoin/ui";
-import { RetroVote } from "@/types";
 import { usePredictionMetricSidebar } from "@/hooks";
+import { RetroVote } from "@/types";
 
 export const VoteSidebar = ({
   isLoading,
@@ -15,8 +15,13 @@ export const VoteSidebar = ({
   chainId?: number;
   ballot?: RetroVote[];
 }) => {
-
-  const { sortedProjects, chartData, isAscending, toggleSort, isLoading: predictionIsLoading } = usePredictionMetricSidebar({
+  const {
+    sortedProjects,
+    chartData,
+    isAscending,
+    toggleSort,
+    isLoading: predictionIsLoading,
+  } = usePredictionMetricSidebar({
     poolId,
     chainId,
     ballot,
@@ -28,6 +33,7 @@ export const VoteSidebar = ({
       title="Allocation preview"
       description="This is a preview of the allocation"
       projects={sortedProjects}
+      className="hidden lg:block"
       chartData={chartData}
       sortConfig={{ isAscending, onClick: toggleSort }}
     />
