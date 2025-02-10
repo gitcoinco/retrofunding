@@ -1,23 +1,77 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { IconType, SideNav, SideNavItem } from "@gitcoin/ui";
+import { Address, Hex } from "viem";
+import { useAccount } from "wagmi";
+import { EditProgramModal, ProgramDetails } from "@/components/EditProgramModal";
+
+interface ProgramItem {
+  name: string;
+  chainId: number;
+  programId: string;
+  iconType?: IconType;
+  admins: Address[];
+  owner: Address;
+}
+
+interface RoundItem {
+  name: string;
+  chainId: number;
+  roundId: string;
+  iconType?: IconType;
+}
+
+const getProgramDetailsFromId = (
+  programId?: string,
+  connectedAddress?: Address,
+  programItems?: ProgramItem[],
+): ProgramDetails => {
+  const program = programItems?.find((item) => item.programId === programId);
+  return {
+    name: program?.name ?? "",
+    chainId: program?.chainId ?? 0,
+    admins: program?.admins ?? [],
+    isProgramOwner: program?.owner?.toLowerCase() === connectedAddress?.toLowerCase(),
+    programId: program?.programId as Hex,
+  };
+};
 
 export const AdminSideNav = ({
   programItems = [],
   roundItems = [],
+  refetch,
 }: {
-  programItems: { name: string; chainId: number; programId: string; iconType?: IconType }[];
-  roundItems: { name: string; chainId: number; roundId: string; iconType?: IconType }[];
+  programItems: ProgramItem[];
+  roundItems: RoundItem[];
+  refetch: () => Promise<void>;
 }) => {
   const navigate = useNavigate();
+  const [isEditProgramModalOpen, setIsEditProgramModalOpen] = useState(false);
 
+  const [programDetails, setProgramDetails] = useState<ProgramDetails>(
+    getProgramDetailsFromId(undefined, undefined, programItems),
+  );
+  const { address } = useAccount();
   const onClick = (id: string | undefined) => {
     if (id) {
-      navigate(id);
+      if (id.includes("manage-program")) {
+        const programId = id.split("/")[2];
+        setIsEditProgramModalOpen(true);
+        setProgramDetails(getProgramDetailsFromId(programId, address, programItems));
+      } else {
+        navigate(id);
+      }
     }
   };
+
+  useEffect(() => {
+    const programId = programDetails.programId;
+    if (programId) {
+      setProgramDetails(getProgramDetailsFromId(programId, address, programItems));
+    }
+  }, [programItems]);
 
   const items = useMemo<SideNavItem[]>(
     () => [
@@ -50,5 +104,15 @@ export const AdminSideNav = ({
     [programItems, roundItems],
   );
 
-  return <SideNav className="w-72" items={items} onClick={(id) => onClick(id)} />;
+  return (
+    <>
+      <SideNav className="w-72" items={items} onClick={(id) => onClick(id)} />
+      <EditProgramModal
+        isOpen={isEditProgramModalOpen}
+        onOpenChange={setIsEditProgramModalOpen}
+        programDetails={programDetails}
+        refetch={refetch}
+      />
+    </>
+  );
 };
