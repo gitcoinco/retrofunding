@@ -5,5 +5,5 @@ export * from "./useCreateRound";
 export * from "./useDistribute";
 export * from "./useUpdateRoundMetadata";
 export * from "./useUpdateTimestamps";
-
+export * from "./useUpdateProgram";
 export * from "./utils";
