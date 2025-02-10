@@ -4,7 +4,7 @@ import { useToast } from "@gitcoin/ui/hooks/useToast";
 import { Distribute } from "@gitcoin/ui/retrofunding";
 import { ApplicationPayout, PoolConfig } from "@gitcoin/ui/types";
 import { RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
-import { Address, getAddress, recoverMessageAddress } from "viem";
+import { Address, getAddress } from "viem";
 import { useWalletClient } from "wagmi";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { MessagePage } from "@/components/Message";
@@ -177,7 +177,7 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
       }
       const hash = await deterministicKeccakHash({
         alloPoolId: roundData.id,
-        chainId: roundData.chainId.toString(),
+        chainId: roundData.chainId,
       });
       const signature = await walletClient.signMessage({
         message: hash,
@@ -186,7 +186,7 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
       await updateCustomDistribution({
         alloPoolId: roundData.id,
         chainId: roundData.chainId,
-        signature: "0xdeadbeef",
+        signature,
         distribution: values.map((value) => ({
           alloApplicationId: value.id,
           distributionPercentage: value.payoutPercentage,
@@ -219,19 +219,10 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
       const signature = await walletClient.signMessage({
         message: hash,
       });
-
-      const recoveredAddress = await recoverMessageAddress({
-        message: hash,
-        signature: signature,
-      });
-      console.log(
-        "recoveredAddress === walletClient.account.address",
-        getAddress(recoveredAddress) === getAddress(walletClient.account.address),
-      );
       await deleteCustomDistribution({
         alloPoolId: roundData.id,
         chainId: roundData.chainId,
-        signature: "0xdeadbeef",
+        signature,
       });
       await refetchPoolDistribution();
       toast({
