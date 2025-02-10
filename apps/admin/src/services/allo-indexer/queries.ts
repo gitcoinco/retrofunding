@@ -12,6 +12,7 @@ export const getProgramsAndRoundsByUserAndTagQuery = gql`
       }
     ) {
       id
+      name
       chainId
       metadata
       createdAtBlock

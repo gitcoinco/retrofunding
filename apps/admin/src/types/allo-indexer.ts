@@ -4,6 +4,7 @@ import { ApplicationMetadata, RoundMetadata } from "./roundMetadata";
 export type ProgramWithRounds = {
   id: string;
   chainId: number;
+  name: string;
   metadata: {
     name: string;
   };
