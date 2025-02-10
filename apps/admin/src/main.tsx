@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router";
+import ReactDOM from "react-dom/client";
+import { Routes, Route, HashRouter } from "react-router";
 import { MainLayout } from "@/layouts/MainLayout";
 import App from "./App";
 import { CreateProgram } from "./pages/CreateProgram";
@@ -8,11 +8,11 @@ import { CreateRound } from "./pages/CreateRound";
 import { ManagePool } from "./pages/ManagePool";
 import "./index.css";
 
-// TODO: Add route protection when the user is not connected
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
-createRoot(document.getElementById("root")!).render(
+root.render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<App />} />
@@ -23,6 +23,6 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/:chainId/:poolId/manage-round" element={<ManagePool />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>,
 );

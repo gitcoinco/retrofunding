@@ -29,20 +29,19 @@ export const getProgramByIdAndChainId = async (programId: string, chainId: numbe
     programId: programId.toLowerCase(),
     chainId,
   })) as {
+    // NOTE: Program name depends on the value stored onChain instead of the metadataCID
     projects: {
       roles: {
         address: string;
       }[];
-      metadata: {
-        name: string;
-      };
+      name: string;
       chainId: number;
       id: string;
     }[];
   };
   const program = response.projects[0];
   return {
-    programName: program.metadata.name,
+    programName: program.name,
     chainId: program.chainId,
     programId: program.id,
     members: program.roles.map((role) => role.address),

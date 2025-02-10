@@ -5,10 +5,10 @@ import { useNavigate, useParams } from "react-router";
 import { Button } from "@gitcoin/ui";
 import { LandingPage } from "@gitcoin/ui/retrofunding";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Hex } from "viem";
 import { useAccount } from "wagmi";
 import { useGetRoundWithApplications } from "@/hooks";
 import { useIsVoter } from "@/hooks/useIsVoter";
-import { Hex } from "viem";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -41,23 +41,22 @@ export const Home = () => {
     const chainId = formData.get("chainId") as string;
     const poolId = formData.get("poolId") as string;
     if (poolId && chainId) {
-      navigate(`/${chainId}/${poolId}`, { replace: true });
+      navigate(`/${chainId}/${poolId}/vote`, { replace: true });
     }
   };
 
-  const isShowForm = !roundIdParam || !chainIdParam;
+  const isShowForm = !roundIdParam || !chainIdParam || !window.location.pathname.includes("/vote");
 
   const actionButton = useMemo(
     () =>
-      isVoter === false?
-      <p>You are not a voter</p> // TODO: add the modal based on designs
-      :
-      isShowForm ? (
+      isVoter === false ? (
+        <p>You are not a voter</p> // TODO: add the modal based on designs
+      ) : isShowForm ? (
         <form onSubmit={handleSubmit}>
           <div className="flex items-center gap-2">
             <input type="text" name="chainId" placeholder="Enter Chain ID" required />
             <input type="text" name="poolId" placeholder="Enter Round ID" required />
-            <Button type="submit" value="Go to Round" />
+            <Button type="submit" value="Go to Round" variant="light-purple" />
           </div>
         </form>
       ) : (

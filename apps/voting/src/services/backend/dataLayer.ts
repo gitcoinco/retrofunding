@@ -17,7 +17,10 @@ export const getVote = async (
   address: Hex,
 ): Promise<GetVoteResponse> => {
   const response = await executeQuery(getVoteQuery, { alloPoolId, chainId, address });
-  return response.votes[0];
+  return {
+    updatedAt: response.votes[0].updatedAt,
+    ballot: JSON.parse(response.votes[0].ballot),
+  };
 };
 
 export const getVoters = async (alloPoolId: string, chainId: number): Promise<string[]> => {

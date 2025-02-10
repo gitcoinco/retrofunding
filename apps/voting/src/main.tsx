@@ -1,13 +1,15 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router";
+import ReactDOM from "react-dom/client";
+import { HashRouter, Routes, Route } from "react-router";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Home, Vote } from "./pages";
 import "./index.css";
 
-createRoot(document.getElementById("root")!).render(
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+
+root.render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="*" element={<Home />} />
@@ -15,6 +17,6 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/:chainId/:roundId/vote" element={<Vote />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>,
 );

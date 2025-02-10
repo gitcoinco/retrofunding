@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ProgressModal } from "@gitcoin/ui/client";
 import { useToast } from "@gitcoin/ui/hooks/useToast";
 import { Distribute } from "@gitcoin/ui/retrofunding";
@@ -5,8 +6,10 @@ import { ApplicationPayout, PoolConfig } from "@gitcoin/ui/types";
 import { RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
 import { Address, getAddress } from "viem";
 import { useWalletClient } from "wagmi";
+import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { MessagePage } from "@/components/Message";
 import { usePoolDistribution } from "@/hooks/backend/usePoolDistribution";
+import { deterministicKeccakHash } from "@/hooks/checker/usePerformEvaluation";
 import { useBalance } from "@/hooks/contracts";
 import { useDistribute } from "@/hooks/contracts/useDistribute/useDistribute";
 import { useFundRound } from "@/hooks/contracts/useFundRound";
@@ -14,8 +17,6 @@ import { deleteCustomDistribution, updateCustomDistribution } from "@/services/b
 import { RetroRound } from "@/types";
 import { transformDistributeApplications } from "@/utils";
 import { getPoolStatus } from "@/utils/getPoolStatus";
-
-// TODO: export from gitcoin-ui all the components for the modal to be used as user confirmations in the actions
 
 interface TabDistributeProps {
   roundData: RetroRound;
@@ -29,6 +30,9 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
   const strategy = roundData.strategyAddress as Address;
   const chainId = roundData.chainId;
 
+  const [edittedPayouts, setEdittedPayouts] = useState<ApplicationPayout[]>([]);
+  const [isEditPayoutsDialogOpen, setIsEditPayoutsDialogOpen] = useState(false);
+  const [isResetPayoutsDialogOpen, setIsResetPayoutsDialogOpen] = useState(false);
   const {
     data: balance,
     isLoading: isBalanceLoading,
@@ -168,14 +172,21 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
       throw new Error(`Total payout percentage must be 100%`);
     }
     try {
-      await walletClient?.signMessage({
-        message: `I am signing my message to update the payouts for the round ${roundData.id}`,
+      if (!walletClient) {
+        throw new Error("Wallet client not found");
+      }
+      const hash = await deterministicKeccakHash({
+        alloPoolId: roundData.id,
+        chainId: roundData.chainId,
       });
+      const signature = await walletClient.signMessage({
+        message: hash,
+      });
+
       await updateCustomDistribution({
         alloPoolId: roundData.id,
         chainId: roundData.chainId,
-        // TODO: Get signature from user
-        signature: "0xdeadbeef",
+        signature,
         distribution: values.map((value) => ({
           alloApplicationId: value.id,
           distributionPercentage: value.payoutPercentage,
@@ -198,14 +209,20 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
 
   const onResetEdit = async () => {
     try {
-      await walletClient?.signMessage({
-        message: `I am signing my message to reset the payouts for the round ${roundData.id}`,
+      if (!walletClient) {
+        throw new Error("Wallet client not found");
+      }
+      const hash = await deterministicKeccakHash({
+        alloPoolId: roundData.id,
+        chainId: roundData.chainId,
+      });
+      const signature = await walletClient.signMessage({
+        message: hash,
       });
       await deleteCustomDistribution({
         alloPoolId: roundData.id,
         chainId: roundData.chainId,
-        // TODO: Get signature from user
-        signature: "0xdeadbeef",
+        signature,
       });
       await refetchPoolDistribution();
       toast({
@@ -230,11 +247,36 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
         canResetEdit={!!poolDistribution.customDistributionData}
         onFundRound={onFundRound}
         onDistribute={onDistribute}
-        onEditPayouts={onEditPayouts}
-        onResetEdit={onResetEdit}
+        onEditPayouts={async (values) => {
+          setEdittedPayouts(values);
+          setIsEditPayoutsDialogOpen(true);
+        }}
+        onResetEdit={async () => setIsResetPayoutsDialogOpen(true)}
       />
       <ProgressModal steps={steps} isOpen={isFunding} />
       <ProgressModal steps={distributeSteps} isOpen={isDistributing} />
+      <ConfirmationDialog
+        isOpen={isEditPayoutsDialogOpen}
+        onOpenChange={setIsEditPayoutsDialogOpen}
+        modalTitle="Edit voting distribution"
+        modalDescription="You can edit the voting distribution anytime, but once a project has been paid out, voting distribution becomes locked and cannot be changed. Make sure all changes are final before making payments."
+        buttonText="Continue"
+        onSubmit={async () => {
+          await onEditPayouts(edittedPayouts);
+          setIsEditPayoutsDialogOpen(false);
+        }}
+      />
+      <ConfirmationDialog
+        isOpen={isResetPayoutsDialogOpen}
+        onOpenChange={setIsResetPayoutsDialogOpen}
+        modalTitle="Reset voting distribution"
+        modalDescription="Reset the distribution to the actual distribution calculated by the round badgeholder's votes."
+        buttonText="Reset"
+        onSubmit={async () => {
+          await onResetEdit();
+          setIsResetPayoutsDialogOpen(false);
+        }}
+      />
     </>
   );
 };

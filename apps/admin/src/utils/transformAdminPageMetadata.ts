@@ -1,5 +1,6 @@
 import { getChainInfo } from "@gitcoin/ui/lib";
 import { PoolStatus, PoolType, PoolData } from "@gitcoin/ui/types";
+import { Address, Hex, zeroAddress } from "viem";
 import { config } from "@/config";
 import { RetroRound, ProgramWithRounds } from "@/types/allo-indexer";
 
@@ -23,7 +24,7 @@ export const getPoolStatus = (pool: {
 export const transformProgramData = (program: ProgramWithRounds) => ({
   id: program.id,
   chainId: program.chainId,
-  title: program.metadata.name,
+  title: program.name,
   operatorsCount: program.roles?.length || 0,
   roundsCount: program.retroRounds?.length || 0,
   createdAtBlock: program.createdAtBlock,
@@ -46,10 +47,13 @@ export const getProgramsAndRoundsItems = (programs: ProgramWithRounds[]) => {
     )
     .flat();
   const programsItems = programs.map((program) => ({
-    name: program.metadata.name,
-    programId: program.id,
+    name: program.name,
+    programId: program.id as Hex,
     chainId: program.chainId,
     iconType: getChainInfo(program.chainId).icon,
+    admins: (program.roles?.map((role) => role.address) ?? []) as Address[],
+    owner: (program.roles?.find((role) => role.role === "OWNER")?.address ??
+      zeroAddress) as Address,
   }));
   return { roundsItems, programsItems };
 };

@@ -49,8 +49,8 @@ export const getRoundWithApplications = async (
         projectId: application.metadata.application.project.id,
         title: application.metadata.application.project.title,
         description: application.metadata.application.project.description,
-        logoImg: application.metadata.application.project.logoImg,
-        bannerImg: application.metadata.application.project.bannerImg,
+        logoImg: `https://ipfs.io/ipfs/${application.metadata.application.project.logoImg}`,
+        bannerImg: `https://ipfs.io/ipfs/${application.metadata.application.project.bannerImg}`,
         metaPtr: application.metadata.application.project.metaPtr,
         website: application.metadata.application.project.website,
         createdAt: application.metadata.application.project.createdAt,
@@ -88,17 +88,16 @@ export const getProgramByIdAndChainId = async (programId: string, chainId: numbe
     programId: programId.toLowerCase(),
     chainId,
   })) as {
+    // NOTE: Program name depends on the value stored onChain instead of the metadataCID
     projects: {
-      metadata: {
-        name: string;
-      };
+      name: string;
       chainId: number;
       id: string;
     }[];
   };
   const program = response.projects[0];
   return {
-    programName: program.metadata.name,
+    programName: program.name,
     chainId: program.chainId,
     programId: program.id,
   };

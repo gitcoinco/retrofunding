@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { vote } from "@/services/backend/api";
-import { RetroVoteBody, RetroVoteFormData } from "@/types";
+import { RetroVoteBody } from "@/types";
 
 export type VoteParams = {
-  data: RetroVoteFormData;
+  data: RetroVoteBody;
 };
 
 export const useVote = () => {
