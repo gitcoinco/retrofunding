@@ -68,6 +68,7 @@ export const getProgramsAndRoundsByUserAndTagQuery = gql`
 export const getProgramByIdAndChainIdQuery = gql`
   query ($programId: String!, $chainId: Int!) {
     projects(filter: { id: { equalTo: $programId }, chainId: { equalTo: $chainId } }) {
+      name
       metadata
       chainId
       id
