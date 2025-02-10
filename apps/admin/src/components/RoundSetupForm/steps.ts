@@ -276,13 +276,8 @@ export const getRoundSetupSteps = async ({
     fields: voterAllowlistFields,
     persistKey: "round-setup-voter-allowlist",
   };
-
-  const deployFields: FormField[] = [
-    // TODO: add preview
-  ];
-
   const reviewDeployArgs = {
-    fields: deployFields,
+    fields: [],
     persistKey: "round-setup-review-deploy",
   };
 
@@ -314,7 +309,7 @@ export const getRoundSetupSteps = async ({
       },
     },
     {
-      name: "Round description",
+      name: "Round description & requirements",
       formProps: roundDescriptionRequirementsArgs,
       stepProps: {
         formTitle: "Round description and requirements",
