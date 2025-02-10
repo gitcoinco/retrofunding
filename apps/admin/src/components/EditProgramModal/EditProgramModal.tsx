@@ -2,7 +2,7 @@ import { Modal, Dialog, DialogTitle, IconType, Icon } from "@gitcoin/ui";
 import { Form, ProgressModal } from "@gitcoin/ui/client";
 import { useToast } from "@gitcoin/ui/hooks/useToast";
 import { cn } from "@gitcoin/ui/lib";
-import { Address, Hex } from "viem";
+import { Address, getAddress, Hex } from "viem";
 import { useUpdateProgram } from "@/hooks/contracts/useUpdateProgram";
 import { getEditProgramFormFields } from "./getEditProgramFormFields";
 
@@ -29,15 +29,19 @@ const getNormalizedAdminSet = (admins: Address[]): Set<string> =>
 const getAdminChanges = (
   oldAdmins: Address[],
   newAdmins: Address[],
-): { removed: string[]; added: string[] } => {
+): { removed: Address[]; added: Address[] } => {
   const originalSet = getNormalizedAdminSet(oldAdmins);
   const newSet = getNormalizedAdminSet(newAdmins);
 
   // Addresses removed: in the original set but not in the new set.
-  const removed = [...originalSet].filter((admin) => !newSet.has(admin));
+  const removed = [...originalSet]
+    .filter((admin) => !newSet.has(admin))
+    .map((admin) => getAddress(admin));
 
   // Addresses added: in the new set but not in the original set.
-  const added = [...newSet].filter((admin) => !originalSet.has(admin));
+  const added = [...newSet]
+    .filter((admin) => !originalSet.has(admin))
+    .map((admin) => getAddress(admin));
 
   return { removed, added };
 };
@@ -68,8 +72,8 @@ export const EditProgramModal = ({
         {
           chainId: programDetails.chainId,
           programId: programDetails.programId,
-          membersToRemove: removed as Address[],
-          membersToAdd: added as Address[],
+          membersToRemove: removed,
+          membersToAdd: added,
           newName,
         },
         {
