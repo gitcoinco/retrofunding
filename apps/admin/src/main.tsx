@@ -18,8 +18,6 @@ root.render(
           <Route path="/" element={<App />} />
           <Route path="/create-program" element={<CreateProgram />} />
           <Route path="/create-round" element={<CreateRound />} />
-          {/* TODO: create manage program page */}
-          {/* <Route path="/:chainId/:programId/manage-program" element={<ManageProgram />} /> */}
           <Route path="/:chainId/:poolId/manage-round" element={<ManagePool />} />
         </Route>
       </Routes>
