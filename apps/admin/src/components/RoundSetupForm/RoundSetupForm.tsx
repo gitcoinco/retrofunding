@@ -9,6 +9,7 @@ import { useAccount } from "wagmi";
 import { MessagePage } from "@/components/Message";
 import { useCreateRound } from "@/hooks";
 import { RoundSetupFormData } from "@/types";
+import { LastStepFormSummary } from "./components";
 import { getRoundSetupSteps } from "./steps";
 
 export const RoundSetupForm = (): React.ReactNode => {
@@ -79,6 +80,7 @@ export const RoundSetupForm = (): React.ReactNode => {
         storeName={STORE_NAME}
         steps={roundSteps}
         stepsPersistKey={STEPS_PERSIST_KEY}
+        lastStepFormSummary={LastStepFormSummary}
       />
       <ProgressModal isOpen={isCreating} steps={steps} />
     </>
