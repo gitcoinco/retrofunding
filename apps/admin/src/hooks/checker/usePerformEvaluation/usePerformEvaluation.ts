@@ -3,7 +3,8 @@ import { EvaluationBody } from "@gitcoin/ui/checker";
 import { useMutation } from "@tanstack/react-query";
 import { Hex } from "viem";
 import { useAccount, useWalletClient } from "wagmi";
-import { deterministicKeccakHash, submitEvaluation } from "./utils";
+import { getDeterministicObjectKeccakHash } from "@/utils";
+import { submitEvaluation } from "./utils";
 
 export const usePerformEvaluation = () => {
   const [evaluationBody, setEvaluationBody] = useState<EvaluationBody | null>(null);
@@ -23,7 +24,7 @@ export const usePerformEvaluation = () => {
       throw new Error("No evaluation body found");
     }
 
-    const hash = await deterministicKeccakHash({
+    const hash = await getDeterministicObjectKeccakHash({
       chainId: evaluationBody.chainId,
       alloPoolId: evaluationBody.alloPoolId,
       alloApplicationId: evaluationBody.alloApplicationId,

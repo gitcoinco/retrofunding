@@ -3,11 +3,12 @@ import { toast } from "@gitcoin/ui/hooks/useToast";
 import { FormField } from "@gitcoin/ui/types";
 import { Hex } from "viem";
 import { MessagePage } from "@/components/Message";
+import { useUpdatePoolEligibility } from "@/hooks/backend";
 import { useGetPool } from "@/hooks/backend/useGetPool";
-import { updatePoolEligibility } from "@/services/backend/api";
 
 export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string }) => {
   const { data: pool, isLoading } = useGetPool(poolId, chainId);
+  const { mutateAsync: updatePoolEligibility } = useUpdatePoolEligibility();
 
   const voterAllowlistFields: FormField[] = [
     {
@@ -48,19 +49,33 @@ export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string 
   }
 
   const handleSubmit = async (values: any) => {
-    await updatePoolEligibility({
-      alloPoolId: poolId,
-      chainId: chainId,
-      eligibilityType: "linear",
-      data: {
-        voters: values.voterAllowlist.map((voter: Hex) => voter.trim()),
+    await updatePoolEligibility(
+      {
+        alloPoolId: poolId,
+        chainId: chainId,
+        eligibilityType: "linear",
+        data: {
+          voters: values.voterAllowlist.map((voter: Hex) => voter.trim()),
+        },
       },
-    });
-
-    toast({
-      status: "success",
-      description: "Voter allowlist updated successfully",
-    });
+      {
+        onSuccess: (data: boolean) => {
+          if (data) {
+            toast({
+              status: "success",
+              description: "Voter allowlist updated successfully",
+            });
+          }
+        },
+        onError: (error: any) => {
+          console.error(error);
+          toast({
+            status: "error",
+            description: "Error updating voter allowlist",
+          });
+        },
+      },
+    );
   };
 
   return <Form step={voterStep} onSubmit={async (values: any) => await handleSubmit(values)} />;

@@ -5,15 +5,16 @@ import { Distribute } from "@gitcoin/ui/retrofunding";
 import { ApplicationPayout, PoolConfig } from "@gitcoin/ui/types";
 import { RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
 import { Address, getAddress } from "viem";
-import { useWalletClient } from "wagmi";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { MessagePage } from "@/components/Message";
+import {
+  useDeleteCustomDistribution,
+  useUpdateCustomDistribution,
+} from "@/hooks/backend/useCustomDistribution";
 import { usePoolDistribution } from "@/hooks/backend/usePoolDistribution";
-import { deterministicKeccakHash } from "@/hooks/checker/usePerformEvaluation";
 import { useBalance } from "@/hooks/contracts";
 import { useDistribute } from "@/hooks/contracts/useDistribute/useDistribute";
 import { useFundRound } from "@/hooks/contracts/useFundRound";
-import { deleteCustomDistribution, updateCustomDistribution } from "@/services/backend/api";
 import { RetroRound } from "@/types";
 import { transformDistributeApplications } from "@/utils";
 import { getPoolStatus } from "@/utils/getPoolStatus";
@@ -40,14 +41,17 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
     refetch: refetchBalance,
   } = useBalance(strategy, chainId, token);
 
+  // This to be true only if non of the applications have a distribution transaction
+  const canSyncDistribution =
+    roundData.applications.filter((application) => Boolean(application.distributionTransaction))
+      .length === 0;
+
   const {
     data: poolDistribution,
     isLoading: isPoolDistributionLoading,
     isError: isPoolDistributionError,
     refetch: refetchPoolDistribution,
-  } = usePoolDistribution(roundData.id, roundData.chainId);
-
-  const { data: walletClient } = useWalletClient();
+  } = usePoolDistribution(roundData.id, roundData.chainId, canSyncDistribution);
 
   const { toast } = useToast();
 
@@ -55,6 +59,9 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
   const { mutateAsync: fundRound, isPending: isFunding } = fundRoundMutation;
   const { steps: distributeSteps, distributeMutation } = useDistribute();
   const { mutateAsync: distribute, isPending: isDistributing } = distributeMutation;
+
+  const { mutateAsync: updateCustomDistribution } = useUpdateCustomDistribution();
+  const { mutateAsync: deleteCustomDistribution } = useDeleteCustomDistribution();
 
   if (isBalanceLoading || isPoolDistributionLoading) {
     return <MessagePage title="Loading..." message="Loading..." />;
@@ -137,28 +144,33 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
       amount: value.amount.toString(),
       index: Number(value.applicationId) + 1,
     }));
-    try {
-      await distribute({
+    await distribute(
+      {
         distributionData,
         data,
         poolId: roundData.id,
         chainId: roundData.chainId,
         strategyAddress: strategy,
-      });
-      await onUpdate();
-      await refetchBalance();
-      toast({
-        title: "Distribution successful",
-        description: "The distribution has been successfully completed",
-        status: "success",
-      });
-    } catch (error) {
-      toast({
-        title: "Distribution failed",
-        description: "The distribution has failed",
-        status: "error",
-      });
-    }
+      },
+      {
+        onSuccess: async () => {
+          await onUpdate();
+          await refetchBalance();
+          toast({
+            title: "Distribution successful",
+            description: "The distribution has been successfully completed",
+            status: "success",
+          });
+        },
+        onError: () => {
+          toast({
+            title: "Distribution failed",
+            description: "The distribution has failed",
+            status: "error",
+          });
+        },
+      },
+    );
   };
 
   const onEditPayouts = async (values: ApplicationPayout[]) => {
@@ -171,72 +183,60 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
       });
       throw new Error(`Total payout percentage must be 100%`);
     }
-    try {
-      if (!walletClient) {
-        throw new Error("Wallet client not found");
-      }
-      const hash = await deterministicKeccakHash({
-        alloPoolId: roundData.id,
-        chainId: roundData.chainId,
-      });
-      const signature = await walletClient.signMessage({
-        message: hash,
-      });
 
-      await updateCustomDistribution({
+    await updateCustomDistribution(
+      {
         alloPoolId: roundData.id,
         chainId: roundData.chainId,
-        signature,
         distribution: values.map((value) => ({
           alloApplicationId: value.id,
           distributionPercentage: value.payoutPercentage,
         })),
-      });
-      await refetchPoolDistribution();
-      toast({
-        title: "Payouts updated successfully",
-        description: "The payouts have been successfully updated",
-        status: "success",
-      });
-    } catch (error) {
-      toast({
-        title: "Payout update failed",
-        description: "The payout update has failed",
-        status: "error",
-      });
-    }
+      },
+      {
+        onSuccess: async () => {
+          await refetchPoolDistribution();
+          toast({
+            title: "Payouts updated successfully",
+            description: "The payouts have been successfully updated",
+            status: "success",
+          });
+        },
+        onError: () => {
+          toast({
+            title: "Payout update failed",
+            description: "The payout update has failed",
+            status: "error",
+          });
+        },
+      },
+    );
   };
 
   const onResetEdit = async () => {
-    try {
-      if (!walletClient) {
-        throw new Error("Wallet client not found");
-      }
-      const hash = await deterministicKeccakHash({
+    await deleteCustomDistribution(
+      {
         alloPoolId: roundData.id,
         chainId: roundData.chainId,
-      });
-      const signature = await walletClient.signMessage({
-        message: hash,
-      });
-      await deleteCustomDistribution({
-        alloPoolId: roundData.id,
-        chainId: roundData.chainId,
-        signature,
-      });
-      await refetchPoolDistribution();
-      toast({
-        title: "Payouts reset successfully",
-        description: "The payouts have been successfully reset",
-        status: "success",
-      });
-    } catch (error) {
-      toast({
-        title: "Reset payouts failed",
-        description: "The payouts reset has failed",
-        status: "error",
-      });
-    }
+      },
+      {
+        onSuccess: async () => {
+          await refetchPoolDistribution();
+          toast({
+            title: "Payouts reset successfully",
+            description: "The payouts have been successfully reset",
+            status: "success",
+          });
+        },
+        onError: () => {
+          toast({
+            title: "Reset payouts failed",
+            description: "The payouts reset has failed",
+            status: "error",
+          });
+        },
+      },
+    );
   };
 
   return (
