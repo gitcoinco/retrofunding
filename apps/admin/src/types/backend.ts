@@ -26,6 +26,7 @@ export interface CreatePoolBody extends AlloPoolIdChainId {
 export type SyncPoolBody = AlloPoolIdChainId;
 
 export interface UpdatePoolEligibilityBody extends AlloPoolIdChainId {
+  signature: Hex;
   eligibilityType: string;
   data: LinearEligibilityData;
 }
