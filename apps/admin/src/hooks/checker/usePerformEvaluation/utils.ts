@@ -1,7 +1,5 @@
 // CHECKER
 import { EvaluationBody, SyncPoolBody } from "@gitcoin/ui/checker";
-import stringify from "json-stringify-deterministic";
-import { type Hex, keccak256, toHex } from "viem";
 
 export const CHECKER_ENDPOINT = "https://api.checker.gitcoin.co";
 
@@ -57,9 +55,4 @@ export async function syncPool(syncPoolBody: SyncPoolBody): Promise<boolean> {
     console.error("Error syncing pool:", error);
     throw error;
   }
-}
-
-export async function deterministicKeccakHash<T>(obj: T): Promise<Hex> {
-  const deterministicString = stringify(obj);
-  return keccak256(toHex(deterministicString));
 }
