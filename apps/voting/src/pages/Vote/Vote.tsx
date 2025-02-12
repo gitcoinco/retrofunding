@@ -35,6 +35,17 @@ export const Vote = () => {
     chainId,
   });
 
+  const { donationsEndTime: votingEndTime, donationsStartTime: votingStartTime } = round ?? {};
+
+  const dateNow = new Date();
+
+  const isBeforeVotingPeriod = votingStartTime ? dateNow < votingStartTime : undefined;
+  const isAfterVotingPeriod = votingEndTime ? dateNow >= votingEndTime : undefined;
+  const isVotingPeriod =
+    votingStartTime && votingEndTime
+      ? dateNow >= votingStartTime && dateNow < votingEndTime
+      : undefined;
+
   const availableMetricsIds = round?.impactMetrics;
 
   const { data: metrics, isLoading: metricsIsLoading } = useGetMetrics({
@@ -161,6 +172,7 @@ export const Vote = () => {
         availableMetrics={availableMetrics}
         maxAllocation={100}
         onChange={handleFormChange}
+        // disabled={isVotingPeriod === false}
         onSubmit={(values) => {
           setBallotToSubmit(values);
           setIsSubmitBallotDialogOpen(true);
