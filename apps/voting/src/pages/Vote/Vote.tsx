@@ -12,7 +12,6 @@ import { useGetMetrics } from "@/hooks/useGetMetrics";
 import { useGetVote } from "@/hooks/useGetVote";
 import { RetroVoteBody, BallotValues } from "@/types";
 import { getDeterministicObjHash } from "@/utils";
-import { Home } from "../Home";
 import { SumbitBalllotDialog } from "./components/SumbitBalllotDialog";
 import { VoteSidebar } from "./components/VoteSidebar";
 
@@ -148,9 +147,6 @@ export const Vote = () => {
 
   if (voteIsLoading || roundIsLoading || metricsIsLoading) {
     return <div className="flex h-screen items-center justify-center">Loading...</div>;
-  }
-  if (!address) {
-    return <Home />;
   }
 
   return (
