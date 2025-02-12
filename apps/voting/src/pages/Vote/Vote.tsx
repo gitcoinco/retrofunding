@@ -21,15 +21,17 @@ export const Vote = () => {
   const [currentBallot, setCurrentBallot] = useState<
     { metricIdentifier: string; voteShare: number }[]
   >([]);
+  const { roundId: roundIdParam, chainId: chainIdParam } = useParams();
+  const chainId = parseInt(chainIdParam as string);
+  const roundId = roundIdParam as string;
+
   const [isSubmitBallotDialogOpen, setIsSubmitBallotDialogOpen] = useState(false);
   const { address } = useAccount();
-  const { roundId, chainId: chainIdString } = useParams();
-  const chainId = parseInt(chainIdString as string);
   const { data: walletClient } = useWalletClient();
   const { voteMutation } = useVote();
 
   const { data: round, isLoading: roundIsLoading } = useGetRoundWithApplications({
-    roundId: roundId as string,
+    roundId,
     chainId,
   });
 
@@ -41,11 +43,11 @@ export const Vote = () => {
   });
 
   const {
-    data: vote,
+    data: voteResponse,
     isLoading: voteIsLoading,
     refetch: refetchVote,
   } = useGetVote({
-    alloPoolId: roundId as string,
+    alloPoolId: roundId,
     chainId,
     address: address as Hex,
   });
@@ -73,21 +75,21 @@ export const Vote = () => {
   }, []);
 
   const alredySubmittedBallot = useMemo(() => {
-    const ballot = vote?.ballot?.map((vote) => ({
+    const ballot = voteResponse?.ballot.map((vote) => ({
       metricId: vote.metricIdentifier,
       amount: vote.voteShare,
       name:
         metrics?.find((metric) => metric.identifier === vote.metricIdentifier)?.title ??
-        "not found",
+        "Unknown metric name",
     }));
-    const submittedAt = vote?.updatedAt?.toString();
+    const submittedAt = voteResponse?.updatedAt?.toString();
     if (ballot && submittedAt) {
       return {
         ballot,
         submittedAt,
       };
     }
-  }, [vote, metrics]);
+  }, [voteResponse, metrics]);
 
   const handleSubmit = async (values: BallotValues[]) => {
     if (roundId && chainId && walletClient) {
