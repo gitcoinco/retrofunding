@@ -1,6 +1,7 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { getRoundWithApplications } from "@/services/allo-indexer/dataLayer";
-import { RetroRoundWithApplications  } from "@/types";
+import { RetroRoundWithApplications } from "@/types";
+import { mapRoundWithApplications } from "@/utils/mapRoundWithApplications";
 
 export const useGetRoundWithApplications = ({
   roundId,
@@ -11,7 +12,9 @@ export const useGetRoundWithApplications = ({
 }): UseQueryResult<RetroRoundWithApplications, Error> => {
   return useQuery({
     enabled: !!roundId && !!chainId,
-    queryKey: ["round", roundId, chainId],
+    queryKey: ["getRoundWithApplications", roundId, chainId],
     queryFn: () => getRoundWithApplications({ roundId: roundId!, chainId: chainId! }),
+    select: (data) => mapRoundWithApplications(data),
+    staleTime: 1000 * 60 * 10,
   });
 };

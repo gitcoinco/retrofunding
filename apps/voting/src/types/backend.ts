@@ -53,5 +53,5 @@ export interface RetroVote {
 
 export interface GetVoteResponse {
   updatedAt: Date;
-  ballot: RetroVote[];
+  ballot: string;
 }

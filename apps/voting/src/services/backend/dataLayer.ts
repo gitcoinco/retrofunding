@@ -15,27 +15,21 @@ export const getVote = async (
   alloPoolId: string,
   chainId: number,
   address: Hex,
-): Promise<GetVoteResponse> => {
-  const response = await executeQuery(getVoteQuery, { alloPoolId, chainId, address });
-  return {
-    updatedAt: response.votes[0].updatedAt,
-    ballot: JSON.parse(response.votes[0].ballot),
-  };
-};
+): Promise<{ votes: GetVoteResponse[] }> =>
+  executeQuery(getVoteQuery, { alloPoolId, chainId, address });
 
 export const getVoters = async (alloPoolId: string, chainId: number): Promise<string[]> => {
   const response = await executeQuery(getVotersQuery, { alloPoolId, chainId });
   return response.pools[0].eligibilityCriteria.data.voters;
 };
 
-export const getMetrics = async (identifiers?: string[]): Promise<Metric[]> => {
+export const getMetrics = async (identifiers?: string[]): Promise<{ metrics: Metric[] }> => {
   try {
     if (!identifiers || identifiers.length === 0) {
       const response = await executeQuery(getMetricsQuery, {});
       return response.metrics;
     }
-    const response = await executeQuery(getFilteredMetricsQuery, { identifiers });
-    return response.metrics;
+    return executeQuery(getFilteredMetricsQuery, { identifiers });
   } catch (error) {
     console.error("Error fetching metrics:", error);
     throw error;

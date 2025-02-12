@@ -1,22 +1,18 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter, Routes, Route } from "react-router";
-import { MainLayout } from "@/layouts/MainLayout";
-import { Home, Vote } from "./pages";
+import { HashRouter } from "react-router";
+import { Web3Providers } from "./providers";
+import { Router } from "./router";
 import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
   <StrictMode>
-    <HashRouter>
-      <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="*" element={<Home />} />
-          <Route path="/:chainId/:roundId" element={<Home />} />
-          <Route path="/:chainId/:roundId/vote" element={<Vote />} />
-        </Route>
-      </Routes>
-    </HashRouter>
+    <Web3Providers>
+      <HashRouter>
+        <Router />
+      </HashRouter>
+    </Web3Providers>
   </StrictMode>,
 );

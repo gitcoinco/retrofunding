@@ -11,7 +11,9 @@ export const useGetMetrics = ({
 }): UseQueryResult<Metric[], Error> => {
   return useQuery({
     enabled,
-    queryKey: ["metrics", identifiers],
+    queryKey: ["getMetrics", identifiers],
     queryFn: () => getMetrics(identifiers),
+    select: (data) => data.metrics,
+    staleTime: 1000 * 60 * 10,
   });
 };
