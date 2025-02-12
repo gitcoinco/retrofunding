@@ -1,9 +1,7 @@
-"use client";
-
 import { PropsWithChildren } from "react";
 import { LandingPage } from "@gitcoin/ui/retrofunding";
 
-export const Home = ({
+export const Landing = ({
   poolName,
   poolDescription,
   isLoading,
