@@ -1,6 +1,9 @@
+import { PropsWithChildren } from "react";
 import { LandingPage } from "@gitcoin/ui/retrofunding";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-export const Landing = () => {
-  return <LandingPage type="admin" actionButton={<ConnectButton />} />;
+export const Landing = ({
+  isLoading,
+  children,
+}: PropsWithChildren<{ poolName?: string; poolDescription?: string; isLoading?: boolean }>) => {
+  return <LandingPage type="admin">{isLoading ? <div>Loading...</div> : children}</LandingPage>;
 };
