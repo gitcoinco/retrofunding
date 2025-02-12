@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { getVoters } from "@/services/backend/dataLayer";
 import { Hex } from "viem";
+import { getVoters } from "@/services/backend/dataLayer";
 
 export const useIsVoter = ({
   alloPoolId,
@@ -13,11 +13,11 @@ export const useIsVoter = ({
 }): UseQueryResult<{ isVoter: boolean }, Error> => {
   return useQuery({
     enabled: !!alloPoolId && !!chainId && !!address,
-    queryKey: ["isVoter", alloPoolId, chainId, address],
+    queryKey: ["getVoters", alloPoolId, chainId, address],
     queryFn: async () => {
       const voters = await getVoters(alloPoolId, chainId);
       const isVoter = voters.some((voter) => voter === address);
-      return {isVoter};
+      return { isVoter };
     },
   });
 };
