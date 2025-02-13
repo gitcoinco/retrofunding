@@ -12,7 +12,7 @@ import { useGetMetrics } from "@/hooks/useGetMetrics";
 import { useGetVote } from "@/hooks/useGetVote";
 import { RetroVoteBody, BallotValues } from "@/types";
 import { getDeterministicObjHash } from "@/utils";
-import { SumbitBalllotDialog } from "./components/SumbitBalllotDialog";
+import { SumbitBallotDialog } from "./components/SumbitBallotDialog";
 import { VoteSidebar } from "./components/VoteSidebar";
 
 export const Vote = () => {
@@ -151,7 +151,7 @@ export const Vote = () => {
 
   return (
     <div className="flex justify-center gap-12 overflow-x-auto px-20 pt-[52px]">
-      <SumbitBalllotDialog
+      <SumbitBallotDialog
         isOpen={isSubmitBallotDialogOpen}
         onOpenChange={setIsSubmitBallotDialogOpen}
         modalTitle="Submit your ballot"
