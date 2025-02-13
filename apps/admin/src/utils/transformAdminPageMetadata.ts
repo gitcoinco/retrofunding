@@ -21,11 +21,20 @@ export const getPoolStatus = (pool: {
   return PoolStatus.PreRound;
 };
 
+const getOperatorsCount = (roles?: ProgramWithRounds["roles"], operatorRoles: string[] = []) => {
+  if (!roles) return 0;
+  return new Set(
+    roles
+      ?.filter(({ role }) => (operatorRoles.length > 0 ? operatorRoles.includes(role) : true))
+      .map(({ address }) => address),
+  ).size;
+};
+
 export const transformProgramData = (program: ProgramWithRounds) => ({
   id: program.id,
   chainId: program.chainId,
   title: program.name,
-  operatorsCount: program.roles?.length || 0,
+  operatorsCount: getOperatorsCount(program.roles),
   roundsCount: program.retroRounds?.length || 0,
   createdAtBlock: program.createdAtBlock,
   onClick: (programData?: { chainId: number; programId: string }) => {
