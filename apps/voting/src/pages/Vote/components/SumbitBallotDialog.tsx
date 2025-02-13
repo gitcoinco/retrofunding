@@ -1,6 +1,6 @@
 import { Dialog, DialogHeader, DialogTitle, DialogDescription, Modal, Button } from "@gitcoin/ui";
 
-export const SumbitBalllotDialog = ({
+export const SumbitBallotDialog = ({
   isOpen,
   onOpenChange,
   modalTitle,

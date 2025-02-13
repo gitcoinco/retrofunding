@@ -7,12 +7,12 @@ import { isEqual } from "lodash";
 import { Hex } from "viem";
 import { useAccount } from "wagmi";
 import { useWalletClient } from "wagmi";
-import { useGetRoundWithApplications, useVote } from "@/hooks";
+import { useGetRoundWithApplications, useRefDimensions, useVote } from "@/hooks";
 import { useGetMetrics } from "@/hooks/useGetMetrics";
 import { useGetVote } from "@/hooks/useGetVote";
 import { RetroVoteBody, BallotValues } from "@/types";
 import { getDeterministicObjHash } from "@/utils";
-import { SumbitBalllotDialog } from "./components/SumbitBalllotDialog";
+import { SumbitBallotDialog } from "./components/SumbitBallotDialog";
 import { VoteSidebar } from "./components/VoteSidebar";
 
 export const Vote = () => {
@@ -20,6 +20,9 @@ export const Vote = () => {
   const [currentBallot, setCurrentBallot] = useState<
     { metricIdentifier: string; voteShare: number }[]
   >([]);
+
+  const { ref: containerRef, width: containerWidth } = useRefDimensions<HTMLDivElement>();
+
   const { roundId: roundIdParam, chainId: chainIdParam } = useParams();
   const chainId = parseInt(chainIdParam as string);
   const roundId = roundIdParam as string;
@@ -29,12 +32,17 @@ export const Vote = () => {
   const { data: walletClient } = useWalletClient();
   const { voteMutation } = useVote();
 
-  const { data: round, isLoading: roundIsLoading } = useGetRoundWithApplications({
+  const { data: roundData, isLoading: roundIsLoading } = useGetRoundWithApplications({
     roundId,
     chainId,
   });
 
-  const { donationsEndTime: votingEndTime, donationsStartTime: votingStartTime } = round ?? {};
+  const {
+    roundName,
+    impactMetrics: availableMetricsIds,
+    donationsEndTime: votingEndTime,
+    donationsStartTime: votingStartTime,
+  } = roundData ?? {};
 
   const dateNow = new Date();
 
@@ -44,8 +52,6 @@ export const Vote = () => {
     votingStartTime && votingEndTime
       ? dateNow >= votingStartTime && dateNow < votingEndTime
       : undefined;
-
-  const availableMetricsIds = round?.impactMetrics;
 
   const { data: metrics, isLoading: metricsIsLoading } = useGetMetrics({
     identifiers: availableMetricsIds,
@@ -150,8 +156,37 @@ export const Vote = () => {
   }
 
   return (
-    <div className="flex justify-center gap-12 overflow-x-auto px-20 pt-[52px]">
-      <SumbitBalllotDialog
+    <div className="flex flex-col items-center gap-[26px] pt-6">
+      <div
+        style={{
+          width: containerRef.current ? `${containerRef.current.clientWidth}px` : "auto",
+        }}
+        className="font-ui-sans px-20 text-left text-2xl font-semibold"
+      >
+        {roundName}
+      </div>
+      <div ref={containerRef} className="flex justify-center gap-12 overflow-x-auto px-20">
+        <BallotForm
+          className="max-w-[1000px] overflow-x-auto"
+          name={`${address}-${roundId}-${chainId}`}
+          availableMetrics={availableMetrics}
+          maxAllocation={100}
+          onChange={handleFormChange}
+          // disabled={isVotingPeriod === false}
+          onSubmit={(values) => {
+            setBallotToSubmit(values);
+            setIsSubmitBallotDialogOpen(true);
+          }}
+          submittedBallot={alredySubmittedBallot}
+        />
+        <VoteSidebar
+          isLoading={roundIsLoading || metricsIsLoading}
+          poolId={roundId}
+          chainId={chainId}
+          ballot={currentBallot}
+        />
+      </div>
+      <SumbitBallotDialog
         isOpen={isSubmitBallotDialogOpen}
         onOpenChange={setIsSubmitBallotDialogOpen}
         modalTitle="Submit your ballot"
@@ -161,25 +196,6 @@ export const Vote = () => {
           handleSubmit(ballotToSubmit);
           setIsSubmitBallotDialogOpen(false);
         }}
-      />
-      <BallotForm
-        className="max-w-[1000px] overflow-x-auto"
-        name={`${address}-${roundId}-${chainId}`}
-        availableMetrics={availableMetrics}
-        maxAllocation={100}
-        onChange={handleFormChange}
-        // disabled={isVotingPeriod === false}
-        onSubmit={(values) => {
-          setBallotToSubmit(values);
-          setIsSubmitBallotDialogOpen(true);
-        }}
-        submittedBallot={alredySubmittedBallot}
-      />
-      <VoteSidebar
-        isLoading={roundIsLoading || metricsIsLoading}
-        poolId={roundId}
-        chainId={chainId}
-        ballot={currentBallot}
       />
     </div>
   );
