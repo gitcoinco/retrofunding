@@ -33,7 +33,7 @@ export const VoteSidebar = ({
       title="Allocation preview"
       description="This is a preview of the allocation"
       projects={sortedProjects}
-      className="hidden lg:block"
+      className="hidden border-grey-300 lg:block"
       chartData={chartData}
       sortConfig={{ isAscending, onClick: toggleSort }}
     />
