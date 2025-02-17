@@ -26,10 +26,10 @@ export const ProtectedVoteRoute = ({ fallback: Fallback }: RouteProps) => {
     data: roundData,
     isLoading: isRoundLoading,
     isError: isRoundError,
-    error: roundError,
   } = useGetRoundWithApplications({
     roundId,
     chainId,
+    retry: false,
   });
 
   const { data: isVoterData, isLoading: isVoterLoading } = useIsVoter({
@@ -37,6 +37,7 @@ export const ProtectedVoteRoute = ({ fallback: Fallback }: RouteProps) => {
     chainId,
     address: address as Hex,
   });
+
   const { isVoter } = isVoterData ?? {};
 
   const { isLoading: metricsIsLoading } = useGetMetrics({
