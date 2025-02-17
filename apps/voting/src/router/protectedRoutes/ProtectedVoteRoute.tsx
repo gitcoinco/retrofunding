@@ -7,6 +7,7 @@ import { useGetMetrics } from "@/hooks/useGetMetrics";
 import { useGetRoundWithApplications } from "@/hooks/useGetRoundWithApplications";
 import { useGetVote } from "@/hooks/useGetVote";
 import { useIsVoter } from "@/hooks/useIsVoter";
+import { NoVoterDialog } from "@/pages/Vote/components/NoVoterDialog";
 
 interface RouteProps {
   fallback: React.FC<PropsWithChildren<any>>;
@@ -73,7 +74,11 @@ export const ProtectedVoteRoute = ({ fallback: Fallback }: RouteProps) => {
   }
 
   if (!isVoter) {
-    return <Fallback {...fallbackProps}>You are not a voter</Fallback>;
+    return (
+      <Fallback {...fallbackProps}>
+        <NoVoterDialog isOpen={true} />
+      </Fallback>
+    );
   }
 
   return <Outlet />;
