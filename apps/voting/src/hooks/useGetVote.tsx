@@ -7,13 +7,17 @@ export const useGetVote = ({
   alloPoolId,
   chainId,
   address,
+  retry,
+  enabled = true,
 }: {
   alloPoolId: string;
   chainId: number;
   address: Hex;
+  retry?: boolean;
+  enabled?: boolean;
 }): UseQueryResult<{ updatedAt: Date; ballot: RetroVote[] }, Error> => {
   return useQuery({
-    enabled: !!alloPoolId && !!chainId && !!address,
+    enabled: enabled && !!alloPoolId && !!chainId && !!address,
     queryKey: ["getVote", alloPoolId, chainId, address],
     queryFn: async () => getVote(alloPoolId, chainId, address),
     select: (data) => ({
@@ -21,5 +25,6 @@ export const useGetVote = ({
       updatedAt: data.votes?.[0]?.updatedAt,
     }),
     staleTime: 1000 * 60 * 10,
+    retry,
   });
 };
