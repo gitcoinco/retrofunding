@@ -6,9 +6,11 @@ import { mapRoundWithApplications } from "@/utils/mapRoundWithApplications";
 export const useGetRoundWithApplications = ({
   roundId,
   chainId,
+  retry,
 }: {
   roundId?: string;
   chainId?: number;
+  retry?: boolean;
 }): UseQueryResult<RetroRoundWithApplications, Error> => {
   return useQuery({
     enabled: !!roundId && !!chainId,
@@ -16,5 +18,6 @@ export const useGetRoundWithApplications = ({
     queryFn: () => getRoundWithApplications({ roundId: roundId!, chainId: chainId! }),
     select: (data) => mapRoundWithApplications(data),
     staleTime: 1000 * 60 * 10,
+    retry,
   });
 };
