@@ -6,7 +6,6 @@ const description =
 
 export const NotFound = () => {
   const { chainId, roundId } = useParams();
-  console.log(chainId, roundId);
   return (
     <NotFoundPage
       description={description}
