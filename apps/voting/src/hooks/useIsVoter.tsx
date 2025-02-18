@@ -20,7 +20,7 @@ export const useIsVoter = ({
     queryKey: ["getVoters", alloPoolId, chainId, address],
     queryFn: async () => {
       const voters = await getVoters(alloPoolId, chainId);
-      const isVoter = voters.some((voter) => voter === address);
+      const isVoter = voters.some((voter) => voter.toLowerCase() === address.toLowerCase());
       return { isVoter };
     },
     retry,

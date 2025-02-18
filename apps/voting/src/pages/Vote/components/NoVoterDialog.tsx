@@ -40,6 +40,7 @@ export const NoVoterDialog = ({ isOpen }: { isOpen: boolean }) => {
               className="rounded-lg border border-grey-100"
               variant="ghost"
               onClick={() => disconnectWallet()}
+              data-testid="rk-disconnect-button"
             />
           </div>
         </div>
