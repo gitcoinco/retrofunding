@@ -6,18 +6,23 @@ export const useIsVoter = ({
   alloPoolId,
   chainId,
   address,
+  retry,
+  enabled = true,
 }: {
   alloPoolId: string;
   chainId: number;
   address: Hex;
+  retry?: boolean;
+  enabled?: boolean;
 }): UseQueryResult<{ isVoter: boolean }, Error> => {
   return useQuery({
-    enabled: !!alloPoolId && !!chainId && !!address,
+    enabled: enabled && !!alloPoolId && !!chainId && !!address,
     queryKey: ["getVoters", alloPoolId, chainId, address],
     queryFn: async () => {
       const voters = await getVoters(alloPoolId, chainId);
       const isVoter = voters.some((voter) => voter === address);
       return { isVoter };
     },
+    retry,
   });
 };

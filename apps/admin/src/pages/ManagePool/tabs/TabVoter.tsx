@@ -2,7 +2,7 @@ import { Form } from "@gitcoin/ui/client";
 import { toast } from "@gitcoin/ui/hooks/useToast";
 import { FormField } from "@gitcoin/ui/types";
 import { Hex } from "viem";
-import { MessagePage } from "@/components/Message";
+import { LoadingPage } from "@/components/LoadingPage";
 import { useUpdatePoolEligibility } from "@/hooks/backend";
 import { useGetPool } from "@/hooks/backend/useGetPool";
 
@@ -45,7 +45,7 @@ export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string 
   };
 
   if (isLoading) {
-    return <MessagePage title="Loading..." message="Loading..." />;
+    return <LoadingPage />;
   }
 
   const handleSubmit = async (values: any) => {

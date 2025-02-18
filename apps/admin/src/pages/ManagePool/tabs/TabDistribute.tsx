@@ -6,6 +6,7 @@ import { ApplicationPayout, PoolConfig } from "@gitcoin/ui/types";
 import { RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
 import { Address, getAddress } from "viem";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
+import { LoadingPage } from "@/components/LoadingPage";
 import { MessagePage } from "@/components/Message";
 import {
   useDeleteCustomDistribution,
@@ -64,7 +65,7 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
   const { mutateAsync: deleteCustomDistribution } = useDeleteCustomDistribution();
 
   if (isBalanceLoading || isPoolDistributionLoading) {
-    return <MessagePage title="Loading..." message="Loading..." />;
+    return <LoadingPage />;
   }
 
   if (isBalanceError || isPoolDistributionError) {

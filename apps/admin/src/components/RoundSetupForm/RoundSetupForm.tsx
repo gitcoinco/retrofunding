@@ -6,9 +6,9 @@ import { deleteDBValues } from "@gitcoin/ui/lib";
 import { FormWithPersistStep as FormStep } from "@gitcoin/ui/types";
 import { Hex } from "viem";
 import { useAccount } from "wagmi";
-import { MessagePage } from "@/components/Message";
 import { useCreateRound } from "@/hooks";
 import { RoundSetupFormData } from "@/types";
+import { LoadingPage } from "../LoadingPage";
 import { LastStepFormSummary } from "./components";
 import { getRoundSetupSteps } from "./steps";
 
@@ -44,7 +44,7 @@ export const RoundSetupForm = (): React.ReactNode => {
   }, []);
 
   if (!roundSteps || !roundSetupKeys || !programId || !chainId || !address) {
-    return <MessagePage title="Loading..." message="Loading..." />;
+    return <LoadingPage />;
   }
 
   const handleSubmit = async (values: RoundSetupFormData) => {

@@ -7,6 +7,7 @@ import { useGetMetrics } from "@/hooks/useGetMetrics";
 import { useGetRoundWithApplications } from "@/hooks/useGetRoundWithApplications";
 import { useGetVote } from "@/hooks/useGetVote";
 import { useIsVoter } from "@/hooks/useIsVoter";
+import { NotFound } from "@/pages";
 import { NoVoterDialog } from "@/pages/Vote/components/NoVoterDialog";
 
 interface RouteProps {
@@ -25,10 +26,10 @@ export const ProtectedVoteRoute = ({ fallback: Fallback }: RouteProps) => {
     data: roundData,
     isLoading: isRoundLoading,
     isError: isRoundError,
-    error: roundError,
   } = useGetRoundWithApplications({
     roundId,
     chainId,
+    retry: false,
   });
 
   const { data: isVoterData, isLoading: isVoterLoading } = useIsVoter({
@@ -36,6 +37,7 @@ export const ProtectedVoteRoute = ({ fallback: Fallback }: RouteProps) => {
     chainId,
     address: address as Hex,
   });
+
   const { isVoter } = isVoterData ?? {};
 
   const { isLoading: metricsIsLoading } = useGetMetrics({
@@ -57,6 +59,10 @@ export const ProtectedVoteRoute = ({ fallback: Fallback }: RouteProps) => {
   const isLoading =
     isRoundLoading || isVoterLoading || isConnecting || metricsIsLoading || voteIsLoading;
 
+  if (isRoundError || (chainId !== undefined && isNaN(chainId))) {
+    return <NotFound />;
+  }
+
   if (isLoading) {
     return <Fallback isLoading={true} />;
   }
@@ -67,10 +73,6 @@ export const ProtectedVoteRoute = ({ fallback: Fallback }: RouteProps) => {
         <ConnectButton />
       </Fallback>
     );
-  }
-
-  if (isRoundError) {
-    return <Fallback>{roundError?.message}</Fallback>;
   }
 
   if (!isVoter) {
