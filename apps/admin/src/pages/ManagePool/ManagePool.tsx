@@ -2,6 +2,7 @@
 
 import { useParams } from "react-router";
 import { PoolSummary } from "@gitcoin/ui/pool";
+import { LoadingPage } from "@/components/LoadingPage";
 import { MessagePage } from "@/components/Message";
 import { useGetRoundByChainIdAndPoolId } from "@/hooks/allo-indexer";
 import { PoolTabs } from "./tabs";
@@ -27,7 +28,7 @@ export const ManagePool = () => {
   } = useGetRoundByChainIdAndPoolId(chainIdNumber, poolId);
 
   if (isLoading) {
-    return <MessagePage title="Loading..." message="Loading..." />;
+    return <LoadingPage />;
   }
 
   if (isError || !poolData || !poolData.project || !poolData.roundMetadata) {

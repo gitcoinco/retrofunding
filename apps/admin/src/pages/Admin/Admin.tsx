@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useAccount } from "wagmi";
-import { MessagePage } from "@/components/Message";
+import { LoadingPage } from "@/components/LoadingPage";
 import { useGetUserProgramsAndRounds } from "@/hooks/allo-indexer";
 import {
   transformProgramData,
@@ -28,7 +28,7 @@ export const Admin = () => {
     return { roundsItems, programsItems, programs, pools };
   }, [programsAndRounds, refetch]);
 
-  if (isLoadingProgramsAndRounds) return <MessagePage title="Loading..." message="Loading..." />;
+  if (isLoadingProgramsAndRounds) return <LoadingPage />;
 
   return (
     <div className="flex items-start justify-center gap-6 px-20 pt-[52px]">
