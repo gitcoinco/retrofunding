@@ -1,0 +1,42 @@
+{
+  "name": "e2e-voting",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "turbo dev --filter=retrofunding-vote -- --port 5177",
+    "lint": "eslint .",
+    "pre-commit": "lint-staged",
+    "check-types": "tsc --noEmit --incremental",
+    "format": "prettier --write . '!(node_modules)/**/*'",
+    "preview": "vite preview",
+    "playwright:browser": "playwright install chromium",
+    "wallet-cache": "synpress ./wallet-setup",
+    "wallet-cache:headless": "synpress --headless ./wallet-setup",
+    "e2e": "playwright test --project=chromium",
+    "e2e:trace": "playwright test --project=chromium --trace on",
+    "e2e:debug": "playwright test --project=chromium --debug"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ethers": "5.7.2",
+    "events": "^3.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.44.0",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@synthetixio/synpress": "4.0.0-alpha.7",
+    "@trivago/prettier-plugin-sort-imports": "~4.3.0",
+    "@types/node": "^20.11.24",
+    "eslint": "^9.15.0",
+    "globals": "^15.14.0",
+    "lint-staged": "~13.2.2",
+    "prettier": "^3.4.1",
+    "typescript": "5.5.4",
+    "typescript-eslint": "^8.16.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,md}": "prettier --write"
+  }
+}

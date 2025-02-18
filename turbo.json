@@ -16,6 +16,19 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "e2e": {
+      "dependsOn": ["^build"],
+      "passThroughEnv": ["PLAYWRIGHT_*"]
+    },
+    "wallet-cache": {
+      "dependsOn": ["^wallet-cache"]
+    },
+    "wallet-cache:headless": {
+      "dependsOn": ["^wallet-cache:headless"]
+    },
+    "playwright:browser": {
+      "dependsOn": ["^playwright:browser"]
     }
   }
 }
