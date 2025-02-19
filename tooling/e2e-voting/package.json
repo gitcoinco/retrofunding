@@ -23,6 +23,7 @@
     "events": "^3.3.0"
   },
   "devDependencies": {
+    "@metamask/providers": "^20.0.0",
     "@playwright/test": "1.44.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
