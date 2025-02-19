@@ -7,13 +7,15 @@ const description =
 export const NotFound = () => {
   const { chainId, roundId } = useParams();
   return (
-    <NotFoundPage
-      description={description}
-      button={
-        chainId && roundId
-          ? { label: "Refresh page", onClick: () => window.location.reload() }
-          : undefined
-      }
-    />
+    <div data-testid="not-found-container">
+      <NotFoundPage
+        description={description}
+        button={
+          chainId && roundId
+            ? { label: "Refresh page", onClick: () => window.location.reload() }
+            : undefined
+        }
+      />
+    </div>
   );
 };
