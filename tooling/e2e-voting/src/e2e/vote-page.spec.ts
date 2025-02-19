@@ -1,13 +1,12 @@
 import { expect } from "@playwright/test";
 import { MetaMask, testWithSynpress, metaMaskFixtures } from "@synthetixio/synpress";
-import Dotenv from "dotenv";
+import { WALLET_ADDRESS } from "@/config";
 import { interceptGQL } from "@/fixtures/graphql";
 import { mockMetrics } from "@/mocks/metrics";
 import { mockRound } from "@/mocks/rounds";
-import { mockVoteResponse } from "@/src/mocks/vote";
+import { mockVoteResponse } from "@/mocks/vote";
+import { checkWalletAddress } from "@/utils/walletHelpers";
 import BasicSetup from "@/wallet-setup/basic.setup";
-
-Dotenv.config({ path: [".env", ".env.test"], override: true });
 
 const {
   round: {
@@ -44,7 +43,7 @@ testQL("Should submit ballot", async ({ context, page, extensionId, interceptGQL
     const { alloPoolId, chainId, voter, signature, ballot } = postData;
     expect(alloPoolId).toBe(alloPoolIdResponse);
     expect(chainId).toBe(chainIdResponse);
-    await checkWalletAddress(page);
+    expect(voter.toLowerCase()).toBe(WALLET_ADDRESS?.toLowerCase());
     expect(typeof signature).toBe("string");
     expect(ballot).toEqual([
       { metricIdentifier: "playwright", voteShare: 25 },
@@ -68,12 +67,7 @@ testQL("Should submit ballot", async ({ context, page, extensionId, interceptGQL
   await metamask.connectToDapp();
   await metamask.approveSwitchNetwork();
 
-  const selectors = await metamask.homePage.selectors;
-
-  const selectedAddress: string = await page.evaluate(() =>
-    window.ethereum.selectedAddress.toLowerCase(),
-  );
-  expect(selectedAddress).toBe(walletAddress?.toLowerCase());
+  await checkWalletAddress(page);
 
   await page.getByText("Submit ballot").click();
 

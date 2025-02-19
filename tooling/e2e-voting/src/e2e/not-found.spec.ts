@@ -1,18 +1,11 @@
 import { expect } from "@playwright/test";
 import { testWithSynpress, metaMaskFixtures } from "@synthetixio/synpress";
 import Dotenv from "dotenv";
-import { interceptGQL } from "@/fixtures/graphql";
 import BasicSetup from "@/wallet-setup/basic.setup";
 
 Dotenv.config({ path: [".env", ".env.test"], override: true });
 
 const test = testWithSynpress(metaMaskFixtures(BasicSetup));
-
-const testQL = test.extend<{ interceptGQL: typeof interceptGQL }>({
-  interceptGQL: async ({ browser }, use) => {
-    await use(interceptGQL);
-  },
-});
 
 test("Should go to the not found page in route '/'", async ({ page }) => {
   await page.goto("/");

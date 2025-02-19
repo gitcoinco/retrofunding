@@ -1,11 +1,5 @@
 import { MetaMask, defineWalletSetup, getExtensionId } from "@synthetixio/synpress";
-import Dotenv from "dotenv";
-
-Dotenv.config({ path: [".env", ".env.test"], override: true });
-
-const SEED_PHRASE = process.env.TEST_SEED_PHRASE!;
-const PRIVATE_KEY = process.env.TEST_PRIVATE_KEY!;
-const PASSWORD = process.env.TEST_WALLET_PASSWORD!;
+import { SEED_PHRASE, PRIVATE_KEY, PASSWORD } from "@/config";
 
 export default defineWalletSetup(PASSWORD, async (context, walletPage) => {
   const extensionId = await getExtensionId(context, "MetaMask");

@@ -3,9 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@/": ["./"]
+      "@/*": ["./src/*"],
+      "@/": ["./src/"]
     }
   },
-  "include": ["e2e", "wallet-setup", "mocks"]
+  "include": ["src", "types.d.ts"]
 }

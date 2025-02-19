@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: [".env", ".env.test"], override: true });
 
 export default defineConfig({
-  testDir: "./e2e",
+  testDir: "./src/e2e",
   outputDir: "./test-results",
   timeout: 60 * 1000,
   expect: {
