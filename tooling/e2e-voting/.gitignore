@@ -26,7 +26,7 @@ dist-ssr
 tsconfig.*.tsbuildinfo
 
 # Playwright
-/test-results/
+/testResults/
 /playwright-report/
 /playwright/.cache/
 .cache-synpress

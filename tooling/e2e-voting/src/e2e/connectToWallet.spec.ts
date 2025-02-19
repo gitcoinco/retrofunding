@@ -1,6 +1,6 @@
 import { MetaMask, testWithSynpress, metaMaskFixtures } from "@synthetixio/synpress";
 import { checkWalletAddress } from "@/utils/walletHelpers";
-import BasicSetup from "@/wallet-setup/basic.setup";
+import BasicSetup from "@/walletSetup/basic.setup";
 
 const test = testWithSynpress(metaMaskFixtures(BasicSetup));
 

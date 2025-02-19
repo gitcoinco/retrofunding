@@ -6,7 +6,7 @@ import { mockMetrics } from "@/mocks/metrics";
 import { mockRound } from "@/mocks/rounds";
 import { mockVoteResponse } from "@/mocks/vote";
 import { checkWalletAddress } from "@/utils/walletHelpers";
-import BasicSetup from "@/wallet-setup/basic.setup";
+import BasicSetup from "@/walletSetup/basic.setup";
 
 const {
   round: {

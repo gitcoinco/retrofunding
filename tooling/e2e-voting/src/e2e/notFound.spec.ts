@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { testWithSynpress, metaMaskFixtures } from "@synthetixio/synpress";
 import Dotenv from "dotenv";
-import BasicSetup from "@/wallet-setup/basic.setup";
+import BasicSetup from "@/walletSetup/basic.setup";
 
 Dotenv.config({ path: [".env", ".env.test"], override: true });
 

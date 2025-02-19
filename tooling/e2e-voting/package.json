@@ -11,8 +11,8 @@
     "format": "prettier --write . '!(node_modules)/**/*'",
     "preview": "vite preview",
     "playwright:browser": "playwright install chromium",
-    "wallet-cache": "synpress ./src/wallet-setup",
-    "wallet-cache:headless": "synpress --headless ./src/wallet-setup",
+    "wallet-cache": "synpress ./src/walletSetup",
+    "wallet-cache:headless": "synpress --headless ./src/walletSetup",
     "e2e": "playwright test --project=chromium",
     "e2e:trace": "playwright test --project=chromium --trace on",
     "e2e:debug": "playwright test --project=chromium --debug"
