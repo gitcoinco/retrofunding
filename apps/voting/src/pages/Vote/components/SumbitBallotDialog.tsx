@@ -32,7 +32,12 @@ export const SumbitBallotDialog = ({
               variant="none"
               onClick={() => onOpenChange(false)}
             />
-            <Button value={buttonText} variant="light-purple" onClick={onSubmit} />
+            <Button
+              value={buttonText}
+              variant="light-purple"
+              data-testid="submit-ballot-button"
+              onClick={onSubmit}
+            />
           </div>
         </div>
       </Modal>
