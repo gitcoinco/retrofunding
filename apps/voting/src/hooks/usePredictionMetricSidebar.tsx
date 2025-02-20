@@ -2,8 +2,9 @@ import { useMemo } from "react";
 import { ProjectAllocation } from "@gitcoin/ui/types";
 import { useToggle } from "usehooks-ts";
 import { RetroApplication, RetroVote } from "@/types";
+import { calculateDistribution } from "@/utils";
+import { useGetDataToCalculateDistribution } from "./backend/useGetDataToCalculateDistribution";
 import { useGetRoundWithApplications } from "./useGetRoundWithApplications";
-import { usePredictDistribution } from "./usePredictDistribution";
 
 export const usePredictionMetricSidebar = ({
   poolId,
@@ -20,11 +21,18 @@ export const usePredictionMetricSidebar = ({
     roundId: poolId,
     chainId,
   });
-  const { data: prediction, isLoading: isLoadingPrediction } = usePredictDistribution({
-    poolId,
-    chainId,
-    ballot,
-  });
+
+  const { data: dataToCalculateDistribution, isLoading: isLoadingDataToCalculateDistribution } =
+    useGetDataToCalculateDistribution(poolId, chainId);
+
+  const prediction = useMemo(() => {
+    if (!dataToCalculateDistribution || !ballot) return [];
+    return calculateDistribution(dataToCalculateDistribution, [
+      {
+        votes: ballot,
+      },
+    ]);
+  }, [dataToCalculateDistribution, ballot]);
 
   const applications = pool?.applications.reduce(
     (acc, application) => ({
@@ -64,6 +72,6 @@ export const usePredictionMetricSidebar = ({
     chartData,
     isAscending,
     toggleSort,
-    isLoading: isLoadingPool || isLoadingPrediction,
+    isLoading: isLoadingPool || isLoadingDataToCalculateDistribution,
   };
 };
