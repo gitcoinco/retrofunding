@@ -54,6 +54,7 @@ export const usePerformEvaluation = () => {
   useEffect(() => {
     if (evaluationBody) {
       evaluationMutation.mutateAsync(evaluationBody);
+      setEvaluationBody(null);
     }
   }, [evaluationBody]);
 

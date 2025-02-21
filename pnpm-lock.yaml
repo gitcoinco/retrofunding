@@ -34,13 +34,13 @@ importers:
     dependencies:
       '@allo-team/allo-v2-sdk':
         specifier: 1.1.2
-        version: 1.1.2(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
+        version: 1.1.2(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@gitcoin/gitcoin-chain-data':
         specifier: ^1.0.44
         version: 1.0.51(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@gitcoin/ui':
-        specifier: 0.0.0-beta.21
-        version: 0.0.0-beta.21(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.34.8)(storybook@8.5.6(bufferutil@4.0.9)(prettier@3.5.1)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.1.0(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.0))
+        specifier: 0.0.0-beta.22
+        version: 0.0.0-beta.22(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.34.8)(storybook@8.5.6(bufferutil@4.0.9)(prettier@3.5.1)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.1.0(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.0))
       '@rainbow-me/rainbowkit':
         specifier: ^2.2.0
         version: 2.2.3(@tanstack/react-query@5.66.5(react@18.3.1))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(viem@2.21.60(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2))(wagmi@2.13.2(@tanstack/query-core@5.66.4)(@tanstack/react-query@5.66.5(react@18.3.1))(@types/react@18.3.18)(bufferutil@4.0.9)(react@18.3.1)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.21.60(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2))(zod@3.24.2))
@@ -131,7 +131,7 @@ importers:
         version: 0.6.11(@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.5.1))(prettier@3.5.1)
       tailwindcss:
         specifier: ^3.4.15
-        version: 3.4.17(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))
+        version: 3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -146,13 +146,13 @@ importers:
     dependencies:
       '@allo-team/allo-v2-sdk':
         specifier: 1.0.79
-        version: 1.0.79(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
+        version: 1.0.79(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@gitcoin/gitcoin-chain-data':
         specifier: ^1.0.43
         version: 1.0.51(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@gitcoin/ui':
-        specifier: 0.0.0-beta.21
-        version: 0.0.0-beta.21(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.34.8)(storybook@8.5.6(bufferutil@4.0.9)(prettier@3.5.1)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.1.0(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.0))
+        specifier: 0.0.0-beta.22
+        version: 0.0.0-beta.22(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.34.8)(storybook@8.5.6(bufferutil@4.0.9)(prettier@3.5.1)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.1.0(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.0))
       '@rainbow-me/rainbowkit':
         specifier: ^2.2.0
         version: 2.2.3(@tanstack/react-query@5.66.5(react@18.3.1))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(viem@2.21.60(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2))(wagmi@2.13.2(@tanstack/query-core@5.66.4)(@tanstack/react-query@5.66.5(react@18.3.1))(@types/react@18.3.18)(bufferutil@4.0.9)(react@18.3.1)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.21.60(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2))(zod@3.24.2))
@@ -246,7 +246,7 @@ importers:
         version: 0.6.11(@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.5.1))(prettier@3.5.1)
       tailwindcss:
         specifier: ^3.4.15
-        version: 3.4.17(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))
+        version: 3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -754,8 +754,8 @@ packages:
     peerDependencies:
       typescript: ^5.0.0
 
-  '@gitcoin/ui@0.0.0-beta.21':
-    resolution: {integrity: sha512-uDFVXfxiNbSKjJbIGwqQ6w/d/WRKsDmG2wVQHoHJDXrAJcCt8ZFkTNu6XaDh1S/XCDanfzO8aTcPW70WqVvUdA==}
+  '@gitcoin/ui@0.0.0-beta.22':
+    resolution: {integrity: sha512-Zk9amVJ4DkTV6oMA1zv6HA5I0u8z/XCf4TyqOuYRRxh3wH5qBwyKsIayHAfJkQLRvqKsC1SQrF8ASaRn87WGOA==}
     peerDependencies:
       react: 18.3.1
       react-dom: 18.3.1
@@ -6779,12 +6779,12 @@ snapshots:
 
   '@adraffy/ens-normalize@1.11.0': {}
 
-  '@allo-team/allo-v2-sdk@1.0.79(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)':
+  '@allo-team/allo-v2-sdk@1.0.79(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)':
     dependencies:
-      '@typechain/hardhat': 9.1.0(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(hardhat@2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))
+      '@typechain/hardhat': 9.1.0(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(hardhat@2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))
       dotenv: 16.4.7
       events: 3.3.0
-      hardhat: 2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)
+      hardhat: 2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)
       mocha: 10.8.2
       viem: 2.21.60(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
     transitivePeerDependencies:
@@ -6799,12 +6799,12 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@allo-team/allo-v2-sdk@1.1.2(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)':
+  '@allo-team/allo-v2-sdk@1.1.2(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)':
     dependencies:
-      '@typechain/hardhat': 9.1.0(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(hardhat@2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))
+      '@typechain/hardhat': 9.1.0(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(hardhat@2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))
       dotenv: 16.4.7
       events: 3.3.0
-      hardhat: 2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)
+      hardhat: 2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)
       mocha: 10.8.2
       viem: 2.21.60(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
     transitivePeerDependencies:
@@ -7301,7 +7301,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@gitcoin/ui@0.0.0-beta.21(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.34.8)(storybook@8.5.6(bufferutil@4.0.9)(prettier@3.5.1)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.1.0(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.0))':
+  '@gitcoin/ui@0.0.0-beta.22(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.34.8)(storybook@8.5.6(bufferutil@4.0.9)(prettier@3.5.1)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.1.0(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.0))':
     dependencies:
       '@gitcoin/gitcoin-chain-data': 1.0.51(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@heroicons/react': 1.0.6(react@18.3.1)
@@ -7361,7 +7361,7 @@ snapshots:
       rehype-sanitize: 6.0.0
       remark-gfm: 4.0.1
       sonner: 1.7.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      tailwind-variants: 0.2.1(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4)))
+      tailwind-variants: 0.2.1(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)))
       ts-pattern: 5.6.2
       vaul: 1.1.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       viem: 2.21.60(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
@@ -9089,12 +9089,12 @@ snapshots:
       typechain: 8.3.2(typescript@5.5.4)
       typescript: 5.5.4
 
-  '@typechain/hardhat@9.1.0(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(hardhat@2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))':
+  '@typechain/hardhat@9.1.0(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(hardhat@2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))':
     dependencies:
       '@typechain/ethers-v6': 0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4)
       ethers: 6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       fs-extra: 9.1.0
-      hardhat: 2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)
+      hardhat: 2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)
       typechain: 8.3.2(typescript@5.5.4)
 
   '@types/bn.js@4.11.6':
@@ -11355,7 +11355,7 @@ snapshots:
     optionalDependencies:
       uglify-js: 3.19.3
 
-  hardhat@2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10):
+  hardhat@2.22.18(bufferutil@4.0.9)(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10):
     dependencies:
       '@ethersproject/abi': 5.7.0
       '@metamask/eth-sig-util': 4.0.1
@@ -11402,7 +11402,7 @@ snapshots:
       uuid: 8.3.2
       ws: 7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     optionalDependencies:
-      ts-node: 10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4)
+      ts-node: 10.9.2(@types/node@22.7.5)(typescript@5.5.4)
       typescript: 5.5.4
     transitivePeerDependencies:
       - bufferutil
@@ -13005,13 +13005,13 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.5.2
 
-  postcss-load-config@4.0.2(postcss@8.5.2)(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4)):
+  postcss-load-config@4.0.2(postcss@8.5.2)(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)):
     dependencies:
       lilconfig: 3.1.3
       yaml: 2.7.0
     optionalDependencies:
       postcss: 8.5.2
-      ts-node: 10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4)
+      ts-node: 10.9.2(@types/node@22.7.5)(typescript@5.5.4)
 
   postcss-nested@6.2.0(postcss@8.5.2):
     dependencies:
@@ -14002,12 +14002,12 @@ snapshots:
 
   tailwind-merge@2.6.0: {}
 
-  tailwind-variants@0.2.1(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))):
+  tailwind-variants@0.2.1(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))):
     dependencies:
       tailwind-merge: 2.6.0
-      tailwindcss: 3.4.17(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))
+      tailwindcss: 3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))
 
-  tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4)):
+  tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -14026,7 +14026,7 @@ snapshots:
       postcss: 8.5.2
       postcss-import: 15.1.0(postcss@8.5.2)
       postcss-js: 4.0.1(postcss@8.5.2)
-      postcss-load-config: 4.0.2(postcss@8.5.2)(ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4))
+      postcss-load-config: 4.0.2(postcss@8.5.2)(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))
       postcss-nested: 6.2.0(postcss@8.5.2)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.10
@@ -14128,7 +14128,7 @@ snapshots:
     optionalDependencies:
       '@swc/core': 1.10.16
 
-  ts-node@10.9.2(@swc/core@1.10.16)(@types/node@22.7.5)(typescript@5.5.4):
+  ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
@@ -14145,8 +14145,6 @@ snapshots:
       typescript: 5.5.4
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-    optionalDependencies:
-      '@swc/core': 1.10.16
     optional: true
 
   ts-pattern@5.6.2: {}

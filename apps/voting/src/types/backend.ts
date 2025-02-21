@@ -51,7 +51,26 @@ export interface RetroVote {
   voteShare: number;
 }
 
+export interface RetroBallot {
+  votes: RetroVote[];
+}
 export interface GetVoteResponse {
   updatedAt: Date;
   ballot: string;
+}
+
+export interface MetricFetcherResponse {
+  alloApplicationId: string;
+  metricIdentifier: string;
+  metricScore: number;
+}
+
+export type MetricBounds = Record<string, { minValue: number; maxValue: number }>;
+export interface PreparedCalculationData {
+  pool: {
+    metricIdentifiers: string[];
+  };
+  isIncreasingMap: Record<string, boolean>;
+  applicationToMetricsScores: MetricFetcherResponse[];
+  metricsBounds: MetricBounds;
 }
