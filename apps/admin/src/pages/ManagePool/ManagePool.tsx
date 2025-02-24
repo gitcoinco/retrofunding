@@ -48,7 +48,7 @@ export const ManagePool = () => {
     );
   }
 
-  const isAdmin = admins?.includes(address?.toLowerCase() ?? "");
+  const isAdmin = admins?.includes(address ?? "");
 
   if (!isAdmin) {
     return <NotAdminDialog isOpen={true} />;
