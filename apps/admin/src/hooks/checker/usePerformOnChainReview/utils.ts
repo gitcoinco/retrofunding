@@ -159,11 +159,11 @@ export const waitUntilIndexerSynced = async ({
       body: JSON.stringify({
         query: `
           query getBlockNumberQuery($chainId: Int!) {
-            subscriptions(
-              filter: { chainId: { equalTo: $chainId }, toBlock: { equalTo: "latest" } }
+            eventsRegistry(
+              where: { chainId: { _eq: $chainId } }
             ) {
               chainId
-              indexedToBlock
+              blockNumber
             }
           }
         `,
@@ -178,18 +178,18 @@ export const waitUntilIndexerSynced = async ({
         data,
       }: {
         data: {
-          subscriptions: { chainId: number; indexedToBlock: string }[];
+          eventsRegistry: { chainId: number; blockNumber: bigint }[];
         };
       } = await response.json();
 
-      const subscriptions = data?.subscriptions || [];
+      const eventsRegistry = data?.eventsRegistry || [];
 
-      if (subscriptions.length > 0) {
+      if (eventsRegistry.length > 0) {
         const currentBlockNumber = BigInt(
-          subscriptions.reduce(
-            (minBlock, sub) =>
-              BigInt(sub.indexedToBlock) < BigInt(minBlock) ? sub.indexedToBlock : minBlock,
-            subscriptions[0].indexedToBlock,
+          eventsRegistry.reduce(
+            (minBlock, event) =>
+              BigInt(event.blockNumber) < BigInt(minBlock) ? event.blockNumber : minBlock,
+            eventsRegistry[0].blockNumber,
           ),
         );
 

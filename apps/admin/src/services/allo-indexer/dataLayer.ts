@@ -2,21 +2,19 @@ import { ProgramWithRounds, RetroRound, RoundRoles } from "@/types";
 import { executeQuery } from "./alloIndexerClient";
 import {
   getProgramByIdAndChainIdQuery,
-  getProgramsAndRoundsByUserAndTagQuery,
+  getProgramsAndRoundsByUserQuery,
   getRoundByChainIdAndPoolIdQuery,
   getRolesByChainIdAndPoolIdQuery,
 } from "./queries";
 
-export const getProgramsAndRoundsByUserAndTag = async (
+export const getProgramsAndRoundsByUser = async (
   userAddress?: string,
   chainIds?: number[],
-  tags?: string[],
 ): Promise<ProgramWithRounds[]> => {
   try {
-    const response = (await executeQuery(getProgramsAndRoundsByUserAndTagQuery, {
+    const response = (await executeQuery(getProgramsAndRoundsByUserQuery, {
       userAddress,
       chainIds,
-      tags,
     })) as { projects: ProgramWithRounds[] };
     return response.projects;
   } catch (error) {
@@ -32,7 +30,7 @@ export const getProgramByIdAndChainId = async (programId: string, chainId: numbe
   })) as {
     // NOTE: Program name depends on the value stored onChain instead of the metadataCID
     projects: {
-      roles: {
+      projectRoles: {
         address: string;
       }[];
       name: string;
@@ -45,7 +43,7 @@ export const getProgramByIdAndChainId = async (programId: string, chainId: numbe
     programName: program.name,
     chainId: program.chainId,
     programId: program.id,
-    members: program.roles.map((role) => role.address),
+    members: program.projectRoles.map((role) => role.address),
   };
 };
 
@@ -54,9 +52,9 @@ export const getRoundByChainIdAndPoolId = async (chainId: number, poolId: string
     const response = (await executeQuery(getRoundByChainIdAndPoolIdQuery, {
       chainId,
       poolId,
-    })) as { round: RetroRound };
+    })) as { rounds: RetroRound[] };
 
-    return response.round;
+    return response.rounds[0];
   } catch (error) {
     console.error("Error fetching round by chainId and poolId:", error);
     throw error;
@@ -70,7 +68,7 @@ export const getRolesByChainIdAndPoolId = async (chainId: number, poolId: string
       poolId,
     })) as { rounds: RoundRoles[] };
 
-    return response.rounds[0].roles.map((role) => role.address);
+    return response.rounds[0].roundRoles.map((role) => role.address);
   } catch (error) {
     console.error("Error fetching roles by chainId and poolId:", error);
     throw error;
