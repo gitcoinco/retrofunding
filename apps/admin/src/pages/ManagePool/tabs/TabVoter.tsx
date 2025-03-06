@@ -40,7 +40,7 @@ export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string 
     formProps: voterAllowlistArgs,
     stepProps: {
       formTitle: "Voters",
-      formDescription: "Set the application and funding period dates for your round.",
+      formDescription: "Configure the wallet addresses that can vote on your round.",
     },
   };
 
