@@ -4,6 +4,7 @@ import { FormField } from "@gitcoin/ui/types";
 import moment from "moment-timezone";
 import { useUpdateTimestamps } from "@/hooks";
 import { RetroRound, RoundDates } from "@/types";
+import { UINT64_MAX } from "@/utils";
 
 export const TabRoundDate = ({
   poolData,
@@ -38,6 +39,7 @@ export const TabRoundDate = ({
         round: {
           start: poolData.donationsStartTime,
           end: poolData.donationsEndTime,
+          noEndDate: BigInt(moment(poolData.donationsEndTime).unix()) === UINT64_MAX,
         },
       },
     },
