@@ -1,3 +1,4 @@
+import { NATIVE } from "@allo-team/allo-v2-sdk";
 import { getTokensByChainId } from "@gitcoin/gitcoin-chain-data";
 import { FormField, FormWithPersistStep as FormStep } from "@gitcoin/ui/types";
 import moment from "moment-timezone";
@@ -16,7 +17,9 @@ export const getRoundSetupSteps = async ({
   address?: Hex;
 }): Promise<{ roundSetupSteps: FormStep[]; managers: Hex[] }> => {
   const program = await getProgramByIdAndChainId(programId, chainId);
-  const tokens = getTokensByChainId(chainId);
+  const tokens = getTokensByChainId(chainId).filter(
+    (token) => token.address.toLowerCase() !== NATIVE.toLowerCase(),
+  );
 
   const poolMembers = program.members
     .map((member) => getAddress(member))
