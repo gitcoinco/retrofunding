@@ -2,7 +2,7 @@ import { NATIVE } from "@allo-team/allo-v2-sdk";
 import { getTokensByChainId } from "@gitcoin/gitcoin-chain-data";
 import { FormField, FormWithPersistStep as FormStep } from "@gitcoin/ui/types";
 import moment from "moment-timezone";
-import { Hex, getAddress } from "viem";
+import { Hex, getAddress, zeroAddress } from "viem";
 import { getProgramByIdAndChainId } from "@/services/allo-indexer/dataLayer";
 import { getMetrics } from "@/services/backend/dataLayer";
 import { supportTypes } from "@/utils/transformRoundMetadata";
@@ -18,7 +18,7 @@ export const getRoundSetupSteps = async ({
 }): Promise<{ roundSetupSteps: FormStep[]; managers: Hex[] }> => {
   const program = await getProgramByIdAndChainId(programId, chainId);
   const tokens = getTokensByChainId(chainId).filter(
-    (token) => token.address.toLowerCase() !== NATIVE.toLowerCase(),
+    (token) => token.address.toLowerCase() !== zeroAddress.toLowerCase(),
   );
 
   const poolMembers = program.members

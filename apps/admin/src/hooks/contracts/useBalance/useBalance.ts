@@ -1,5 +1,5 @@
 import { NATIVE } from "@allo-team/allo-v2-sdk";
-import { getAddress, Hex } from "viem";
+import { getAddress, Hex, zeroAddress } from "viem";
 import { useBalance as useBalanceHook } from "wagmi";
 
 /**
@@ -10,8 +10,10 @@ import { useBalance as useBalanceHook } from "wagmi";
  * @returns The balance of the token or native token
  */
 export const useBalance = (address: Hex, chainId: number, tokenAddress: Hex) => {
-  const token = getAddress(tokenAddress) === getAddress(NATIVE) ? undefined : tokenAddress;
-
+  const token =
+    getAddress(tokenAddress) === getAddress(NATIVE) || getAddress(tokenAddress) === zeroAddress
+      ? undefined
+      : tokenAddress;
   const balance = useBalanceHook({
     address,
     token,

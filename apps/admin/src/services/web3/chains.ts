@@ -1,3 +1,4 @@
+import { NATIVE } from "@allo-team/allo-v2-sdk";
 import { getChains, TChain } from "@gitcoin/gitcoin-chain-data";
 import { Chain } from "@rainbow-me/rainbowkit";
 import { zeroAddress } from "viem";
@@ -75,7 +76,9 @@ export function stringToBlobUrl(data: string): string {
 }
 
 export const parseRainbowChain = (chain: TChain): Chain => {
-  const nativeToken = chain.tokens.find((token) => token.address === zeroAddress);
+  const nativeToken = chain.tokens.find(
+    (token) => token.address.toLowerCase() === NATIVE.toLowerCase(),
+  );
 
   const rpc = getRpcUrl(chain);
 
