@@ -2,13 +2,16 @@
 
 import { useParams } from "react-router";
 import { PoolSummary } from "@gitcoin/ui/pool";
+import { useAccount } from "wagmi";
 import { LoadingPage } from "@/components/LoadingPage";
 import { MessagePage } from "@/components/Message";
-import { useGetRoundByChainIdAndPoolId } from "@/hooks/allo-indexer";
+import { useGetRolesByChainIdAndPoolId, useGetRoundByChainIdAndPoolId } from "@/hooks/allo-indexer";
+import { NotAdminDialog } from "./NotAdminDialog";
 import { PoolTabs } from "./tabs";
 
 export const ManagePool = () => {
   const { chainId, poolId } = useParams();
+  const { address } = useAccount();
 
   if (!chainId || !poolId) {
     return (
@@ -19,6 +22,11 @@ export const ManagePool = () => {
     );
   }
 
+  let { data: admins, isLoading: isAdminsLoading } = useGetRolesByChainIdAndPoolId(
+    Number(chainId),
+    poolId,
+  );
+
   const chainIdNumber = parseInt(chainId);
   const {
     data: poolData,
@@ -27,7 +35,7 @@ export const ManagePool = () => {
     refetch,
   } = useGetRoundByChainIdAndPoolId(chainIdNumber, poolId);
 
-  if (isLoading) {
+  if (isLoading || isAdminsLoading) {
     return <LoadingPage />;
   }
 
@@ -38,6 +46,12 @@ export const ManagePool = () => {
         message="Pool data is missing. Please check the URL."
       />
     );
+  }
+
+  const isAdmin = admins?.includes(address?.toLowerCase() ?? "");
+
+  if (!isAdmin) {
+    return <NotAdminDialog isOpen={true} />;
   }
 
   return (
