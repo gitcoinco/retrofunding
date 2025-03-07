@@ -30,7 +30,10 @@ export const LastStepFormSummary = ({
   }
   const values = data as RoundSetupFormData;
   const tokens = getTokensByChainId(Number(values.program.chainId));
-  const tokenTicker = tokens.find((token) => token.address === values.payoutToken)?.code;
+  const token = tokens.find((token) => token.address === values.payoutToken);
+  const tokenTicker = token?.code;
+  const tokenIcon = token?.icon;
+
   return (
     <div className="flex max-h-[700px] flex-col gap-6 overflow-y-auto">
       <span className="text-[16px]/[24px] font-medium">Round details</span>
@@ -40,7 +43,10 @@ export const LastStepFormSummary = ({
       </div>
       <div className="flex w-[223px] justify-between">
         <span className="text-sm font-normal">Payment token</span>
-        <span className="text-sm font-normal">{tokenTicker}</span>
+        <div className="flex items-center gap-2">
+          <div dangerouslySetInnerHTML={{ __html: tokenIcon ?? "" }} />
+          <span className="text-sm font-normal">{tokenTicker}</span>
+        </div>
       </div>
       <div className="flex w-[223px] justify-between">
         <span className="text-sm font-normal">Payment amount</span>

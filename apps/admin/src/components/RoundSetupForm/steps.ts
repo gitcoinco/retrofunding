@@ -348,7 +348,7 @@ export const getRoundSetupSteps = async ({
       name: "Review & deploy",
       formProps: reviewDeployArgs,
       stepProps: {
-        formTitle: "Review your round and deploy  onchain",
+        formTitle: "Review your round and deploy onchain",
         formDescription: "You can edit your round after it's been deployed.",
       },
     },
