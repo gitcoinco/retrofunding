@@ -67,28 +67,28 @@ export interface APIRetroRoundWithApplications extends APIRetroRound {
 export interface APIRetroApplication {
   id: string;
   metadata: {
-    signature: string
+    signature: string;
     application: {
-      round:string
-      answers: ApplicationAnswer[],
+      round: string;
+      answers: ApplicationAnswer[];
       project: {
         id: string;
         title: string;
-        description: string
+        description: string;
         logoImg: string;
-        bannerImg: string
+        bannerImg: string;
         metaPtr: {
-          pointer: string
-          protocol: any
-        }
-        website: string
-        createdAt: number
-        credentials: any
-        lastUpdated: number
-      }
-      recipient: string
-    }
-  }
+          pointer: string;
+          protocol: any;
+        };
+        website: string;
+        createdAt: number;
+        credentials: any;
+        lastUpdated: number;
+      };
+      recipient: string;
+    };
+  };
 }
 
 export interface ApplicationAnswer {

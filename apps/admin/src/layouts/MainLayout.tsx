@@ -9,7 +9,7 @@ export const MainLayout = () => {
     <div style={{ height: "100vh" }} className="flex min-h-full flex-col">
       <Toaster />
       <Navbar />
-      <main className="flex flex-1 flex-col">
+      <main className="flex flex-1 flex-col pb-20">
         <Outlet />
       </main>
     </div>

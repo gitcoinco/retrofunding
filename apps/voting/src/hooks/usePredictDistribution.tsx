@@ -9,11 +9,7 @@ interface PredictDistributionParams {
 }
 
 export const usePredictDistribution = ({ poolId, chainId, ballot }: PredictDistributionParams) => {
-  const hasRequiredParams = Boolean(
-    poolId &&
-    chainId &&
-    ballot
-  );
+  const hasRequiredParams = Boolean(poolId && chainId && ballot);
 
   return useQuery({
     queryKey: ["predictDistribution", { poolId, chainId, ballot }],
