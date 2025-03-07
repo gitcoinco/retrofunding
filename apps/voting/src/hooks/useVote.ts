@@ -9,7 +9,7 @@ export type VoteParams = {
 export const useVote = () => {
   const voteMutation = useMutation({
     mutationFn: async (data: RetroVoteBody) => {
-      return vote(data)
+      return vote(data);
     },
   });
 

@@ -26,6 +26,7 @@
 
 .rainbow-button {
   @apply rounded-lg p-px;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%),
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%),
     linear-gradient(124deg, #ff9776 17.77%, #5f94bc 35.47%, #25bdce 59.3%, #deab0c 91.61%);
 }
