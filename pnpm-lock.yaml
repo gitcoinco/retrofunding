@@ -36,8 +36,8 @@ importers:
         specifier: 1.1.2
         version: 1.1.2(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@gitcoin/gitcoin-chain-data':
-        specifier: ^1.0.44
-        version: 1.0.51(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
+        specifier: ^1.0.53
+        version: 1.0.53(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@gitcoin/ui':
         specifier: 0.0.0-beta.22
         version: 0.0.0-beta.22(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.34.8)(storybook@8.5.6(bufferutil@4.0.9)(prettier@3.5.1)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.1.0(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.0))
@@ -149,7 +149,7 @@ importers:
         version: 1.0.79(@typechain/ethers-v6@0.5.1(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4))(bufferutil@4.0.9)(ethers@6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10))(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4))(typechain@8.3.2(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@gitcoin/gitcoin-chain-data':
         specifier: ^1.0.43
-        version: 1.0.51(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
+        version: 1.0.53(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@gitcoin/ui':
         specifier: 0.0.0-beta.22
         version: 0.0.0-beta.22(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.34.8)(storybook@8.5.6(bufferutil@4.0.9)(prettier@3.5.1)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.1.0(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.0))
@@ -748,8 +748,8 @@ packages:
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
 
-  '@gitcoin/gitcoin-chain-data@1.0.51':
-    resolution: {integrity: sha512-oiK3kNGt1vBrOKeDA6jCENstZ7buW4oHihZf59Z1hTftW4qDrZLiheDdd54N74p43RnDBXKmuvInl+q+OIdXgA==}
+  '@gitcoin/gitcoin-chain-data@1.0.53':
+    resolution: {integrity: sha512-4kvnDwxKIYAOASpP/Ig6YxnbTIhvVo1qrBBB+dbu2tbIq9yh07Esa10Eq7D+A4wWafJ+YoLew++PxHxjo/opdA==}
     engines: {node: '>=16.15.0', npm: '>=8.5.5'}
     peerDependencies:
       typescript: ^5.0.0
@@ -7292,7 +7292,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.9': {}
 
-  '@gitcoin/gitcoin-chain-data@1.0.51(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)':
+  '@gitcoin/gitcoin-chain-data@1.0.53(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)':
     dependencies:
       typescript: 5.5.4
       viem: 2.21.60(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
@@ -7303,7 +7303,7 @@ snapshots:
 
   '@gitcoin/ui@0.0.0-beta.22(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.34.8)(storybook@8.5.6(bufferutil@4.0.9)(prettier@3.5.1)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.1.0(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.0))':
     dependencies:
-      '@gitcoin/gitcoin-chain-data': 1.0.51(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
+      '@gitcoin/gitcoin-chain-data': 1.0.53(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@heroicons/react': 1.0.6(react@18.3.1)
       '@hookform/resolvers': 3.10.0(react-hook-form@7.54.2(react@18.3.1))
       '@radix-ui/react-accordion': 1.2.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
