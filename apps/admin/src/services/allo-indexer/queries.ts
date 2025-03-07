@@ -114,3 +114,13 @@ export const getRoundByChainIdAndPoolIdQuery = gql`
     }
   }
 `;
+
+export const getRolesByChainIdAndPoolIdQuery = gql`
+  query ($chainId: Int!, $poolId: String!) {
+    rounds(filter: { chainId: { equalTo: $chainId }, id: { equalTo: $poolId } }) {
+      roles {
+        address
+      }
+    }
+  }
+`;

@@ -1,9 +1,10 @@
-import { ProgramWithRounds, RetroRound } from "@/types";
+import { ProgramWithRounds, RetroRound, RoundRoles } from "@/types";
 import { executeQuery } from "./alloIndexerClient";
 import {
   getProgramByIdAndChainIdQuery,
   getProgramsAndRoundsByUserAndTagQuery,
   getRoundByChainIdAndPoolIdQuery,
+  getRolesByChainIdAndPoolIdQuery,
 } from "./queries";
 
 export const getProgramsAndRoundsByUserAndTag = async (
@@ -58,6 +59,20 @@ export const getRoundByChainIdAndPoolId = async (chainId: number, poolId: string
     return response.round;
   } catch (error) {
     console.error("Error fetching round by chainId and poolId:", error);
+    throw error;
+  }
+};
+
+export const getRolesByChainIdAndPoolId = async (chainId: number, poolId: string) => {
+  try {
+    const response = (await executeQuery(getRolesByChainIdAndPoolIdQuery, {
+      chainId,
+      poolId,
+    })) as { rounds: RoundRoles[] };
+
+    return response.rounds[0].roles.map((role) => role.address);
+  } catch (error) {
+    console.error("Error fetching roles by chainId and poolId:", error);
     throw error;
   }
 };

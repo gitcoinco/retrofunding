@@ -65,3 +65,9 @@ export type RetroRound = {
     distributionTransaction?: Hex;
   }[];
 };
+
+export type RoundRoles = {
+  roles: Array<{
+    address: string;
+  }>;
+};
