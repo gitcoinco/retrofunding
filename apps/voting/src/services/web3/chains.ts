@@ -117,11 +117,16 @@ const filterChainsByAvailability = (chains: TChain[], availableNetworks: number[
   return chains.filter((chain) => availableNetworks.includes(chain.id));
 };
 
+const filterChainsByRetrofundingAvailability = (chains: TChain[]): TChain[] => {
+  return chains.filter((chain) => chain.contracts.retroFunding);
+};
+
 export const getTargetNetworks = (config: ChainConfig): [Chain, ...Chain[]] => {
   const environmentChains = filterChainsByEnvironment(config.isDevelopment);
   const availableChains = filterChainsByAvailability(environmentChains, config.availableNetworks);
+  const retrofundingChains = filterChainsByRetrofundingAvailability(availableChains);
 
-  const parsedChains = availableChains.map(parseRainbowChain) as [Chain, ...Chain[]];
+  const parsedChains = retrofundingChains.map(parseRainbowChain) as [Chain, ...Chain[]];
 
   return parsedChains.length > 0 ? parsedChains : ([chains.mainnet] as [Chain, ...Chain[]]);
 };
