@@ -1,6 +1,7 @@
 export type ProgramWithRounds = {
   id: string;
   chainId: number;
+  name: string;
   metadata: {
     name: string;
   };
