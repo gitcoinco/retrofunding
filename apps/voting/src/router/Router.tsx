@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router";
 import { MainLayout } from "@/layouts/MainLayout";
-import { Landing, NotFound, Vote } from "@/pages";
+import { Landing, NotFound, Vote, ListBallots } from "@/pages";
 import { ProtectedVoteRoute } from "./protectedRoutes";
 
 function useHashRedirect() {
@@ -33,6 +33,7 @@ export const Router = () => {
   return (
     <Routes>
       <Route element={<MainLayout />}>
+        <Route index element={<ListBallots />} />
         <Route path="/:chainId/:roundId">
           <Route element={<ProtectedVoteRoute fallback={Landing} />}>
             <Route index element={<Vote />} />
