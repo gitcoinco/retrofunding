@@ -32,7 +32,7 @@ export const getProgramByIdAndChainId = async (programId: string, chainId: numbe
   })) as {
     // NOTE: Program name depends on the value stored onChain instead of the metadataCID
     projects: {
-      roles: {
+      projectRoles: {
         address: string;
       }[];
       name: string;
@@ -45,7 +45,7 @@ export const getProgramByIdAndChainId = async (programId: string, chainId: numbe
     programName: program.name,
     chainId: program.chainId,
     programId: program.id,
-    members: program.roles.map((role) => role.address),
+    members: program.projectRoles.map((role) => role.address),
   };
 };
 
