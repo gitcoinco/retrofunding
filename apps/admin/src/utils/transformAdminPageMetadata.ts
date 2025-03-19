@@ -21,7 +21,10 @@ export const getPoolStatus = (pool: {
   return PoolStatus.PreRound;
 };
 
-const getOperatorsCount = (roles?: ProgramWithRounds["roles"], operatorRoles: string[] = []) => {
+const getOperatorsCount = (
+  roles?: ProgramWithRounds["projectRoles"],
+  operatorRoles: string[] = [],
+) => {
   if (!roles) return 0;
   return new Set(
     roles
@@ -34,7 +37,7 @@ export const transformProgramData = (program: ProgramWithRounds) => ({
   id: program.id,
   chainId: program.chainId,
   title: program.name,
-  operatorsCount: getOperatorsCount(program.roles),
+  operatorsCount: getOperatorsCount(program.projectRoles),
   roundsCount: program.retroRounds?.length || 0,
   createdAtBlock: program.createdAtBlock,
   onClick: (programData?: { chainId: number; programId: string }) => {
@@ -60,8 +63,8 @@ export const getProgramsAndRoundsItems = (programs: ProgramWithRounds[]) => {
     programId: program.id as Hex,
     chainId: program.chainId,
     iconType: getChainInfo(program.chainId).icon,
-    admins: (program.roles?.map((role) => role.address) ?? []) as Address[],
-    owner: (program.roles?.find((role) => role.role === "OWNER")?.address ??
+    admins: (program.projectRoles?.map((role) => role.address) ?? []) as Address[],
+    owner: (program.projectRoles?.find((role) => role.role === "OWNER")?.address ??
       zeroAddress) as Address,
   }));
   return { roundsItems, programsItems };
@@ -88,7 +91,7 @@ export const transformPoolData = (programs: ProgramWithRounds[]): PoolData[] => 
         chainId: program?.chainId,
         poolType: PoolType.Retrofunding,
         poolStatus: getPoolStatus(poolDates),
-        operatorsCount: round?.roles?.length || 0,
+        operatorsCount: round?.roundRoles?.length || 0,
         createdAtBlock: round?.createdAtBlock,
         logoImg: `${config.pinataBaseUrl}/${round?.roundMetadata?.retroFundingConfig?.coverImage}`,
         ...poolDates,

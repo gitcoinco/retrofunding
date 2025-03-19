@@ -4,8 +4,8 @@ import { ProgressStatus } from "@gitcoin/ui/types";
 import { useMutation } from "@tanstack/react-query";
 import { Abi, createPublicClient, encodeFunctionData, http } from "viem";
 import { useWalletClient } from "wagmi";
+import { waitUntilIndexerSynced } from "@/hooks/contracts/utils/indexer";
 import {
-  waitUntilIndexerSynced,
   applicationStatusToNumber,
   buildUpdatedRowsOfApplicationStatuses,
   getStrategyInstance,
