@@ -5,7 +5,7 @@ export const waitUntilIndexerSynced = async ({
   chainId: number;
   blockNumber: bigint;
 }) => {
-  const endpoint = `${import.meta.env.VITE_INDEXER_V2_API_URL}/graphql`;
+  const endpoint = `${import.meta.env.VITE_ALLO_INDEXER_ENDPOINT}/graphql`;
   const pollIntervalInMs = 1000;
 
   async function pollIndexer() {
@@ -43,14 +43,7 @@ export const waitUntilIndexerSynced = async ({
       const eventsRegistry = data?.eventsRegistry || [];
 
       if (eventsRegistry.length > 0) {
-        const currentBlockNumber = BigInt(
-          eventsRegistry.reduce(
-            (minBlock, event) =>
-              BigInt(event.blockNumber) < BigInt(minBlock) ? event.blockNumber : minBlock,
-            eventsRegistry[0].blockNumber,
-          ),
-        );
-
+        const currentBlockNumber = eventsRegistry[0].blockNumber;
         if (currentBlockNumber >= blockNumber) {
           return true;
         }
