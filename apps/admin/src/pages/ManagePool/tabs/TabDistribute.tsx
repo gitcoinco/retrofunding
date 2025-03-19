@@ -19,6 +19,7 @@ import { useFundRound } from "@/hooks/contracts/useFundRound";
 import { RetroRound } from "@/types";
 import { transformDistributeApplications } from "@/utils";
 import { getPoolStatus } from "@/utils/getPoolStatus";
+import { getRoundConstantGrantFunding } from "@/utils/getRoundConstantGrantFunding";
 
 interface TabDistributeProps {
   roundData: RetroRound;
@@ -81,7 +82,10 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
   const applications = transformDistributeApplications(roundData, latestDistribution);
 
   const amountOfTokensToDistribute = roundData.roundMetadata.retroFundingConfig.fundingAmount ?? 0;
-
+  const constantFundingAmount = getRoundConstantGrantFunding(
+    roundData.id,
+    roundData.chainId.toString(),
+  );
   const poolConfig = {
     tokenTicker: balance.symbol,
     amountOfTokensInPool: balance.value,
@@ -89,7 +93,8 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
     tokenDecimals: balance.decimals,
     poolStatus: getPoolStatus(roundData),
     chainId,
-  } as PoolConfig;
+    constantAmountPerGrant: constantFundingAmount,
+  } satisfies PoolConfig;
 
   const onFundRound = async (amount: bigint) => {
     try {
