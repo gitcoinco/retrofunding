@@ -85,6 +85,8 @@ export interface APIRetroApplication {
         createdAt: number;
         credentials: any;
         lastUpdated: number;
+        projectGithub?: string;
+        projectTwitter?: string;
       };
       recipient: string;
     };
