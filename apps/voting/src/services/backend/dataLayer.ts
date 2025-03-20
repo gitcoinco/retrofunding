@@ -8,6 +8,7 @@ import {
   getPoolQuery,
   getVotersQuery,
   getVoteQuery,
+  getPoolMetricsWithVotesQuery,
 } from "./queries";
 import { executeQuery } from "./retrofundingClient";
 
@@ -17,6 +18,12 @@ export const getVote = async (
   address: Hex,
 ): Promise<{ votes: GetVoteResponse[] }> =>
   executeQuery(getVoteQuery, { alloPoolId, chainId, address });
+
+export const getRoundVotesWithMetrics = async (
+  alloPoolId: string,
+  chainId: number,
+): Promise<{ pools: { metricIdentifiers: string; votes: GetVoteResponse[] }[] }> =>
+  executeQuery(getPoolMetricsWithVotesQuery, { alloPoolId, chainId });
 
 export const getVoters = async (alloPoolId: string, chainId: number): Promise<string[]> => {
   const response = await executeQuery(getVotersQuery, { alloPoolId, chainId });
