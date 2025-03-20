@@ -22,6 +22,8 @@ const mapAplications = (applications: APIRetroApplication[]) =>
       createdAt,
       credentials,
       lastUpdated,
+      projectGithub,
+      projectTwitter,
     } = project;
 
     return {
@@ -40,6 +42,8 @@ const mapAplications = (applications: APIRetroApplication[]) =>
       credentials,
       lastUpdated,
       recipient,
+      projectGithub,
+      projectTwitter,
     };
   });
 
