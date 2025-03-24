@@ -4,6 +4,7 @@ import { useToast } from "@gitcoin/ui/hooks/useToast";
 import { Distribute } from "@gitcoin/ui/retrofunding";
 import { ApplicationPayout, PoolConfig } from "@gitcoin/ui/types";
 import { RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
+import Decimal from "decimal.js";
 import { Address, getAddress } from "viem";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { LoadingPage } from "@/components/LoadingPage";
@@ -118,9 +119,19 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
     }
   };
 
-  const onDistribute = async (values: { applicationId: string; amount: bigint }[]) => {
-    const totalAmount = values.reduce((acc, value) => acc + value.amount, 0n);
-    if (totalAmount > balance.value) {
+  const onDistribute = async (
+    values: { applicationId: string; amount: bigint }[],
+    selectedApplications: string[],
+  ) => {
+    const filteredValues = values.filter((value) =>
+      selectedApplications.includes(value.applicationId),
+    );
+    const totalAmount = filteredValues.reduce(
+      (acc, value) => acc.plus(new Decimal(value.amount.toString())),
+      new Decimal(0),
+    );
+
+    if (totalAmount.gt(new Decimal(balance.value.toString()))) {
       throw new Error(`something went wrong with the calculations`);
     }
     const roundApplications: Record<
@@ -139,12 +150,12 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
       },
       {} as Record<string, { anchorAddress: Address; payoutAddress: Address }>,
     );
-    const data = values.map((value) => ({
+    const transactionData = filteredValues.map((value) => ({
       anchorAddress: getAddress(roundApplications[value.applicationId].anchorAddress),
       amount: value.amount,
       index: Number(value.applicationId) + 1,
     }));
-    const distributionData = values.map((value) => ({
+    const distributionMetadata = values.map((value) => ({
       anchorAddress: roundApplications[value.applicationId].anchorAddress,
       payoutAddress: roundApplications[value.applicationId].payoutAddress,
       amount: value.amount.toString(),
@@ -152,8 +163,8 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
     }));
     await distribute(
       {
-        distributionData,
-        data,
+        distributionMetadata,
+        transactionData,
         poolId: roundData.id,
         chainId: roundData.chainId,
         strategyAddress: strategy,
@@ -180,8 +191,12 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
   };
 
   const onEditPayouts = async (values: ApplicationPayout[]) => {
-    const totalPercentage = values.reduce((acc, value) => acc + value.payoutPercentage, 0);
-    if (totalPercentage !== 100) {
+    // use Decimal.js for sum
+    const totalPercentage = values.reduce(
+      (acc, value) => acc.plus(new Decimal(value.payoutPercentage)),
+      new Decimal(0),
+    );
+    if (totalPercentage.toNumber() !== 100) {
       toast({
         title: "Payout percentage error",
         description: "The payout percentage must be 100%",
