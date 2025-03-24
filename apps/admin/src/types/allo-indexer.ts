@@ -8,7 +8,7 @@ export type ProgramWithRounds = {
   metadata: {
     name: string;
   };
-  roles: {
+  projectRoles: {
     address: string;
     role: string;
   }[];
@@ -29,7 +29,7 @@ export type RetroRound = {
   roundMetadata: RoundMetadata;
   applicationMetadata: ApplicationMetadata;
   matchTokenAddress: string;
-  roles: {
+  roundRoles: {
     address: string;
     role: string;
   }[];
@@ -67,7 +67,7 @@ export type RetroRound = {
 };
 
 export type RoundRoles = {
-  roles: Array<{
+  roundRoles: Array<{
     address: string;
   }>;
 };

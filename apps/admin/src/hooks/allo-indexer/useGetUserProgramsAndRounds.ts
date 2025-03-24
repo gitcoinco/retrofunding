@@ -1,15 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { config } from "@/config";
-import { getProgramsAndRoundsByUserAndTag } from "@/services/allo-indexer/dataLayer";
-
-const tags = ["allo-v2", "program"];
+import { getProgramsAndRoundsByUser } from "@/services/allo-indexer/dataLayer";
 
 export const useGetUserProgramsAndRounds = (userAddress?: string) => {
-  const lowerCaseAddress = userAddress?.toLowerCase();
   return useQuery({
-    enabled: !!lowerCaseAddress,
-    queryKey: ["userProgramsAndRounds", lowerCaseAddress],
-    queryFn: () =>
-      getProgramsAndRoundsByUserAndTag(lowerCaseAddress, config.availableNetworks, tags),
+    enabled: !!userAddress,
+    queryKey: ["userProgramsAndRounds", userAddress],
+    queryFn: () => getProgramsAndRoundsByUser(userAddress, config.availableNetworks),
   });
 };
