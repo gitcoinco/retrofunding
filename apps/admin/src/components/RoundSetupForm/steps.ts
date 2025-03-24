@@ -262,16 +262,38 @@ export const getRoundSetupSteps = async ({
         name: "voterAllowlist",
         label: "Voter allowlist",
         validation: {
-          arrayValidation: {
-            itemType: "address",
-            minItems: 1,
-            maxItems: 100,
-            minItemsMessage: "At least one admin is required",
-            maxItemsMessage: "Maximum of 100 admins allowed",
+          objectValidation: {
+            properties: {
+              addresses: {
+                type: "array",
+                label: "addresses",
+                isRequired: true,
+                arrayValidation: {
+                  minItems: 1,
+                  minItemsMessage: "At least one address is required",
+                  itemType: "address",
+                },
+              },
+              weights: {
+                type: "array",
+                label: "weights",
+                arrayValidation: {
+                  minItems: 0,
+                  maxItems: Number.MAX_SAFE_INTEGER,
+                  itemType: "number",
+                },
+                isRequired: false,
+              },
+              isWeighted: {
+                type: "boolean",
+                label: "Weighted",
+                isRequired: false,
+              },
+            },
           },
         },
       },
-      component: "Allowlist",
+      component: "WeightedAllowlist",
     },
   ];
 

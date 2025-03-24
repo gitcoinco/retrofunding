@@ -1,3 +1,4 @@
+import Decimal from "decimal.js";
 import { Hex } from "viem";
 
 export interface Metric {
@@ -13,13 +14,22 @@ export interface AlloPoolIdChainId {
   chainId: number;
 }
 
+export enum EligibilityType {
+  Linear = "linear",
+  Weighted = "weighted",
+}
+
 export interface LinearEligibilityData {
   voters: Hex[];
 }
 
+export interface WeightedEligibilityData {
+  voters: Record<Hex, number>;
+}
+
 export interface CreatePoolBody extends AlloPoolIdChainId {
-  eligibilityType: string;
-  eligibilityData: LinearEligibilityData;
+  eligibilityType: EligibilityType;
+  eligibilityData: LinearEligibilityData | WeightedEligibilityData;
   metricIdentifiers: string[];
 }
 
@@ -27,15 +37,15 @@ export type SyncPoolBody = AlloPoolIdChainId;
 
 export interface UpdatePoolEligibilityBody extends AlloPoolIdChainId {
   signature: Hex;
-  eligibilityType: string;
-  data: LinearEligibilityData;
+  eligibilityType: EligibilityType;
+  data: LinearEligibilityData | WeightedEligibilityData;
 }
 
 export type CalculatePoolBody = AlloPoolIdChainId;
 
 export interface DistributionItem {
   alloApplicationId: string;
-  distributionPercentage: number;
+  distributionPercentage: Decimal;
 }
 
 export interface DistributionData {
@@ -45,8 +55,8 @@ export interface DistributionData {
 
 export interface Pool extends AlloPoolIdChainId, DistributionData {
   eligibilityCriteria: {
-    eligibilityType: string;
-    data: LinearEligibilityData;
+    eligibilityType: EligibilityType;
+    data: LinearEligibilityData | WeightedEligibilityData;
   };
   metricIdentifiers: string[];
 }

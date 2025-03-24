@@ -5,6 +5,7 @@ import { Hex } from "viem";
 import { LoadingPage } from "@/components/LoadingPage";
 import { useUpdatePoolEligibility } from "@/hooks/backend";
 import { useGetPool } from "@/hooks/backend/useGetPool";
+import { EligibilityType } from "@/types";
 
 export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string }) => {
   const { data: pool, isLoading } = useGetPool(poolId, chainId);
@@ -14,25 +15,59 @@ export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string 
     {
       field: {
         name: "voterAllowlist",
-        label: "Provide wallet addresses to grant voter access to the round.",
+        label: "",
         validation: {
-          arrayValidation: {
-            itemType: "address",
-            minItems: 1,
-            maxItems: 100,
-            minItemsMessage: "At least one admin is required",
-            maxItemsMessage: "Maximum of 100 admins allowed",
+          objectValidation: {
+            properties: {
+              addresses: {
+                type: "array",
+                label: "addresses",
+                isRequired: true,
+                arrayValidation: {
+                  minItems: 1,
+                  minItemsMessage: "At least one address is required",
+                  itemType: "address",
+                },
+              },
+              weights: {
+                type: "array",
+                label: "weights",
+                arrayValidation: {
+                  minItems: 0,
+                  maxItems: Number.MAX_SAFE_INTEGER,
+                  itemType: "number",
+                },
+                isRequired: false,
+              },
+              isWeighted: {
+                type: "boolean",
+                label: "Weighted",
+                isRequired: false,
+              },
+            },
           },
         },
       },
-      component: "Allowlist",
+      component: "WeightedAllowlist",
     },
   ];
+
+  const eligibilityData = pool?.eligibilityCriteria.data;
+
+  const eligibilityCriteria = pool?.eligibilityCriteria.eligibilityType;
+
+  const isWeighted = eligibilityCriteria === EligibilityType.Weighted.toLocaleUpperCase();
 
   const voterAllowlistArgs = {
     fields: voterAllowlistFields,
     defaultValues: {
-      voterAllowlist: pool?.eligibilityCriteria.data.voters,
+      voterAllowlist: {
+        addresses: isWeighted
+          ? Object.keys(eligibilityData?.voters as Record<Hex, number>)
+          : eligibilityData?.voters,
+        weights: isWeighted ? Object.values(eligibilityData?.voters as Record<Hex, number>) : [],
+        isWeighted: isWeighted,
+      },
     },
   };
 
@@ -40,7 +75,8 @@ export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string 
     formProps: voterAllowlistArgs,
     stepProps: {
       formTitle: "Voters",
-      formDescription: "Configure the wallet addresses that can vote on your round.",
+      formDescription:
+        "Provide wallet addresses to grant voter access to the round, with the option to assign a weight to each voter's votes.",
     },
   };
 
@@ -49,14 +85,31 @@ export const TabVoter = ({ chainId, poolId }: { chainId: number; poolId: string 
   }
 
   const handleSubmit = async (values: any) => {
+    const eligibilityType = values.voterAllowlist.isWeighted
+      ? EligibilityType.Weighted
+      : EligibilityType.Linear;
+    const data =
+      eligibilityType === EligibilityType.Weighted
+        ? {
+            voters: values.voterAllowlist.addresses.reduce(
+              (acc: Record<Hex, number>, voter: Hex) => {
+                acc[voter] =
+                  values.voterAllowlist.weights[values.voterAllowlist.addresses.indexOf(voter)];
+                return acc;
+              },
+              {},
+            ),
+          }
+        : {
+            voters: values.voterAllowlist.addresses.map((voter: Hex) => voter.trim()),
+          };
+
     await updatePoolEligibility(
       {
         alloPoolId: poolId,
         chainId: chainId,
-        eligibilityType: "linear",
-        data: {
-          voters: values.voterAllowlist.map((voter: Hex) => voter.trim()),
-        },
+        eligibilityType: eligibilityType,
+        data,
       },
       {
         onSuccess: (data: boolean) => {
