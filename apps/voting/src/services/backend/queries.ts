@@ -19,9 +19,13 @@ export const getPoolMetricsWithVotesQuery = gql`
   query getPoolMetricsWithVotes($alloPoolId: String!, $chainId: Int!) {
     pools(filter: { alloPoolId: { equalTo: $alloPoolId }, chainId: { equalTo: $chainId } }) {
       metricIdentifiers
+      eligibilityCriteria {
+        data
+      }
       votes {
         updatedAt
         ballot
+        voter
       }
     }
   }

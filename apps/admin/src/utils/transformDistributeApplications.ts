@@ -1,11 +1,18 @@
 import { ApplicationPayout } from "@gitcoin/ui/types";
+import Decimal from "decimal.js";
 import { DistributionData, RetroRound } from "@/types";
+
+// Configure Decimal.js for maximum precision
+Decimal.set({
+  precision: 64, // Precision for financial calculations
+  rounding: Decimal.ROUND_DOWN, // Better for financial calculations (prevents overshooting)
+});
 
 export const transformDistributeApplications = (
   roundData: RetroRound,
   poolDistribution?: DistributionData,
 ): ApplicationPayout[] => {
-  const applicationsPercentages: Record<string, number> = {};
+  const applicationsPercentages: Record<string, Decimal> = {};
 
   if (!roundData?.applications) {
     return [];
@@ -21,7 +28,7 @@ export const transformDistributeApplications = (
     });
   } else {
     filteredApplications.forEach((application) => {
-      applicationsPercentages[application.id] = 0;
+      applicationsPercentages[application.id] = new Decimal(0);
     });
   }
 

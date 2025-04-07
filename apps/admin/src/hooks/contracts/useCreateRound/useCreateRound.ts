@@ -7,7 +7,7 @@ import { Hex, TransactionReceipt, decodeEventLog } from "viem";
 import { getCreateRoundProgressSteps } from "@/hooks";
 import { createPool } from "@/services/backend/api";
 import { uploadData } from "@/services/ipfs/upload";
-import { RoundSetupFormData } from "@/types";
+import { EligibilityType, RoundSetupFormData } from "@/types";
 import { mapFormDataToRoundMetadata } from "@/utils/transformRoundMetadata";
 import { UINT64_MAX } from "@/utils/utils";
 import { useContractInteraction } from "../useContractInteraction";
@@ -111,13 +111,29 @@ export const useCreateRound = () => {
 
           if (!poolId) throw new Error("Pool ID is undefined");
 
+          const eligibilityType = data.voterAllowlist.isWeighted
+            ? EligibilityType.Weighted
+            : EligibilityType.Linear;
+
+          const eligibilityData = data.voterAllowlist.isWeighted
+            ? {
+                voters: data.voterAllowlist.addresses.reduce(
+                  (acc, address, index) => {
+                    acc[address] = data.voterAllowlist.weights[index];
+                    return acc;
+                  },
+                  {} as Record<Hex, number>,
+                ),
+              }
+            : {
+                voters: data.voterAllowlist.addresses as Hex[],
+              };
+
           await createPool({
             alloPoolId: poolId,
             chainId: data.program.chainId,
-            eligibilityType: "linear",
-            eligibilityData: {
-              voters: data.voterAllowlist.map((voter: string) => voter.trim()) as Hex[],
-            },
+            eligibilityType,
+            eligibilityData,
             metricIdentifiers: data.impactMetrics,
           });
         },

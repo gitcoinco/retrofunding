@@ -1,3 +1,6 @@
+"use client";
+
+import { useSearchParams } from "react-router";
 import { VerticalTabs, Icon, IconType } from "@gitcoin/ui";
 import { RefetchOptions } from "@tanstack/react-query";
 import { QueryObserverResult } from "@tanstack/react-query";
@@ -18,10 +21,19 @@ interface PoolTabsProps {
 }
 
 export const PoolTabs = ({ chainId, poolId, poolData, onUpdate }: PoolTabsProps) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = searchParams.get("tab") || "applications";
+
+  const handleTabChange = (tab: any) => {
+    setSearchParams({ tab });
+  };
+
   return (
     <div className="px-20">
       <VerticalTabs
         listClassName="justify-normal"
+        value={tab}
+        onValueChange={handleTabChange}
         tabs={[
           {
             tabContent: <TabApplication chainId={chainId} poolId={poolId} />,

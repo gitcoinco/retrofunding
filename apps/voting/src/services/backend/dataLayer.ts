@@ -22,10 +22,20 @@ export const getVote = async (
 export const getRoundVotesWithMetrics = async (
   alloPoolId: string,
   chainId: number,
-): Promise<{ pools: { metricIdentifiers: string; votes: GetVoteResponse[] }[] }> =>
-  executeQuery(getPoolMetricsWithVotesQuery, { alloPoolId, chainId });
+): Promise<{
+  pools: {
+    metricIdentifiers: string;
+    votes: GetVoteResponse[];
+    eligibilityCriteria: {
+      data: { voters: string[] | Record<Hex, number> };
+    };
+  }[];
+}> => executeQuery(getPoolMetricsWithVotesQuery, { alloPoolId, chainId });
 
-export const getVoters = async (alloPoolId: string, chainId: number): Promise<string[]> => {
+export const getVoters = async (
+  alloPoolId: string,
+  chainId: number,
+): Promise<string[] | Record<Hex, number>> => {
   const response = await executeQuery(getVotersQuery, { alloPoolId, chainId });
   return response.pools[0].eligibilityCriteria.data.voters;
 };

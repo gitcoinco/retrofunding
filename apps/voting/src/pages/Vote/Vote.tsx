@@ -114,7 +114,7 @@ export const Vote = () => {
       }
 
       const alloPoolId = roundId;
-      const hash = await getDeterministicObjHash({ alloPoolId, chainId: chainId });
+      const hash = await getDeterministicObjHash({ alloPoolId, chainId });
       const signature = await walletClient.signMessage({ message: hash });
       const voter = address as Hex;
       const ballot = values.map(({ metricId, amount }) => ({
@@ -125,7 +125,7 @@ export const Vote = () => {
         alloPoolId,
         chainId,
         voter,
-        signature: signature,
+        signature,
         ballot,
       };
       await voteMutation.mutateAsync(voteBody, {

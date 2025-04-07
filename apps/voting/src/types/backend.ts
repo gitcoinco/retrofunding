@@ -57,6 +57,7 @@ export interface RetroBallot {
 export interface GetVoteResponse {
   updatedAt: Date;
   ballot: string;
+  voter: Hex;
 }
 
 export interface MetricFetcherResponse {

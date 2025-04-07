@@ -126,12 +126,11 @@ export const useContractInteraction = () => {
           });
         } catch (e) {
           setContractUpdatingStatus(ProgressStatus.IS_ERROR);
-          console.log(txData);
           throw new Error("Failed to send transaction");
         }
 
         receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
-        if (!receipt.status) {
+        if (!receipt.status || receipt.status === "reverted") {
           setContractUpdatingStatus(ProgressStatus.IS_ERROR);
           throw new Error("Transaction failed");
         }

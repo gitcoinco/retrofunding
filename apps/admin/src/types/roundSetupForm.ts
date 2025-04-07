@@ -56,6 +56,10 @@ export interface RoundSetupFormData {
       choices: string[];
     }>;
   };
-  voterAllowlist: string[];
+  voterAllowlist: {
+    addresses: Hex[];
+    weights: number[];
+    isWeighted: boolean;
+  };
   managers: Hex[];
 }

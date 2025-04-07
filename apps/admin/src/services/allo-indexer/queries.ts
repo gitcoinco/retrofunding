@@ -1,14 +1,13 @@
 import { gql } from "graphql-request";
 
-export const getProgramsAndRoundsByUserAndTagQuery = gql`
-  query ($userAddress: String!, $chainIds: [Int!]!, $tags: [String!]!) {
+export const getProgramsAndRoundsByUserQuery = gql`
+  query ($userAddress: String!, $chainIds: [Int!]!) {
     projects(
-      orderBy: PRIMARY_KEY_DESC
-      first: 100
-      filter: {
-        tags: { contains: $tags }
-        chainId: { in: $chainIds }
-        roles: { some: { address: { equalTo: $userAddress } } }
+      orderBy: { timestamp: DESC }
+      where: {
+        tags: { _contains: ["allo-v2", "program"] }
+        chainId: { _in: $chainIds }
+        projectRoles: { address: { _eq: $userAddress } }
       }
     ) {
       id
@@ -16,14 +15,14 @@ export const getProgramsAndRoundsByUserAndTagQuery = gql`
       chainId
       metadata
       createdAtBlock
-      roles {
+      projectRoles {
         address
         role
       }
       retroRounds: rounds(
-        filter: {
-          strategyName: { equalTo: "allov2.EasyRetroFundingStrategy" }
-          roles: { some: { address: { equalTo: $userAddress } } }
+        where: {
+          strategyName: { _eq: "allov2.EasyRetroFundingStrategy" }
+          roundRoles: { address: { _eq: $userAddress } }
         }
       ) {
         id
@@ -40,23 +39,23 @@ export const getProgramsAndRoundsByUserAndTagQuery = gql`
           name
           chainId
         }
-        roles {
+        roundRoles {
           address
           role
         }
       }
       qfRounds: rounds(
-        filter: {
-          strategyName: { equalTo: "allov2.DonationVotingMerkleDistributionDirectTransferStrategy" }
-          roles: { some: { address: { equalTo: $userAddress } } }
+        where: {
+          strategyName: { _eq: "allov2.DonationVotingMerkleDistributionDirectTransferStrategy" }
+          roundRoles: { address: { _eq: $userAddress } }
         }
       ) {
         id
       }
       dgRounds: rounds(
-        filter: {
-          strategyName: { equalTo: "allov2.DirectGrantsLiteStrategy" }
-          roles: { some: { address: { equalTo: $userAddress } } }
+        where: {
+          strategyName: { _eq: "allov2.DirectGrantsLiteStrategy" }
+          roundRoles: { address: { _eq: $userAddress } }
         }
       ) {
         id
@@ -67,12 +66,12 @@ export const getProgramsAndRoundsByUserAndTagQuery = gql`
 
 export const getProgramByIdAndChainIdQuery = gql`
   query ($programId: String!, $chainId: Int!) {
-    projects(filter: { id: { equalTo: $programId }, chainId: { equalTo: $chainId } }) {
+    projects(where: { id: { _eq: $programId }, chainId: { _eq: $chainId } }) {
       name
       metadata
       chainId
       id
-      roles {
+      projectRoles {
         address
         role
       }
@@ -82,7 +81,7 @@ export const getProgramByIdAndChainIdQuery = gql`
 
 export const getRoundByChainIdAndPoolIdQuery = gql`
   query ($chainId: Int!, $poolId: String!) {
-    round(id: $poolId, chainId: $chainId) {
+    rounds(where: { id: { _eq: $poolId }, chainId: { _eq: $chainId } }) {
       id
       chainId
       strategyAddress
@@ -100,7 +99,7 @@ export const getRoundByChainIdAndPoolIdQuery = gql`
         name
         chainId
       }
-      roles {
+      roundRoles {
         address
         role
       }
@@ -117,8 +116,8 @@ export const getRoundByChainIdAndPoolIdQuery = gql`
 
 export const getRolesByChainIdAndPoolIdQuery = gql`
   query ($chainId: Int!, $poolId: String!) {
-    rounds(filter: { chainId: { equalTo: $chainId }, id: { equalTo: $poolId } }) {
-      roles {
+    rounds(where: { chainId: { _eq: $chainId }, id: { _eq: $poolId } }) {
+      roundRoles {
         address
       }
     }
