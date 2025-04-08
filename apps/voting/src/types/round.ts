@@ -58,4 +58,6 @@ export interface RetroApplication {
   credentials: any;
   lastUpdated: number;
   recipient: string;
+  projectGithub?: string;
+  projectTwitter?: string;
 }
