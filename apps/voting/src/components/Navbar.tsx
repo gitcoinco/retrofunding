@@ -8,7 +8,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 export const Navbar = () => {
   return (
     <GitcoinNavbar
-      className="bg-white/5 shadow-[0px_4px_24px_0px_rgba(0,0,0,0.08)] backdrop-blur-[44px]"
+      className="h-24 flex-col items-center justify-between gap-2 bg-white/5 px-0 shadow-[0px_4px_24px_0px_rgba(0,0,0,0.08)] backdrop-blur-[44px] md:h-16 md:flex-row md:px-20"
       primaryLogo={{ link: "/", img: RetrofundingLogoLockup, size: "32px" }}
       secondaryLogo={{ link: "/", img: RetrofundingVoteLogoWordmark, size: "32px" }}
     >

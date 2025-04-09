@@ -154,8 +154,8 @@ importers:
         specifier: ^1.0.53
         version: 1.0.56(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@gitcoin/ui':
-        specifier: 0.0.0-beta.37
-        version: 0.0.0-beta.37(@storybook/addons@7.6.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react-dom@18.3.6(@types/react@18.3.20))(@types/react@18.3.20)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.39.0)(storybook@8.6.12(bufferutil@4.0.9)(prettier@3.5.3)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.2.5(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.1))
+        specifier: 0.0.0-beta.39
+        version: 0.0.0-beta.39(@storybook/addons@7.6.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react-dom@18.3.6(@types/react@18.3.20))(@types/react@18.3.20)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.39.0)(storybook@8.6.12(bufferutil@4.0.9)(prettier@3.5.3)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.2.5(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.1))
       '@rainbow-me/rainbowkit':
         specifier: ^2.2.0
         version: 2.2.4(@tanstack/react-query@5.72.0(react@18.3.1))(@types/react@18.3.20)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(viem@2.21.60(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2))(wagmi@2.13.2(@tanstack/query-core@5.72.0)(@tanstack/react-query@5.72.0(react@18.3.1))(@types/react@18.3.20)(bufferutil@4.0.9)(react@18.3.1)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.21.60(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2))(zod@3.24.2))
@@ -772,8 +772,8 @@ packages:
       react: 18.3.1
       react-dom: 18.3.1
 
-  '@gitcoin/ui@0.0.0-beta.37':
-    resolution: {integrity: sha512-0T0WkgJhTFS49atw/9liNLJ5Lv3JXIR/Ie7qOltLAsJM7nrk7oqaRA5ObOShy4rKuk5M5jaTTcM/yfYzL0YZFw==}
+  '@gitcoin/ui@0.0.0-beta.39':
+    resolution: {integrity: sha512-WJkFRAb8y7dmLd0WyyYYTqJJIw3XU1aVyj89AW3iS72d5egILRked825xF76LRf8qhtyqWnM8qejRl6zD5RW8g==}
     peerDependencies:
       react: 18.3.1
       react-dom: 18.3.1
@@ -7602,7 +7602,7 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@gitcoin/ui@0.0.0-beta.37(@storybook/addons@7.6.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react-dom@18.3.6(@types/react@18.3.20))(@types/react@18.3.20)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.39.0)(storybook@8.6.12(bufferutil@4.0.9)(prettier@3.5.3)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.2.5(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.1))':
+  '@gitcoin/ui@0.0.0-beta.39(@storybook/addons@7.6.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react-dom@18.3.6(@types/react@18.3.20))(@types/react@18.3.20)(bufferutil@4.0.9)(graphql@16.10.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.39.0)(storybook@8.6.12(bufferutil@4.0.9)(prettier@3.5.3)(utf-8-validate@5.0.10))(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.7.5)(typescript@5.5.4)))(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@6.2.5(@types/node@22.7.5)(jiti@1.21.7)(yaml@2.7.1))':
     dependencies:
       '@gitcoin/gitcoin-chain-data': 1.0.56(bufferutil@4.0.9)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@heroicons/react': 1.0.6(react@18.3.1)

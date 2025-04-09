@@ -21,7 +21,10 @@ export const Leaderboard = () => {
   }
 
   return (
-    <div className="px-20 pt-10" key={roundIdParam}>
+    <div
+      className="flex flex-col items-center justify-center gap-4 px-4 pt-10 md:px-20"
+      key={roundIdParam}
+    >
       <LeaderboardComponent {...leaderboardProps} padding="xl" />
     </div>
   );
