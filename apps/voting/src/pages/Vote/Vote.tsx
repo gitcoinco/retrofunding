@@ -107,6 +107,12 @@ export const Vote = () => {
     }
   }, [voteResponse, metrics]);
 
+  // TODO: Change the intent text and then uncomment the onShare prop in the BallotForm component
+  const handleShareTwitterIntent = () => {
+    const url = `https://x.com/intent/tweet?text=I just voted for the ${roundName} round on Gitcoin Retrofunding! Check out the leaderboard of the top performing OOS projects: https://beta.rf.vote.gitcoin.co/${encodeURIComponent(`#/leaderboard/${chainId}/${roundId}`)}`;
+    window.open(url, "_blank");
+  };
+
   const handleSubmit = async (values: BallotValues[]) => {
     if (roundId && chainId && walletClient) {
       if (!walletClient) {
@@ -156,16 +162,16 @@ export const Vote = () => {
   }
 
   return (
-    <div className="flex flex-col items-center gap-[26px] pt-6">
+    <div className="mx-auto flex flex-col items-center gap-[26px] pt-6">
       <div
         style={{
           width: containerRef.current ? `${containerRef.current.clientWidth}px` : "auto",
         }}
-        className="font-ui-sans px-20 text-left text-2xl font-semibold"
+        className="font-ui-sans px-4 text-left text-2xl font-semibold md:px-20"
       >
         {roundName}
       </div>
-      <div ref={containerRef} className="flex justify-center gap-12 overflow-x-auto px-20">
+      <div ref={containerRef} className="flex justify-center gap-12 px-4 md:px-20">
         <BallotForm
           className="max-w-[1000px] overflow-x-auto"
           name={`${address}-${roundId}-${chainId}`}
@@ -177,6 +183,7 @@ export const Vote = () => {
             setBallotToSubmit(values);
             setIsSubmitBallotDialogOpen(true);
           }}
+          // onShare={handleShareTwitterIntent}
           submittedBallot={alredySubmittedBallot}
         />
         <VoteSidebar
