@@ -93,6 +93,7 @@ export const useLeaderboard = ({ poolId, chainId }: { poolId?: string; chainId?:
               name: application.title,
               logoImg: application.logoImg,
               website: application.website,
+              projectProfile: `https://explorer.gitcoin.co/#/round/${chainId}/${poolId}/${application.id}`,
               projectTwitter: application.projectTwitter,
               projectGithub: application.projectGithub,
               description: application.description,
