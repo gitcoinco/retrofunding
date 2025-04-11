@@ -119,6 +119,7 @@ export const useLeaderboard = ({ poolId, chainId }: { poolId?: string; chainId?:
   }, [applications, dataToCalculateDistribution, sortedProjects, metricsData]);
 
   return {
+    round: pool,
     leaderboardProps,
     isLoading:
       isLoadingPool || isLoadingDataToCalculateDistribution || isLoadingVotes || isLoadingMetrics,
