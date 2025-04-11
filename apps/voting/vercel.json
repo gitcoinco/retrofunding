@@ -1,0 +1,27 @@
+{
+  "rewrites": [
+    {
+      "source": "/leaderboard/:chainId/:roundId",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/:chainId/:roundId",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow"
+        }
+      ]
+    }
+  ]
+}

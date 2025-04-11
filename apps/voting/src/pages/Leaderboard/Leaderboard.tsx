@@ -28,7 +28,7 @@ export const Leaderboard = () => {
       <SEO
         title="Top Projects in GG23: Mature Builders Retro Round 🚀"
         description="Discover the projects that are building long-term impact. Check out the current leaderboard rankings."
-        url={`https://retrofunding-vote-git-chore-seo-leaderboard-fa673d-grants-stack.vercel.app/#/leaderboard/${chainIdParam}/${roundIdParam}`}
+        url={`https://retrofunding-vote-git-chore-seo-leaderboard-fa673d-grants-stack.vercel.app/leaderboard/${chainIdParam}/${roundIdParam}`}
         twitterCard="summary"
         image="https://retrofunding-vote-git-chore-seo-leaderboard-fa673d-grants-stack.vercel.app/leaderboard.svg"
       />
