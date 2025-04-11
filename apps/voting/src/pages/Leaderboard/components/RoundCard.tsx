@@ -1,5 +1,6 @@
 import { Button } from "@gitcoin/ui";
 import { Icon, IconType } from "@gitcoin/ui";
+import { Badge } from "@gitcoin/ui";
 import moment from "moment";
 
 export const RoundCard = ({
@@ -22,6 +23,8 @@ export const RoundCard = ({
   roundId: string;
 }) => {
   const daysLeft = moment(roundDonationsEndTime).diff(moment(), "days");
+  const isDaysLeftPositive = daysLeft > 0;
+  const daysLeftText = isDaysLeftPositive ? `${daysLeft} days left` : "Voting ended";
   return (
     <div className="inline-flex w-full flex-col items-start justify-start gap-4 px-2 md:px-0">
       <div className="inline-flex flex-col items-center justify-between self-stretch pr-6 md:flex-row">
@@ -32,15 +35,7 @@ export const RoundCard = ({
                 <div className="font-ui-sans justify-center text-3xl font-semibold leading-9 text-text-primary">
                   {roundName}
                 </div>
-                <div
-                  data-state="Default"
-                  data-type="default"
-                  className="flex items-center justify-center gap-1 rounded-full bg-blue-100 px-2.5 py-0.5"
-                >
-                  <div className="font-ui-mono justify-start text-sm font-medium leading-normal text-text-primary">
-                    {daysLeft} days left
-                  </div>
-                </div>
+                <Badge className="bg-blue-100">{daysLeftText}</Badge>
               </div>
               <div className="inline-flex items-center justify-start gap-2">
                 <div className="flex items-center justify-start gap-2">
@@ -77,6 +72,7 @@ export const RoundCard = ({
         <Button
           size="lg"
           variant="light-purple"
+          disabled={!isDaysLeftPositive}
           value="Vote here!"
           onClick={() => {
             window.open(`https://beta.rf.vote.gitcoin.co/#/${roundChainId}/${roundId}`, "_blank");
