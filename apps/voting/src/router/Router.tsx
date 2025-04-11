@@ -8,9 +8,12 @@ function useRemoveHashRedirect() {
   useEffect(() => {
     const { pathname, hash, search } = window.location;
 
-    // If there's a hash, remove it and update the URL
+    // If there's a hash, remove it but keep the path after the hash
     if (hash) {
-      const newPath = pathname + search;
+      // Remove the # and any leading slashes from the hash
+      const cleanPath = hash.replace(/^#\/?/, "");
+      // Combine with search params if they exist
+      const newPath = "/" + cleanPath + (search || "");
       // Use replaceState to avoid adding to browser history
       window.history.replaceState({}, "", newPath);
     }
