@@ -7,6 +7,7 @@ import { isEqual } from "lodash";
 import { Hex } from "viem";
 import { useAccount } from "wagmi";
 import { useWalletClient } from "wagmi";
+import { SEO } from "@/components/SEO";
 import { useGetRoundWithApplications, useRefDimensions, useVote } from "@/hooks";
 import { useGetMetrics } from "@/hooks/useGetMetrics";
 import { useGetVote } from "@/hooks/useGetVote";
@@ -107,9 +108,8 @@ export const Vote = () => {
     }
   }, [voteResponse, metrics]);
 
-  // TODO: Change the intent text and then uncomment the onShare prop in the BallotForm component
   const handleShareTwitterIntent = () => {
-    const url = `https://x.com/intent/tweet?text=I just voted for the ${roundName} round on Gitcoin Retrofunding! Check out the leaderboard of the top performing OOS projects: https://beta.rf.vote.gitcoin.co/${encodeURIComponent(`#/leaderboard/${chainId}/${roundId}`)}`;
+    const url = `https://x.com/intent/tweet?text=Just voted in @gitcoin’s GG23 Mature Builders Retro Round! 🗳️🔥 Check out the top projects on the leaderboard → ${encodeURIComponent("https://beta.rf.vote.gitcoin.co/leaderboard/42161/862")} #gg23retrofunding`;
     window.open(url, "_blank");
   };
 
@@ -163,6 +163,13 @@ export const Vote = () => {
 
   return (
     <div className="mx-auto flex flex-col items-center gap-[26px] pt-6">
+      <SEO
+        title={`Vote | Retrofunding`}
+        description={`Powered by Gitcoin`}
+        url={`https://beta.rf.vote.gitcoin.co/vote/${chainId}/${roundId}`}
+        twitterCard="summary"
+        image="https://beta.rf.vote.gitcoin.co/gitcoin.svg"
+      />
       <div
         style={{
           width: containerRef.current ? `${containerRef.current.clientWidth}px` : "auto",
@@ -183,7 +190,7 @@ export const Vote = () => {
             setBallotToSubmit(values);
             setIsSubmitBallotDialogOpen(true);
           }}
-          // onShare={handleShareTwitterIntent}
+          onShare={handleShareTwitterIntent}
           submittedBallot={alredySubmittedBallot}
         />
         <VoteSidebar
