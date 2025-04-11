@@ -109,7 +109,7 @@ export const Vote = () => {
   }, [voteResponse, metrics]);
 
   const handleShareTwitterIntent = () => {
-    const url = `https://x.com/intent/tweet?text=Just voted in @gitcoin’s GG23 Mature Builders Retro Round! 🗳️🔥 Check out the top projects on the leaderboard → ${encodeURIComponent("https://retrofunding-vote-git-chore-seo-leaderboard-fa673d-grants-stack.vercel.app/leaderboard/42161/862")} #gg23retrofunding`;
+    const url = `https://x.com/intent/tweet?text=Just voted in @gitcoin’s GG23 Mature Builders Retro Round! 🗳️🔥 Check out the top projects on the leaderboard → ${encodeURIComponent("https://beta.rf.vote.gitcoin.co/leaderboard/42161/862")} #gg23retrofunding`;
     window.open(url, "_blank");
   };
 
@@ -166,9 +166,9 @@ export const Vote = () => {
       <SEO
         title={`Vote | Retrofunding`}
         description={`Powered by Gitcoin`}
-        url={`https://retrofunding-vote-git-chore-seo-leaderboard-fa673d-grants-stack.vercel.app/vote/${chainId}/${roundId}`}
+        url={`https://beta.rf.vote.gitcoin.co/vote/${chainId}/${roundId}`}
         twitterCard="summary"
-        image="https://retrofunding-vote-git-chore-seo-leaderboard-fa673d-grants-stack.vercel.app/gitcoin.svg"
+        image="https://beta.rf.vote.gitcoin.co/gitcoin.svg"
       />
       <div
         style={{
