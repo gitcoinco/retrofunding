@@ -1,10 +1,12 @@
 import { useEffect } from "react";
-import { Routes, Route } from "react-router";
+import { Routes, Route, useNavigate } from "react-router";
 import { MainLayout } from "@/layouts/MainLayout";
 import { Landing, NotFound, Vote, Leaderboard } from "@/pages";
 import { ProtectedVoteRoute } from "./protectedRoutes";
 
 function useRemoveHashRedirect() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const { pathname, hash, search } = window.location;
 
@@ -14,10 +16,10 @@ function useRemoveHashRedirect() {
       const cleanPath = hash.replace(/^#\/?/, "");
       // Combine with search params if they exist
       const newPath = "/" + cleanPath + (search || "");
-      // Use replaceState to avoid adding to browser history
-      window.history.replaceState({}, "", newPath);
+      // Use navigate to properly handle the route change
+      navigate(newPath, { replace: true });
     }
-  }, []);
+  }, [navigate]);
 }
 
 export const Router = () => {
