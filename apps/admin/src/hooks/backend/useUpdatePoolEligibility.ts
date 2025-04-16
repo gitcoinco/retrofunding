@@ -10,10 +10,12 @@ export const useUpdatePoolEligibility = () => {
     mutationFn: async (body: Omit<UpdatePoolEligibilityBody, "signature">) => {
       if (!walletClient) throw new Error("Wallet client not found");
       const signature = await walletClient.signMessage({
-        message: await getDeterministicObjectKeccakHash({
-          alloPoolId: body.alloPoolId,
-          chainId: body.chainId,
-        }),
+        message: {
+          raw: await getDeterministicObjectKeccakHash({
+            alloPoolId: body.alloPoolId,
+            chainId: body.chainId,
+          }),
+        },
       });
       return await updatePoolEligibility({ ...body, signature });
     },

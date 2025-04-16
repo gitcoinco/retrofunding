@@ -34,7 +34,7 @@ export const usePerformEvaluation = () => {
       evaluationStatus: evaluationBody.evaluationStatus,
     });
 
-    const signature = await walletClient.signMessage({ message: hash });
+    const signature = await walletClient.signMessage({ message: { raw: hash } });
 
     return signature;
   };
