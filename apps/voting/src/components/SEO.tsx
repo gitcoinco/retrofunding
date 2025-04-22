@@ -14,7 +14,7 @@ interface SEOProps {
 export const SEO = ({
   title = "Vote | Retrofunding",
   description = "Powered by Gitcoin",
-  image = "https://beta.rf.vote.gitcoin.co/banner.svg",
+  image = "https://beta.rf.vote.gitcoin.co/banner.png",
   url = "https://beta.rf.vote.gitcoin.co",
   type = "website",
   twitterCard = "summary_large_image",
