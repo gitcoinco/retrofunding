@@ -1,0 +1,51 @@
+{
+  "short_name": "Retrofunding Admin",
+  "name": "Gitcoin Safe App Retrofunding Admin",
+  "description": "Gitcoin Safe App Retrofunding Admin",
+  "icons": [
+    {
+      "src": "retrofundingLockup.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#FFFFFF",
+  "background_color": "#FFFFFF",
+  "permissions": [
+    "camera",
+    "microphone",
+    "geolocation",
+    "clipboard-read",
+    "clipboard-write",
+    "display-capture",
+    "fullscreen",
+    "notifications",
+    "payment",
+    "persistent-storage",
+    "screen-wake-lock",
+    "storage-access",
+    "window-management"
+  ]
+}

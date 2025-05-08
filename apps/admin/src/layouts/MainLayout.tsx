@@ -6,7 +6,7 @@ import { Navbar } from "@/components/Navbar";
 
 export const MainLayout = () => {
   return (
-    <div style={{ height: "100vh" }} className="flex min-h-full flex-col">
+    <div style={{ height: "100vh" }} className="flex min-h-full flex-col bg-white">
       <Toaster />
       <Navbar />
       <main className="flex flex-1 flex-col pb-20">

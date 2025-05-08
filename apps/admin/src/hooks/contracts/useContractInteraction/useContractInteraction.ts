@@ -1,9 +1,11 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { TransactionData } from "@allo-team/allo-v2-sdk";
 import { ProgressStatus, Step } from "@gitcoin/ui/types";
+import { useSafeAppsSDK } from "@safe-global/safe-apps-react-sdk";
 import { useMutation } from "@tanstack/react-query";
 import { createPublicClient, http, TransactionReceipt } from "viem";
 import { useWalletClient } from "wagmi";
+import { useCheckIsSafeWallet } from "@/hooks";
 import { uploadData } from "@/services/ipfs/upload";
 import { targetNetworks } from "@/services/web3/chains";
 import { waitUntilIndexerSynced } from "../utils/indexer";
@@ -18,6 +20,8 @@ interface GetProgressSteps {
 }
 
 export const useContractInteraction = () => {
+  const { sdk } = useSafeAppsSDK();
+
   const [uploadMetadataStatus, setUploadMetadataStatus] = useState<ProgressStatus>(
     ProgressStatus.NOT_STARTED,
   );
@@ -33,6 +37,8 @@ export const useContractInteraction = () => {
   const { data: walletClient } = useWalletClient();
 
   const getProgressStepsRef = useRef<GetProgressSteps | null>(null);
+
+  const isSafeWallet = useCheckIsSafeWallet();
 
   useMemo(() => {
     if (getProgressStepsRef.current) {
@@ -114,40 +120,52 @@ export const useContractInteraction = () => {
       const txDatas = await transactionsData(metadataCid);
       setContractUpdatingStatus(ProgressStatus.IN_PROGRESS);
       let receipt: TransactionReceipt | undefined;
-      for (const txData of txDatas) {
-        let txHash;
-        try {
-          txHash = await walletClient.sendTransaction({
-            account,
-            to: txData.to,
-            data: txData.data,
-            value: BigInt(txData.value),
-            chain,
-          });
-        } catch (e) {
-          setContractUpdatingStatus(ProgressStatus.IS_ERROR);
-          throw new Error("Failed to send transaction");
-        }
 
-        receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
-        if (!receipt.status || receipt.status === "reverted") {
-          setContractUpdatingStatus(ProgressStatus.IS_ERROR);
-          throw new Error("Transaction failed");
-        }
+      if (isSafeWallet) {
+        const transactions = txDatas.map((txData) => ({
+          to: txData.to,
+          data: txData.data,
+          value: txData.value,
+        }));
+        const { safeTxHash } = await sdk.txs.send({ txs: transactions });
 
-        if (!txData.skip) {
-          setContractUpdatingStatus(ProgressStatus.IS_SUCCESS);
-
-          setIndexingStatus(ProgressStatus.IN_PROGRESS);
-
+        console.log(transactions);
+      } else {
+        for (const txData of txDatas) {
+          let txHash;
           try {
-            await waitUntilIndexerSynced({
-              chainId,
-              blockNumber: receipt.blockNumber,
+            txHash = await walletClient.sendTransaction({
+              account,
+              to: txData.to,
+              data: txData.data,
+              value: BigInt(txData.value),
+              chain,
             });
           } catch (e) {
-            setIndexingStatus(ProgressStatus.IS_ERROR);
-            throw new Error("Failed to sync with indexer");
+            setContractUpdatingStatus(ProgressStatus.IS_ERROR);
+            throw new Error("Failed to send transaction");
+          }
+
+          receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
+          if (!receipt.status || receipt.status === "reverted") {
+            setContractUpdatingStatus(ProgressStatus.IS_ERROR);
+            throw new Error("Transaction failed");
+          }
+
+          if (!txData.skip) {
+            setContractUpdatingStatus(ProgressStatus.IS_SUCCESS);
+
+            setIndexingStatus(ProgressStatus.IN_PROGRESS);
+
+            try {
+              await waitUntilIndexerSynced({
+                chainId,
+                blockNumber: receipt.blockNumber,
+              });
+            } catch (e) {
+              setIndexingStatus(ProgressStatus.IS_ERROR);
+              throw new Error("Failed to sync with indexer");
+            }
           }
         }
       }
