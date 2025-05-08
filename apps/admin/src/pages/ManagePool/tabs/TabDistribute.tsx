@@ -155,12 +155,25 @@ export const TabDistribute = ({ roundData, onUpdate }: TabDistributeProps) => {
       amount: value.amount,
       index: Number(value.applicationId) + 1,
     }));
-    const distributionMetadata = values.map((value) => ({
-      anchorAddress: roundApplications[value.applicationId].anchorAddress,
-      payoutAddress: roundApplications[value.applicationId].payoutAddress,
-      amount: value.amount.toString(),
-      index: Number(value.applicationId) + 1,
-    }));
+    // Sort By percentage in descending order
+    const distributionMetadata = values
+      .map((value) => ({
+        anchorAddress: roundApplications[value.applicationId].anchorAddress,
+        payoutAddress: roundApplications[value.applicationId].payoutAddress,
+        percentage: new Decimal(value.amount.toString())
+          .div(new Decimal(balance.value.toString()))
+          .mul(100)
+          .toString(),
+        amount: value.amount.toString(),
+        formattedAmount: new Decimal(value.amount.toString())
+          .div(new Decimal(10 ** balance.decimals))
+          .toString(),
+        projectName: roundData.applications.find(
+          (application) => application.id === value.applicationId,
+        )?.metadata.application.project.title,
+        index: Number(value.applicationId) + 1,
+      }))
+      .sort((a, b) => new Decimal(b.percentage).minus(new Decimal(a.percentage)).toNumber());
     await distribute(
       {
         distributionMetadata,
